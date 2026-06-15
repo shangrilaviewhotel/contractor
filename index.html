@@ -10,7 +10,8 @@
   <meta property="og:image" content="https://tobi1533.github.io/Contractor-/Akeemstore1.jpg">
   <meta property="og:type" content="website">
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Enhanced Typography from UI UX Pro Max -->
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -20,25 +21,54 @@
     }
 
     :root {
-      --primary: #FF6B35;
-      --primary-dark: #E55100;
-      --secondary: #3498DB;
-      --accent: #2ECC71;
+      /* E-commerce Optimized Color Palette */
+      --primary: #059669;
+      --primary-light: #10B981;
+      --primary-dark: #047857;
+      --accent: #EA580C;
+      --accent-light: #F97316;
+      --accent-dark: #C2410C;
+      --destructive: #DC2626;
+      --success: #10B981;
       --dark: #1a1a2e;
       --darker: #0f1419;
-      --light: #F5F5F5;
+      --light: #F0FDF4;
+      --card-bg: #FFFFFF;
+      --card-fg: #064E3B;
+      --muted-fg: #64748B;
+      --border: #A7F3D0;
       --glass: rgba(255, 255, 255, 0.08);
       --glass-hover: rgba(255, 255, 255, 0.15);
+      
+      /* Typography Scale */
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-lg: 18px;
+      --text-xl: 22px;
+      --text-2xl: 28px;
+      --text-3xl: 36px;
+      --text-4xl: 48px;
+      
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
     }
 
     body {
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Rubik', 'Inter', sans-serif;
       background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
       background-attachment: fixed;
       min-height: 100vh;
       position: relative;
       overflow-x: hidden;
       color: white;
+      line-height: 1.6;
+      letter-spacing: -0.3px;
     }
 
     body::before {
@@ -49,9 +79,9 @@
       width: 100%;
       height: 100%;
       background:
-        radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(46, 204, 113, 0.08) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(5, 150, 105, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(234, 88, 12, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
       pointer-events: none;
       z-index: 0;
       animation: ambientPulse 15s ease-in-out infinite;
@@ -70,12 +100,53 @@
       width: 100%;
       height: 100%;
       background-image:
-        linear-gradient(0deg, transparent 24%, rgba(52, 152, 219, 0.03) 25%, rgba(52, 152, 219, 0.03) 26%, transparent 27%, transparent 74%, rgba(52, 152, 219, 0.03) 75%, rgba(52, 152, 219, 0.03) 76%, transparent 77%, transparent),
-        linear-gradient(90deg, transparent 24%, rgba(52, 152, 219, 0.03) 25%, rgba(52, 152, 219, 0.03) 26%, transparent 27%, transparent 74%, rgba(52, 152, 219, 0.03) 75%, rgba(52, 152, 219, 0.03) 76%, transparent 77%, transparent);
+        linear-gradient(0deg, transparent 24%, rgba(5, 150, 105, 0.03) 25%, rgba(5, 150, 105, 0.03) 26%, transparent 27%, transparent 74%, rgba(5, 150, 105, 0.03) 75%, rgba(5, 150, 105, 0.03) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(5, 150, 105, 0.03) 25%, rgba(5, 150, 105, 0.03) 26%, transparent 27%, transparent 74%, rgba(5, 150, 105, 0.03) 75%, rgba(5, 150, 105, 0.03) 76%, transparent 77%, transparent);
       background-size: 50px 50px;
       pointer-events: none;
       z-index: 0;
     }
+
+    /* FLOATING BACKGROUND FIGURES */
+    .floating-figures {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .figure {
+      position: absolute;
+      font-size: 64px;
+      opacity: 0.18;
+      filter: none;
+      animation: floatDrift linear infinite;
+      will-change: transform;
+      user-select: none;
+    }
+
+    @keyframes floatDrift {
+      0%   { transform: translateY(110vh) rotate(0deg) scale(1); opacity: 0; }
+      5%   { opacity: 0.18; }
+      50%  { transform: translateY(50vh) rotate(20deg) scale(1.05); opacity: 0.22; }
+      95%  { opacity: 0.18; }
+      100% { transform: translateY(-10vh) rotate(40deg) scale(1); opacity: 0; }
+    }
+
+    @keyframes floatDriftReverse {
+      0%   { transform: translateY(-10vh) rotate(0deg) scale(1); opacity: 0; }
+      5%   { opacity: 0.18; }
+      50%  { transform: translateY(50vh) rotate(-20deg) scale(1.05); opacity: 0.22; }
+      95%  { opacity: 0.18; }
+      100% { transform: translateY(110vh) rotate(-40deg) scale(1); opacity: 0; }
+    }
+
+    .figure:nth-child(odd)  { animation-name: floatDriftReverse; }
+    .figure:nth-child(even) { animation-name: floatDrift; }
 
     nav {
       position: fixed;
@@ -86,7 +157,7 @@
       background: var(--glass);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 2px solid rgba(255, 107, 53, 0.3);
+      border-bottom: 2px solid rgba(5, 150, 105, 0.3);
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
       z-index: 1000;
       display: flex;
@@ -99,11 +170,12 @@
       font-family: 'Playfair Display', serif;
       font-size: 26px;
       font-weight: 900;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .hamburger {
@@ -114,13 +186,18 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       border: none;
       border-radius: 10px;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 5px 20px rgba(5, 150, 105, 0.3);
       position: relative;
       z-index: 1001;
+    }
+
+    .hamburger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(5, 150, 105, 0.4);
     }
 
     .hamburger span {
@@ -172,7 +249,7 @@
       padding: 15px 20px;
       margin: 10px 0;
       background: transparent;
-      border: 2px solid rgba(255, 107, 53, 0.3);
+      border: 2px solid rgba(5, 150, 105, 0.3);
       border-radius: 10px;
       color: white;
       text-decoration: none;
@@ -182,11 +259,13 @@
       transition: all 0.3s ease;
       text-align: center;
       font-size: 14px;
+      letter-spacing: 0.5px;
     }
 
     .menu-item:hover {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       border-color: var(--primary);
+      transform: translateY(-2px);
     }
 
     h2 {
@@ -194,11 +273,11 @@
       z-index: 1;
       text-align: center;
       padding: 100px 20px 40px;
-      font-size: 48px;
-      font-weight: 900;
-      letter-spacing: 2px;
+      font-size: var(--text-4xl);
+      font-weight: 800;
+      letter-spacing: -1px;
       font-family: 'Playfair Display', serif;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -214,14 +293,14 @@
     }
 
     .activity-feed {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(52, 152, 219, 0.1) 100%);
-      border: 2px solid rgba(255, 107, 53, 0.4);
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.15) 0%, rgba(234, 88, 12, 0.1) 100%);
+      border: 2px solid rgba(5, 150, 105, 0.4);
       border-radius: 15px;
       padding: 20px;
       backdrop-filter: blur(10px);
       max-height: 300px;
       overflow-y: auto;
-      box-shadow: 0 8px 32px rgba(255, 107, 53, 0.2);
+      box-shadow: 0 8px 32px rgba(5, 150, 105, 0.2);
     }
 
     .activity-header {
@@ -229,34 +308,34 @@
       align-items: center;
       gap: 10px;
       margin-bottom: 15px;
-      font-size: 14px;
+      font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: var(--primary);
     }
 
     .live-indicator {
       width: 10px;
       height: 10px;
-      background: #FF6B35;
+      background: var(--accent);
       border-radius: 50%;
       animation: pulse 2s ease-in-out infinite;
-      box-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
+      box-shadow: 0 0 10px rgba(234, 88, 12, 0.8);
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(255, 107, 53, 0.8); }
-      50% { opacity: 0.5; box-shadow: 0 0 20px rgba(255, 107, 53, 0.4); }
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(234, 88, 12, 0.8); }
+      50% { opacity: 0.5; box-shadow: 0 0 20px rgba(234, 88, 12, 0.4); }
     }
 
     .activity-item {
       padding: 12px;
       margin: 8px 0;
       background: rgba(255, 255, 255, 0.05);
-      border-left: 3px solid var(--primary);
+      border-left: 3px solid var(--accent);
       border-radius: 8px;
-      font-size: 13px;
+      font-size: var(--text-sm);
       line-height: 1.5;
       animation: slideIn 0.5s ease;
     }
@@ -279,8 +358,8 @@
     }
 
     .stat-card {
-      background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(52, 152, 219, 0.05) 100%);
-      border: 2px solid rgba(255, 107, 53, 0.3);
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%);
+      border: 2px solid rgba(5, 150, 105, 0.3);
       border-radius: 12px;
       padding: 15px;
       text-align: center;
@@ -288,17 +367,25 @@
       transition: all 0.3s ease;
     }
 
+    .stat-card:hover {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.15) 0%, rgba(234, 88, 12, 0.08) 100%);
+      transform: translateY(-4px);
+    }
+
     .stat-value {
-      font-size: 24px;
-      font-weight: 900;
+      font-size: 28px;
+      font-weight: 800;
       color: var(--primary);
       margin-bottom: 5px;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.5px;
     }
 
     .stat-label {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: rgba(255, 255, 255, 0.7);
       font-weight: 600;
     }
@@ -315,12 +402,13 @@
       width: 100%;
       padding: 14px 20px;
       font-size: 16px;
-      border: 2px solid rgba(255, 107, 53, 0.5);
+      border: 2px solid rgba(5, 150, 105, 0.5);
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.95);
       color: #1a1a2e;
       transition: all 0.3s ease;
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Rubik', sans-serif;
+      font-weight: 500;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
@@ -328,7 +416,8 @@
       outline: none;
       border-color: var(--primary);
       background: white;
-      box-shadow: 0 6px 25px rgba(255, 107, 53, 0.3);
+      box-shadow: 0 6px 25px rgba(5, 150, 105, 0.3);
+      transform: translateY(-2px);
     }
 
     #products {
@@ -344,19 +433,21 @@
     .product {
       width: 220px;
       height: 420px;
-      border: 2px solid rgba(255, 107, 53, 0.3);
+      border: 2px solid rgba(5, 150, 105, 0.2);
       display: flex;
       flex-direction: column;
       border-radius: 15px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 250, 255, 0.9) 100%);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      transition: all 0.4s ease;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 253, 244, 0.95) 100%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       position: relative;
       overflow: hidden;
     }
 
     .product:hover {
-      transform: scale(1.03);
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(5, 150, 105, 0.2);
+      border-color: var(--primary);
     }
 
     .image-container {
@@ -374,6 +465,10 @@
       object-fit: cover;
       display: block;
       transition: 0.4s ease;
+    }
+
+    .product:hover .product-img {
+      transform: scale(1.05);
     }
 
     .product-stats {
@@ -395,19 +490,21 @@
       font-size: 11px;
       font-weight: 600;
       backdrop-filter: blur(10px);
+      font-family: 'Inter', sans-serif;
     }
 
     .image-counter {
       position: absolute;
       bottom: 10px;
       right: 10px;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0, 0, 0, 0.7);
       color: white;
       padding: 6px 12px;
       border-radius: 20px;
       font-size: 12px;
       font-weight: 600;
       z-index: 10;
+      font-family: 'Inter', sans-serif;
     }
 
     /* SHARE BUTTON */
@@ -425,15 +522,15 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       z-index: 25;
     }
 
     .share-button:hover {
-      transform: scale(1.15);
+      transform: scale(1.15) translateY(-4px);
       background: white;
-      box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
     }
 
     /* SHARE MENU */
@@ -473,7 +570,7 @@
     }
 
     .share-option:hover {
-      transform: scale(1.15);
+      transform: scale(1.15) translateY(-2px);
     }
 
     .share-option.whatsapp {
@@ -489,7 +586,7 @@
     }
 
     .share-option.copy {
-      background: #FF6B35;
+      background: var(--accent);
     }
 
     /* LIKE BUTTON */
@@ -507,15 +604,15 @@
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       z-index: 25;
     }
 
     .like-button:hover {
-      transform: scale(1.15);
+      transform: scale(1.15) translateY(-4px);
       background: white;
-      box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
     }
 
     .like-button.liked {
@@ -539,6 +636,7 @@
       font-size: 11px;
       font-weight: 600;
       backdrop-filter: blur(10px);
+      font-family: 'Inter', sans-serif;
     }
 
     .product-info {
@@ -552,8 +650,10 @@
     .title {
       font-size: 15px;
       font-weight: 700;
-      color: #1a1a2e;
+      color: var(--card-fg);
       line-height: 1.3;
+      letter-spacing: -0.3px;
+      font-family: 'Rubik', sans-serif;
     }
 
     .price {
@@ -561,11 +661,13 @@
       font-weight: 800;
       font-size: 16px;
       margin: 4px 0;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.5px;
     }
 
     .desc {
       font-size: 11px;
-      color: #666;
+      color: var(--muted-fg);
       line-height: 1.4;
       margin-bottom: 8px;
       flex-grow: 1;
@@ -573,19 +675,20 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      letter-spacing: -0.2px;
     }
 
     .order-btn {
       width: 100%;
       padding: 10px 10px;
-      background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
       color: white;
       border: none;
       border-radius: 8px;
       font-weight: 700;
       font-size: 12px;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       text-transform: uppercase;
       letter-spacing: 0.5px;
       text-decoration: none;
@@ -593,18 +696,20 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
+      font-family: 'Rubik', sans-serif;
     }
 
     .order-btn:hover {
       transform: translateY(-2px);
       color: white;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
     }
 
     .sold-badge {
       position: absolute;
       top: 12px;
       left: 12px;
-      background: #E74C3C;
+      background: var(--destructive);
       color: white;
       padding: 6px 12px;
       border-radius: 20px;
@@ -612,7 +717,9 @@
       font-weight: 700;
       z-index: 30;
       text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      letter-spacing: 0.5px;
+      font-family: 'Inter', sans-serif;
     }
 
     .product.sold .product-img {
@@ -620,7 +727,7 @@
     }
 
     .product.sold .order-btn {
-      background: #777;
+      background: #999;
       cursor: not-allowed;
       pointer-events: none;
     }
@@ -646,23 +753,24 @@
       align-items: center;
       justify-content: center;
       font-size: 28px;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       text-decoration: none;
       position: relative;
     }
 
     .contact-btn:hover {
-      transform: scale(1.1);
+      transform: scale(1.1) translateY(-4px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     }
 
     .whatsapp-btn {
-      background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
       color: white;
     }
 
     .email-btn {
-      background: linear-gradient(135deg, #FF6B35 0%, #E55100 100%);
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
       color: white;
     }
 
@@ -675,7 +783,7 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0,0,0,0.95);
+      background-color: rgba(0, 0, 0, 0.95);
       backdrop-filter: blur(8px);
     }
 
@@ -712,8 +820,9 @@
       font-size: 30px;
       border-radius: 8px;
       z-index: 100;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      font-weight: 700;
     }
 
     .modal-nav:hover {
@@ -733,10 +842,15 @@
       position: absolute;
       top: 20px;
       right: 30px;
-      color: var(--primary);
+      color: var(--accent);
       font-size: 40px;
       font-weight: bold;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+      transform: rotate(90deg) scale(1.1);
     }
 
     .modal-counter {
@@ -750,6 +864,7 @@
       border-radius: 20px;
       font-size: 14px;
       font-weight: 600;
+      font-family: 'Inter', sans-serif;
     }
 
     .no-results {
@@ -762,7 +877,7 @@
     }
 
     @media (max-width: 768px) {
-      h2 { font-size: 36px; }
+      h2 { font-size: var(--text-3xl); }
       .product { width: 160px; height: 340px; }
       .image-container { height: 120px; }
       .share-button, .like-button { width: 35px; height: 35px; font-size: 16px; }
@@ -770,6 +885,25 @@
   </style>
 </head>
 <body>
+
+<!-- FLOATING BACKGROUND FIGURES -->
+<div class="floating-figures" aria-hidden="true">
+  <span class="figure" style="left:5%;  font-size:80px; animation-duration:18s; animation-delay:0s;">🚗</span>
+  <span class="figure" style="left:15%; font-size:72px; animation-duration:22s; animation-delay:3s;">🏠</span>
+  <span class="figure" style="left:25%; font-size:88px; animation-duration:16s; animation-delay:6s;">🏨</span>
+  <span class="figure" style="left:35%; font-size:76px; animation-duration:24s; animation-delay:1s;">🚢</span>
+  <span class="figure" style="left:45%; font-size:80px; animation-duration:19s; animation-delay:8s;">🚜</span>
+  <span class="figure" style="left:55%; font-size:72px; animation-duration:21s; animation-delay:4s;">⚡</span>
+  <span class="figure" style="left:65%; font-size:84px; animation-duration:17s; animation-delay:11s;">🏗️</span>
+  <span class="figure" style="left:75%; font-size:76px; animation-duration:23s; animation-delay:2s;">🚗</span>
+  <span class="figure" style="left:85%; font-size:80px; animation-duration:20s; animation-delay:9s;">🏠</span>
+  <span class="figure" style="left:92%; font-size:72px; animation-duration:15s; animation-delay:5s;">🚢</span>
+  <span class="figure" style="left:10%; font-size:68px; animation-duration:26s; animation-delay:13s;">🚜</span>
+  <span class="figure" style="left:30%; font-size:76px; animation-duration:18s; animation-delay:7s;">⚡</span>
+  <span class="figure" style="left:50%; font-size:88px; animation-duration:25s; animation-delay:14s;">🏨</span>
+  <span class="figure" style="left:70%; font-size:72px; animation-duration:20s; animation-delay:10s;">🏗️</span>
+  <span class="figure" style="left:88%; font-size:80px; animation-duration:22s; animation-delay:16s;">🚗</span>
+</div>
 
 <nav>
   <h1 class="nav-title">🛍️ AKEEM STORE</h1>
