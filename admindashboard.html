@@ -839,7 +839,8 @@ button:active{transform:translateY(1px);}
   </div>
 </div>
 <script type="module">
-import { db } from './firebase.js';
+import { auth, db } from './firebase.js';
+import { signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import {
   collection, addDoc, getDocs, getDoc, deleteDoc, doc, updateDoc, setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -1942,8 +1943,12 @@ window.toggleTheme = function(){
   renderCharts();
 };
 
-window.doLogout = function(){
-  toast("No admin login is configured yet — add Firebase Auth to enable real logout.", "info");
+window.doLogout = async function () {
+  try {
+    await signOut(auth);
+  } finally {
+    window.location.replace("index.html");
+  }
 };
 
 function tickClock(){
