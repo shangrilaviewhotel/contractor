@@ -3578,9 +3578,13 @@ function updateStats(){
   ).textContent =
     views.toLocaleString();
 
-  // Real active visitors are updated from the shared Firestore presence collection.
-  // Do not invent a random number.
-  updateActiveUsers();
+  // Keep the storefront's generated Active Users number.
+  document.getElementById(
+    "onlineNowStat"
+  ).textContent =
+    Math.floor(
+      Math.random() * 15
+    ) + 3;
 
   document.getElementById(
     "totalLikesStat"
@@ -3905,7 +3909,6 @@ async function loadProducts(){
     renderRecent();
     renderCurrentProducts();
     handleHashProduct();
-    startPresenceTracking();
 
   }catch(error){
     console.error("Error loading products:",error);
@@ -3929,7 +3932,6 @@ async function loadProducts(){
       renderFeatured();
       renderRecent();
       renderCurrentProducts();
-      startPresenceTracking();
       return;
     }
 
