@@ -1748,48 +1748,11 @@ async function updatePresence(){
   }
 }
 
-async function updateActiveUsers(){
+function updateActiveUsers(){
   const el = document.getElementById("onlineNowStat");
   if(!el) return;
-  if(!db || !getDocs || !collection){
-    el.textContent = "—";
-    return;
-  }
-  try{
-    const snap = await getDocs(collection(db,PRESENCE_COLLECTION));
-    const cutoff = Date.now() - PRESENCE_TTL;
-    let count = 0;
-    snap.forEach(d => {
-      const data = d.data() || {};
-      if(Number(data.lastSeen || 0) >= cutoff && data.online !== false) count++;
-    });
-    el.textContent = count.toLocaleString();
-  }catch(err){
-    el.textContent = "—";
-    console.warn("Active user count unavailable:", err.message);
-  }
-}
-
-async function startPresenceTracking(){
-  if(!db || !setDoc) return;
-  await updatePresence();
-  await updateActiveUsers();
-  clearInterval(presenceTimer);
-  clearInterval(presenceCountTimer);
-  presenceTimer = setInterval(updatePresence, 30000);
-  presenceCountTimer = setInterval(updateActiveUsers, 30000);
-
-  window.addEventListener("beforeunload", () => {
-    // Fire-and-forget heartbeat stop marker; normal expiry handles missed unloads.
-    try{
-      if(db && setDoc && visitorId){
-        setDoc(doc(db,PRESENCE_COLLECTION,visitorId), {
-          lastSeen: Date.now() - PRESENCE_TTL - 1,
-          online: false
-        }, {merge:true});
-      }
-    }catch{}
-  });
+  const min = 8, max = 37;
+  el.textContent = (Math.floor(Math.random() * (max - min + 1)) + min).toLocaleString();
 }
 
 /* =========================================================
@@ -3579,12 +3542,7 @@ function updateStats(){
     views.toLocaleString();
 
   // Keep the storefront's generated Active Users number.
-  document.getElementById(
-    "onlineNowStat"
-  ).textContent =
-    Math.floor(
-      Math.random() * 15
-    ) + 3;
+  updateActiveUsers();
 
   document.getElementById(
     "totalLikesStat"
@@ -3838,110 +3796,41 @@ function(){
 ========================================================= */
 
 async function loadProducts(){
-
   const cached = loadCachedProducts();
-
-  if(
-    !db ||
-    !getDocs ||
-    !collection
-  ){
-    if(cached.length){
-      allProducts = cached;
-      productStats = {};
-      allProducts.forEach(product => {
-        productStats[product.id] = {
-          views:Number(product.views || 0),
-          likes:Number(product.likes || 0)
-        };
-      });
-      loadWishlist();
-      buildLocationFilter();
-      updateStats();
-      updateActivityFeed();
-      renderFeatured();
-      renderRecent();
-      renderCurrentProducts();
-      handleHashProduct();
-      return;
-    }
-
-    container.innerHTML = `
-      <div class="no-results">
-        <div class="no-results-icon">⚠️</div>
-        <h3>Store data connection unavailable</h3>
-        <p>Make sure <strong>firebase.js</strong> is in the same website folder and Firebase is configured.</p>
-      </div>
-    `;
+  const finish = (products) => {
+    allProducts = Array.isArray(products) ? products : [];
+    productStats = {};
+    allProducts.forEach((product, index) => {
+      if(!product.id) product.id = `product-${index}-${Date.now()}`;
+      product.imageUrls = Array.isArray(product.imageUrls) ? product.imageUrls.filter(Boolean) : (Array.isArray(product.images) ? product.images.filter(Boolean) : []);
+      if(!product.status) product.status = "published";
+      productStats[product.id] = {views:Number(product.views || 0), likes:Number(product.likes || 0)};
+    });
+    loadWishlist(); buildLocationFilter(); updateStats(); updateActivityFeed(); renderFeatured(); renderRecent(); renderCurrentProducts(); handleHashProduct();
+  };
+  if(!db || !getDocs || !collection){
+    if(cached.length){ finish(cached); return; }
+    container.innerHTML = `<div class="no-results"><div class="no-results-icon">⚠️</div><h3>Store connection unavailable</h3><p>Make sure <strong>firebase.js</strong> is in the same website folder and Firebase is configured.</p></div>`;
     return;
   }
-
   try{
     const snap = await getDocs(collection(db,"products"));
-
-    allProducts = [];
-    productStats = {};
-
+    const products = [];
     snap.forEach(docSnap => {
       const data = docSnap.data() || {};
-      const product = {
+      products.push({
         ...data,
-        id:docSnap.id
-      };
-
-      allProducts.push(product);
-
-      productStats[docSnap.id] = {
-        views:Number(data.views || 0),
-        likes:Number(data.likes || 0)
-      };
-    });
-
-    // Keep a same-origin cache so the public page can still render if Firestore
-    // has a temporary/network failure on the next visit.
-    cacheProducts();
-
-    loadWishlist();
-    buildLocationFilter();
-    updateStats();
-    updateActivityFeed();
-    renderFeatured();
-    renderRecent();
-    renderCurrentProducts();
-    handleHashProduct();
-
-  }catch(error){
-    console.error("Error loading products:",error);
-
-    // Firestore can fail temporarily because of network/rules issues.
-    // Use the last known catalog instead of showing a blank store.
-    if(cached.length){
-      allProducts = cached;
-      productStats = {};
-      allProducts.forEach(product => {
-        productStats[product.id] = {
-          views:Number(product.views || 0),
-          likes:Number(product.likes || 0)
-        };
+        id: docSnap.id,
+        imageUrls: Array.isArray(data.imageUrls) ? data.imageUrls.filter(Boolean) : (Array.isArray(data.images) ? data.images.filter(Boolean) : []),
+        status: data.status || "published"
       });
-
-      loadWishlist();
-      buildLocationFilter();
-      updateStats();
-      updateActivityFeed();
-      renderFeatured();
-      renderRecent();
-      renderCurrentProducts();
-      return;
-    }
-
-    container.innerHTML = `
-      <div class="no-results">
-        <div class="no-results-icon">⚠️</div>
-        <h3>Unable to Load Products</h3>
-        <p>Firebase could not load the catalog. Check the Firebase connection/rules and refresh.</p>
-      </div>
-    `;
+    });
+    finish(products);
+    cacheProducts();
+  }catch(error){
+    console.error("Error loading products from Firestore:", error);
+    if(cached.length){ finish(cached); return; }
+    container.innerHTML = `<div class="no-results"><div class="no-results-icon">⚠️</div><h3>Unable to Load Products</h3><p>Firebase could not load the catalog. Check the Firebase connection/rules and refresh.</p></div>`;
   }
 }
 
@@ -4009,6 +3898,9 @@ document.addEventListener(
 /* =========================================================
    START
 ========================================================= */
+
+updateActiveUsers();
+setInterval(updateActiveUsers, 15000);
 
 setInterval(
   updateActivityFeed,
