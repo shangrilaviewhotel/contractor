@@ -463,6 +463,9 @@ button:active{transform:translateY(1px);}
   </nav>
   <div class="sidebar-foot">
     <div class="whoami"><span class="dot"></span> Connected · Firestore live</div>
+    <div style="font-size:10px;color:var(--sidebar-text);opacity:.72;margin-top:6px;">
+      Storefront catalog sync: ON
+    </div>
   </div>
 </aside>
 
@@ -1056,6 +1059,15 @@ async function loadProducts(){
   const snap = await getDocs(collection(db,"products"));
   allProducts = [];
   snap.forEach(d=> allProducts.push({ id:d.id, ...d.data() }));
+
+  // Keep the public storefront cache synchronized with the admin catalog.
+  // The index page uses this only as a fallback when Firestore is temporarily unavailable.
+  try{
+    localStorage.setItem("akeemStoreProductsCacheV2", JSON.stringify(allProducts));
+    localStorage.setItem("akeemStoreProductsCacheUpdatedAt", String(Date.now()));
+  }catch(err){
+    console.warn("Storefront cache skipped:", err.message);
+  }
 }
 async function loadCategories(){
   const snap = await getDocs(collection(db,"categories"));
