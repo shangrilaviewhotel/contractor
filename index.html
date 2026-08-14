@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products - Akeem Store</title>
 
+  <title>Akeem Store - Products</title>
+
+  <meta name="description" content="Akeem Store — cars, houses, hotels, scrap ships, tractors, generators, machinery and more.">
   <meta property="og:title" content="Akeem Store">
-  <meta property="og:description" content="Akeem Store — contractor for cars, houses, hotels, scrap ships, tractors, generators and more.">
+  <meta property="og:description" content="Cars, houses, hotels, scrap ships, tractors, generators and more.">
   <meta property="og:image" content="https://tobi1533.github.io/Contractor-/Akeemstore1.jpg">
   <meta property="og:type" content="website">
 
-  <!-- Enhanced Typography from UI UX Pro Max -->
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -21,7 +22,6 @@
     }
 
     :root {
-      /* E-commerce Optimized Color Palette */
       --primary: #059669;
       --primary-light: #10B981;
       --primary-dark: #047857;
@@ -29,6 +29,7 @@
       --accent-light: #F97316;
       --accent-dark: #C2410C;
       --destructive: #DC2626;
+      --warning: #F59E0B;
       --success: #10B981;
       --dark: #1a1a2e;
       --darker: #0f1419;
@@ -37,10 +38,8 @@
       --card-fg: #064E3B;
       --muted-fg: #64748B;
       --border: #A7F3D0;
-      --glass: rgba(255, 255, 255, 0.08);
-      --glass-hover: rgba(255, 255, 255, 0.15);
-      
-      /* Typography Scale */
+      --glass: rgba(255,255,255,.08);
+
       --text-xs: 12px;
       --text-sm: 14px;
       --text-base: 16px;
@@ -49,864 +48,1255 @@
       --text-2xl: 28px;
       --text-3xl: 36px;
       --text-4xl: 48px;
-      
-      /* Spacing */
-      --space-xs: 4px;
-      --space-sm: 8px;
-      --space-md: 16px;
-      --space-lg: 24px;
-      --space-xl: 32px;
-      --space-2xl: 48px;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      font-family: 'Rubik', 'Inter', sans-serif;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      font-family: 'Rubik','Inter',sans-serif;
+      background: linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
       background-attachment: fixed;
       min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
       color: white;
       line-height: 1.6;
-      letter-spacing: -0.3px;
+      letter-spacing: -.3px;
+      overflow-x: hidden;
     }
 
     body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      content:'';
+      position:fixed;
+      inset:0;
       background:
-        radial-gradient(circle at 20% 50%, rgba(5, 150, 105, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(234, 88, 12, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 0;
-      animation: ambientPulse 15s ease-in-out infinite;
+        radial-gradient(circle at 20% 50%,rgba(5,150,105,.12) 0%,transparent 50%),
+        radial-gradient(circle at 80% 80%,rgba(234,88,12,.1) 0%,transparent 50%),
+        radial-gradient(circle at 40% 20%,rgba(16,185,129,.08) 0%,transparent 50%);
+      pointer-events:none;
+      z-index:0;
+      animation:ambientPulse 15s ease-in-out infinite;
     }
 
     @keyframes ambientPulse {
-      0%, 100% { opacity: 0.7; }
-      50% { opacity: 1; }
+      0%,100%{opacity:.7}
+      50%{opacity:1}
     }
 
     body::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      content:'';
+      position:fixed;
+      inset:0;
       background-image:
-        linear-gradient(0deg, transparent 24%, rgba(5, 150, 105, 0.03) 25%, rgba(5, 150, 105, 0.03) 26%, transparent 27%, transparent 74%, rgba(5, 150, 105, 0.03) 75%, rgba(5, 150, 105, 0.03) 76%, transparent 77%, transparent),
-        linear-gradient(90deg, transparent 24%, rgba(5, 150, 105, 0.03) 25%, rgba(5, 150, 105, 0.03) 26%, transparent 27%, transparent 74%, rgba(5, 150, 105, 0.03) 75%, rgba(5, 150, 105, 0.03) 76%, transparent 77%, transparent);
-      background-size: 50px 50px;
-      pointer-events: none;
-      z-index: 0;
+        linear-gradient(0deg,transparent 24%,rgba(5,150,105,.03) 25%,rgba(5,150,105,.03) 26%,transparent 27%,transparent 74%,rgba(5,150,105,.03) 75%,rgba(5,150,105,.03) 76%,transparent 77%,transparent),
+        linear-gradient(90deg,transparent 24%,rgba(5,150,105,.03) 25%,rgba(5,150,105,.03) 26%,transparent 27%,transparent 74%,rgba(5,150,105,.03) 75%,rgba(5,150,105,.03) 76%,transparent 77%,transparent);
+      background-size:50px 50px;
+      pointer-events:none;
+      z-index:0;
     }
 
-    /* FLOATING BACKGROUND FIGURES */
     .floating-figures {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+      overflow:hidden;
     }
 
     .figure {
-      position: absolute;
-      font-size: 64px;
-      opacity: 0.18;
-      filter: none;
-      animation: floatDrift linear infinite;
-      will-change: transform;
-      user-select: none;
+      position:absolute;
+      opacity:.18;
+      animation:floatDrift linear infinite;
+      user-select:none;
     }
 
     @keyframes floatDrift {
-      0%   { transform: translateY(110vh) rotate(0deg) scale(1); opacity: 0; }
-      5%   { opacity: 0.18; }
-      50%  { transform: translateY(50vh) rotate(20deg) scale(1.05); opacity: 0.22; }
-      95%  { opacity: 0.18; }
-      100% { transform: translateY(-10vh) rotate(40deg) scale(1); opacity: 0; }
+      0%{transform:translateY(110vh) rotate(0deg);opacity:0}
+      5%{opacity:.18}
+      50%{transform:translateY(50vh) rotate(20deg) scale(1.05);opacity:.22}
+      95%{opacity:.18}
+      100%{transform:translateY(-10vh) rotate(40deg);opacity:0}
     }
 
     @keyframes floatDriftReverse {
-      0%   { transform: translateY(-10vh) rotate(0deg) scale(1); opacity: 0; }
-      5%   { opacity: 0.18; }
-      50%  { transform: translateY(50vh) rotate(-20deg) scale(1.05); opacity: 0.22; }
-      95%  { opacity: 0.18; }
-      100% { transform: translateY(110vh) rotate(-40deg) scale(1); opacity: 0; }
+      0%{transform:translateY(-10vh) rotate(0deg);opacity:0}
+      5%{opacity:.18}
+      50%{transform:translateY(50vh) rotate(-20deg) scale(1.05);opacity:.22}
+      95%{opacity:.18}
+      100%{transform:translateY(110vh) rotate(-40deg);opacity:0}
     }
 
-    .figure:nth-child(odd)  { animation-name: floatDriftReverse; }
-    .figure:nth-child(even) { animation-name: floatDrift; }
+    .figure:nth-child(odd){animation-name:floatDriftReverse}
+    .figure:nth-child(even){animation-name:floatDrift}
+
+    /* NAVIGATION */
 
     nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 70px;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 2px solid rgba(5, 150, 105, 0.3);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 25px;
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:70px;
+      background:var(--glass);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border-bottom:2px solid rgba(5,150,105,.3);
+      box-shadow:0 10px 40px rgba(0,0,0,.3);
+      z-index:1000;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 25px;
     }
 
     .nav-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      font-family:'Playfair Display',serif;
+      font-size:26px;
+      font-weight:900;
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      letter-spacing:1px;
     }
 
     .hamburger {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      border: none;
-      border-radius: 10px;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 5px 20px rgba(5, 150, 105, 0.3);
-      position: relative;
-      z-index: 1001;
+      width:50px;
+      height:50px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      cursor:pointer;
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      border:none;
+      border-radius:10px;
+      transition:.3s;
+      box-shadow:0 5px 20px rgba(5,150,105,.3);
+      z-index:1001;
     }
 
     .hamburger:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(5, 150, 105, 0.4);
+      transform:translateY(-2px);
     }
 
     .hamburger span {
-      width: 25px;
-      height: 2.5px;
-      background: white;
-      margin: 5px 0;
-      display: block;
-      border-radius: 2px;
-      transition: all 0.3s ease;
+      width:25px;
+      height:2.5px;
+      background:white;
+      margin:5px 0;
+      border-radius:2px;
+      transition:.3s;
     }
 
     .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(12px, 12px);
+      transform:rotate(45deg) translate(12px,12px);
     }
 
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
+    .hamburger.active span:nth-child(2){opacity:0}
 
     .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -7px);
+      transform:rotate(-45deg) translate(7px,-7px);
     }
 
     .mobile-menu {
-      position: fixed;
-      top: 70px;
-      right: -300px;
-      width: 280px;
-      height: calc(100vh - 70px);
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-left: 3px solid var(--primary);
-      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.4);
-      transition: right 0.4s ease;
-      z-index: 2000;
-      padding: 30px 20px;
-      overflow-y: auto;
+      position:fixed;
+      top:70px;
+      right:-300px;
+      width:280px;
+      height:calc(100vh - 70px);
+      background:rgba(15,20,25,.96);
+      backdrop-filter:blur(20px);
+      border-left:3px solid var(--primary);
+      box-shadow:-10px 0 40px rgba(0,0,0,.4);
+      transition:right .4s ease;
+      z-index:2000;
+      padding:30px 20px;
+      overflow-y:auto;
     }
 
-    .mobile-menu.active {
-      right: 0;
-    }
+    .mobile-menu.active{right:0}
 
     .menu-item {
-      display: block;
-      width: 100%;
-      padding: 15px 20px;
-      margin: 10px 0;
-      background: transparent;
-      border: 2px solid rgba(5, 150, 105, 0.3);
-      border-radius: 10px;
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: center;
-      font-size: 14px;
-      letter-spacing: 0.5px;
+      display:block;
+      width:100%;
+      padding:15px 20px;
+      margin:10px 0;
+      border:2px solid rgba(5,150,105,.3);
+      border-radius:10px;
+      color:white;
+      text-decoration:none;
+      font-weight:600;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:.3s;
+      text-align:center;
+      font-size:14px;
     }
 
     .menu-item:hover {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      border-color: var(--primary);
-      transform: translateY(-2px);
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      transform:translateY(-2px);
     }
 
-    h2 {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 100px 20px 40px;
-      font-size: var(--text-4xl);
-      font-weight: 800;
-      letter-spacing: -1px;
-      font-family: 'Playfair Display', serif;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    /* HERO */
+
+    .hero {
+      position:relative;
+      z-index:1;
+      padding:115px 20px 35px;
+      text-align:center;
     }
 
-    /* ACTIVITY FEED */
-    .activity-feed-section {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: -20px auto 50px;
-      padding: 0 20px;
+    .hero h1 {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(34px,7vw,58px);
+      line-height:1.1;
+      background:linear-gradient(135deg,var(--primary-light),var(--accent-light));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
 
-    .activity-feed {
-      background: linear-gradient(135deg, rgba(5, 150, 105, 0.15) 0%, rgba(234, 88, 12, 0.1) 100%);
-      border: 2px solid rgba(5, 150, 105, 0.4);
-      border-radius: 15px;
-      padding: 20px;
-      backdrop-filter: blur(10px);
-      max-height: 300px;
-      overflow-y: auto;
-      box-shadow: 0 8px 32px rgba(5, 150, 105, 0.2);
+    .hero p {
+      max-width:700px;
+      margin:12px auto 0;
+      color:rgba(255,255,255,.75);
+      font-size:15px;
     }
 
-    .activity-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 15px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--primary);
+    .store-status {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:18px;
+      padding:8px 16px;
+      border-radius:30px;
+      background:rgba(5,150,105,.12);
+      border:1px solid rgba(16,185,129,.35);
+      font-size:13px;
+      font-weight:600;
     }
 
-    .live-indicator {
-      width: 10px;
-      height: 10px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-      box-shadow: 0 0 10px rgba(234, 88, 12, 0.8);
+    .online-dot {
+      width:9px;
+      height:9px;
+      background:#10B981;
+      border-radius:50%;
+      box-shadow:0 0 12px #10B981;
+      animation:pulseDot 2s infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(234, 88, 12, 0.8); }
-      50% { opacity: 0.5; box-shadow: 0 0 20px rgba(234, 88, 12, 0.4); }
+    @keyframes pulseDot {
+      50%{opacity:.45}
     }
 
-    .activity-item {
-      padding: 12px;
-      margin: 8px 0;
-      background: rgba(255, 255, 255, 0.05);
-      border-left: 3px solid var(--accent);
-      border-radius: 8px;
-      font-size: var(--text-sm);
-      line-height: 1.5;
-      animation: slideIn 0.5s ease;
-    }
-
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-20px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    /* STATS BAR */
-    .stats-bar {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto 40px;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 15px;
-    }
-
-    .stat-card {
-      background: linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%);
-      border: 2px solid rgba(5, 150, 105, 0.3);
-      border-radius: 12px;
-      padding: 15px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-      border-color: var(--primary);
-      background: linear-gradient(135deg, rgba(5, 150, 105, 0.15) 0%, rgba(234, 88, 12, 0.08) 100%);
-      transform: translateY(-4px);
-    }
-
-    .stat-value {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 5px;
-      font-family: 'Inter', sans-serif;
-      letter-spacing: -0.5px;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: rgba(255, 255, 255, 0.7);
-      font-weight: 600;
-    }
+    /* SEARCH */
 
     .search-container {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      margin: 0 auto 50px;
-      padding: 0 20px;
+      position:relative;
+      z-index:5;
+      max-width:900px;
+      margin:0 auto 20px;
+      padding:0 20px;
+    }
+
+    .search-wrap {
+      position:relative;
     }
 
     .search-box {
-      width: 100%;
-      padding: 14px 20px;
-      font-size: 16px;
-      border: 2px solid rgba(5, 150, 105, 0.5);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.95);
-      color: #1a1a2e;
-      transition: all 0.3s ease;
-      font-family: 'Rubik', sans-serif;
-      font-weight: 500;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width:100%;
+      padding:16px 55px 16px 20px;
+      font-size:16px;
+      border:2px solid rgba(5,150,105,.5);
+      border-radius:14px;
+      background:rgba(255,255,255,.96);
+      color:#1a1a2e;
+      transition:.3s;
+      font-family:'Rubik',sans-serif;
     }
 
     .search-box:focus {
-      outline: none;
-      border-color: var(--primary);
-      background: white;
-      box-shadow: 0 6px 25px rgba(5, 150, 105, 0.3);
-      transform: translateY(-2px);
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 6px 25px rgba(5,150,105,.3);
+    }
+
+    .search-icon {
+      position:absolute;
+      right:18px;
+      top:50%;
+      transform:translateY(-50%);
+      font-size:22px;
+      pointer-events:none;
+    }
+
+    /* CATEGORIES */
+
+    .category-section {
+      position:relative;
+      z-index:2;
+      max-width:1200px;
+      margin:0 auto 25px;
+      padding:0 20px;
+    }
+
+    .section-label {
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:1.5px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.65);
+      margin-bottom:10px;
+    }
+
+    .categories {
+      display:flex;
+      gap:9px;
+      overflow-x:auto;
+      padding:5px 2px 12px;
+      scrollbar-width:thin;
+    }
+
+    .categories::-webkit-scrollbar{height:5px}
+
+    .category-btn {
+      flex:0 0 auto;
+      border:1px solid rgba(5,150,105,.4);
+      background:rgba(255,255,255,.06);
+      color:white;
+      padding:10px 15px;
+      border-radius:30px;
+      cursor:pointer;
+      font-family:'Rubik';
+      font-weight:600;
+      font-size:13px;
+      transition:.25s;
+      white-space:nowrap;
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      border-color:transparent;
+      transform:translateY(-2px);
+    }
+
+    /* FILTERS */
+
+    .filters {
+      position:relative;
+      z-index:3;
+      max-width:1200px;
+      margin:0 auto 30px;
+      padding:0 20px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .filter-select {
+      min-width:170px;
+      padding:11px 14px;
+      border:1px solid rgba(5,150,105,.35);
+      border-radius:10px;
+      background:rgba(15,20,25,.85);
+      color:white;
+      font-family:'Rubik';
+      cursor:pointer;
+      outline:none;
+    }
+
+    .filter-select:focus {
+      border-color:var(--primary);
+    }
+
+    .clear-filters {
+      padding:11px 15px;
+      border:none;
+      border-radius:10px;
+      background:rgba(220,38,38,.15);
+      color:#fecaca;
+      border:1px solid rgba(220,38,38,.3);
+      cursor:pointer;
+      font-weight:700;
+    }
+
+    /* FEATURED */
+
+    .featured-section,
+    .recent-section,
+    .catalog-section {
+      position:relative;
+      z-index:1;
+      max-width:1250px;
+      margin:0 auto 40px;
+      padding:0 20px;
+    }
+
+    .section-heading {
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:15px;
+      margin-bottom:16px;
+    }
+
+    .section-heading h2 {
+      padding:0;
+      text-align:left;
+      font-size:27px;
+      font-family:'Playfair Display';
+      background:linear-gradient(135deg,var(--primary-light),var(--accent-light));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .section-heading span {
+      color:rgba(255,255,255,.55);
+      font-size:12px;
+    }
+
+    .horizontal-products {
+      display:flex;
+      gap:18px;
+      overflow-x:auto;
+      padding:5px 3px 15px;
+    }
+
+    .horizontal-products .product {
+      flex:0 0 230px;
+    }
+
+    /* ACTIVITY */
+
+    .activity-feed-section {
+      position:relative;
+      z-index:1;
+      max-width:1200px;
+      margin:0 auto 35px;
+      padding:0 20px;
+    }
+
+    .activity-feed {
+      background:linear-gradient(135deg,rgba(5,150,105,.15),rgba(234,88,12,.1));
+      border:2px solid rgba(5,150,105,.4);
+      border-radius:15px;
+      padding:20px;
+      backdrop-filter:blur(10px);
+      max-height:220px;
+      overflow-y:auto;
+    }
+
+    .activity-header {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:12px;
+      font-size:12px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:1.5px;
+      color:var(--primary-light);
+    }
+
+    .live-indicator {
+      width:10px;
+      height:10px;
+      background:var(--accent);
+      border-radius:50%;
+      animation:pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      50%{opacity:.5}
+    }
+
+    .activity-item {
+      padding:10px 12px;
+      margin:7px 0;
+      background:rgba(255,255,255,.05);
+      border-left:3px solid var(--accent);
+      border-radius:8px;
+      font-size:13px;
+    }
+
+    /* STATS */
+
+    .stats-bar {
+      position:relative;
+      z-index:1;
+      max-width:1200px;
+      margin:0 auto 35px;
+      padding:0 20px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+
+    .stat-card {
+      background:linear-gradient(135deg,rgba(5,150,105,.1),rgba(234,88,12,.05));
+      border:2px solid rgba(5,150,105,.3);
+      border-radius:12px;
+      padding:15px;
+      text-align:center;
+      backdrop-filter:blur(10px);
+      transition:.3s;
+    }
+
+    .stat-card:hover {
+      border-color:var(--primary);
+      transform:translateY(-3px);
+    }
+
+    .stat-value {
+      font-size:27px;
+      font-weight:800;
+      color:var(--primary-light);
+    }
+
+    .stat-label {
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
+      color:rgba(255,255,255,.65);
+      font-weight:600;
+    }
+
+    /* CATALOG */
+
+    .catalog-toolbar {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      margin-bottom:15px;
+      flex-wrap:wrap;
+    }
+
+    .result-count {
+      font-size:14px;
+      color:rgba(255,255,255,.7);
+    }
+
+    .result-count strong {
+      color:var(--primary-light);
     }
 
     #products {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 40px 20px 80px;
-      gap: 30px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:25px;
     }
 
+    /* PRODUCT */
+
     .product {
-      width: 220px;
-      height: 420px;
-      border: 2px solid rgba(5, 150, 105, 0.2);
-      display: flex;
-      flex-direction: column;
-      border-radius: 15px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 253, 244, 0.95) 100%);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      position: relative;
-      overflow: hidden;
+      width:100%;
+      min-height:420px;
+      border:2px solid rgba(5,150,105,.2);
+      display:flex;
+      flex-direction:column;
+      border-radius:15px;
+      background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(240,253,244,.95));
+      box-shadow:0 8px 24px rgba(0,0,0,.15);
+      transition:.4s cubic-bezier(.34,1.56,.64,1);
+      position:relative;
+      overflow:hidden;
+      color:#1a1a2e;
     }
 
     .product:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 16px 40px rgba(5, 150, 105, 0.2);
-      border-color: var(--primary);
+      transform:translateY(-7px);
+      box-shadow:0 16px 40px rgba(5,150,105,.2);
+      border-color:var(--primary);
     }
 
     .image-container {
-      position: relative;
-      width: 100%;
-      height: 160px;
-      overflow: hidden;
-      cursor: pointer;
-      background: #f0f0f0;
+      position:relative;
+      width:100%;
+      height:170px;
+      overflow:hidden;
+      cursor:pointer;
+      background:#eee;
     }
 
     .product-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: 0.4s ease;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:.4s;
     }
 
     .product:hover .product-img {
-      transform: scale(1.05);
+      transform:scale(1.05);
     }
 
     .product-stats {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      gap: 8px;
-      z-index: 20;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      position:absolute;
+      top:10px;
+      right:10px;
+      display:flex;
+      gap:6px;
+      z-index:20;
     }
 
     .stat-badge {
-      background: rgba(0, 0, 0, 0.75);
-      color: white;
-      padding: 4px 10px;
-      border-radius: 15px;
-      font-size: 11px;
-      font-weight: 600;
-      backdrop-filter: blur(10px);
-      font-family: 'Inter', sans-serif;
+      background:rgba(0,0,0,.75);
+      color:white;
+      padding:4px 9px;
+      border-radius:15px;
+      font-size:10px;
+      font-weight:600;
     }
 
     .image-counter {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      z-index: 10;
-      font-family: 'Inter', sans-serif;
+      position:absolute;
+      bottom:10px;
+      right:10px;
+      background:rgba(0,0,0,.7);
+      color:white;
+      padding:5px 10px;
+      border-radius:20px;
+      font-size:11px;
+      z-index:10;
     }
 
-    /* SHARE BUTTON */
-    .share-button {
-      position: absolute;
-      bottom: 100px;
-      left: 10px;
-      width: 40px;
-      height: 40px;
-      border: none;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      z-index: 25;
+    .category-badge {
+      position:absolute;
+      bottom:10px;
+      left:10px;
+      background:rgba(5,150,105,.9);
+      color:white;
+      padding:5px 9px;
+      border-radius:15px;
+      font-size:10px;
+      font-weight:700;
+      z-index:20;
+      text-transform:uppercase;
     }
 
-    .share-button:hover {
-      transform: scale(1.15) translateY(-4px);
-      background: white;
-      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
+    .condition-badge {
+      position:absolute;
+      top:10px;
+      left:10px;
+      background:rgba(0,0,0,.75);
+      color:white;
+      padding:5px 9px;
+      border-radius:15px;
+      font-size:10px;
+      z-index:20;
     }
 
-    /* SHARE MENU */
-    .share-menu {
-      position: absolute;
-      bottom: 95px;
-      left: 0;
-      display: none;
-      flex-direction: column;
-      gap: 8px;
-      background: rgba(0, 0, 0, 0.9);
-      border-radius: 12px;
-      padding: 10px;
-      z-index: 26;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    .featured-badge {
+      position:absolute;
+      top:10px;
+      left:10px;
+      background:linear-gradient(135deg,#F59E0B,#EA580C);
+      color:white;
+      padding:6px 10px;
+      border-radius:15px;
+      font-size:10px;
+      font-weight:800;
+      z-index:30;
     }
 
-    .share-menu.active {
-      display: flex;
-    }
-
-    .share-option {
-      width: 40px;
-      height: 40px;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .share-option:hover {
-      transform: scale(1.15) translateY(-2px);
-    }
-
-    .share-option.whatsapp {
-      background: #25D366;
-    }
-
-    .share-option.facebook {
-      background: #1877F2;
-    }
-
-    .share-option.instagram {
-      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    }
-
-    .share-option.copy {
-      background: var(--accent);
-    }
-
-    /* LIKE BUTTON */
-    .like-button {
-      position: absolute;
-      bottom: 100px;
-      right: 10px;
-      width: 40px;
-      height: 40px;
-      border: none;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      z-index: 25;
-    }
-
-    .like-button:hover {
-      transform: scale(1.15) translateY(-4px);
-      background: white;
-      box-shadow: 0 6px 20px rgba(5, 150, 105, 0.4);
-    }
-
-    .like-button.liked {
-      animation: likeAnim 0.6s ease;
-    }
-
-    @keyframes likeAnim {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.3); }
-      100% { transform: scale(1); }
-    }
-
-    .like-count {
-      position: absolute;
-      bottom: 58px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.75);
-      color: white;
-      padding: 4px 10px;
-      border-radius: 15px;
-      font-size: 11px;
-      font-weight: 600;
-      backdrop-filter: blur(10px);
-      font-family: 'Inter', sans-serif;
-    }
-
-    .product-info {
-      padding: 12px 10px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--card-fg);
-      line-height: 1.3;
-      letter-spacing: -0.3px;
-      font-family: 'Rubik', sans-serif;
-    }
-
-    .price {
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 16px;
-      margin: 4px 0;
-      font-family: 'Inter', sans-serif;
-      letter-spacing: -0.5px;
-    }
-
-    .desc {
-      font-size: 11px;
-      color: var(--muted-fg);
-      line-height: 1.4;
-      margin-bottom: 8px;
-      flex-grow: 1;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      letter-spacing: -0.2px;
-    }
-
-    .order-btn {
-      width: 100%;
-      padding: 10px 10px;
-      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      font-family: 'Rubik', sans-serif;
-    }
-
-    .order-btn:hover {
-      transform: translateY(-2px);
-      color: white;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    .new-badge {
+      position:absolute;
+      top:45px;
+      left:10px;
+      background:#2563EB;
+      color:white;
+      padding:5px 9px;
+      border-radius:15px;
+      font-size:10px;
+      font-weight:700;
+      z-index:30;
     }
 
     .sold-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: var(--destructive);
-      color: white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      z-index: 30;
-      text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
-      letter-spacing: 0.5px;
-      font-family: 'Inter', sans-serif;
+      position:absolute;
+      top:12px;
+      right:12px;
+      background:var(--destructive);
+      color:white;
+      padding:6px 12px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:700;
+      z-index:30;
     }
 
-    .product.sold .product-img {
-      filter: grayscale(100%) brightness(0.7);
+    .reserved-badge {
+      position:absolute;
+      top:12px;
+      right:12px;
+      background:var(--warning);
+      color:white;
+      padding:6px 12px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:700;
+      z-index:30;
     }
 
-    .product.sold .order-btn {
-      background: #999;
-      cursor: not-allowed;
-      pointer-events: none;
+    .share-button,
+    .like-button {
+      position:absolute;
+      bottom:102px;
+      width:39px;
+      height:39px;
+      border:none;
+      border-radius:50%;
+      background:rgba(255,255,255,.96);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      transition:.3s;
+      box-shadow:0 4px 12px rgba(0,0,0,.2);
+      z-index:25;
     }
 
-    /* Contact Popup */
+    .share-button {
+      left:10px;
+    }
+
+    .like-button {
+      right:10px;
+    }
+
+    .share-button:hover,
+    .like-button:hover {
+      transform:scale(1.12) translateY(-3px);
+    }
+
+    .share-menu {
+      position:absolute;
+      bottom:96px;
+      left:0;
+      display:none;
+      flex-direction:column;
+      gap:7px;
+      background:rgba(0,0,0,.92);
+      border-radius:12px;
+      padding:9px;
+      z-index:50;
+    }
+
+    .share-menu.active {
+      display:flex;
+    }
+
+    .share-option {
+      width:38px;
+      height:38px;
+      border:none;
+      border-radius:50%;
+      cursor:pointer;
+      color:white;
+      font-size:16px;
+    }
+
+    .share-option.whatsapp{background:#25D366}
+    .share-option.facebook{background:#1877F2}
+    .share-option.instagram{background:linear-gradient(45deg,#f09433,#bc1888)}
+    .share-option.copy{background:var(--accent)}
+
+    .like-count {
+      position:absolute;
+      bottom:61px;
+      right:10px;
+      background:rgba(0,0,0,.75);
+      color:white;
+      padding:3px 9px;
+      border-radius:15px;
+      font-size:10px;
+      z-index:20;
+    }
+
+    .product-info {
+      padding:12px 11px;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .title {
+      font-size:15px;
+      font-weight:700;
+      color:var(--card-fg);
+      line-height:1.3;
+    }
+
+    .price {
+      color:var(--primary);
+      font-weight:800;
+      font-size:16px;
+      margin:4px 0;
+    }
+
+    .desc {
+      font-size:11px;
+      color:var(--muted-fg);
+      line-height:1.4;
+      margin-bottom:5px;
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+
+    .product-meta {
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin:4px 0 8px;
+    }
+
+    .meta-item {
+      font-size:9px;
+      color:#64748B;
+      background:#ECFDF5;
+      padding:3px 6px;
+      border-radius:5px;
+    }
+
+    .order-btn {
+      width:100%;
+      padding:10px;
+      background:linear-gradient(135deg,var(--success),#059669);
+      color:white;
+      border:none;
+      border-radius:8px;
+      font-weight:700;
+      font-size:11px;
+      cursor:pointer;
+      text-transform:uppercase;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:5px;
+      transition:.3s;
+    }
+
+    .order-btn:hover {
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(16,185,129,.3);
+    }
+
+    .order-btn.reserved {
+      background:#F59E0B;
+    }
+
+    .order-btn.sold {
+      background:#999;
+      pointer-events:none;
+    }
+
+    .wishlist-active {
+      color:#DC2626 !important;
+    }
+
+    /* LOAD MORE */
+
+    .load-more-wrap {
+      text-align:center;
+      padding:30px 0 60px;
+    }
+
+    .load-more {
+      border:none;
+      padding:13px 28px;
+      border-radius:30px;
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      color:white;
+      font-weight:800;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    .load-more:hover {
+      transform:translateY(-3px);
+      box-shadow:0 8px 25px rgba(5,150,105,.3);
+    }
+
+    /* CONTACT */
+
     .contact-popup {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      z-index: 900;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+      position:fixed;
+      bottom:25px;
+      right:25px;
+      z-index:900;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
     }
 
     .contact-btn {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      text-decoration: none;
-      position: relative;
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      border:none;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:27px;
+      transition:.3s;
+      box-shadow:0 4px 15px rgba(0,0,0,.3);
+      text-decoration:none;
     }
 
     .contact-btn:hover {
-      transform: scale(1.1) translateY(-4px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      transform:scale(1.1) translateY(-4px);
     }
 
     .whatsapp-btn {
-      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
-      color: white;
+      background:linear-gradient(135deg,var(--success),#059669);
     }
 
     .email-btn {
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
-      color: white;
+      background:linear-gradient(135deg,var(--accent),var(--accent-dark));
     }
 
-    /* Modal */
+    /* MODAL */
+
     .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(8px);
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:3000;
+      background:rgba(0,0,0,.95);
+      backdrop-filter:blur(8px);
+      overflow:auto;
     }
 
     .modal-content {
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      position: relative;
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      padding:60px 20px;
     }
 
     .modal-image {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-      border-radius: 10px;
-      transition: opacity 0.4s ease-in-out;
-    }
-    
-    .modal-image.loading {
-      opacity: 0.4 !important;
+      max-width:min(90vw,900px);
+      max-height:78vh;
+      object-fit:contain;
+      border-radius:10px;
     }
 
     .modal-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 20px 25px;
-      cursor: pointer;
-      font-size: 30px;
-      border-radius: 8px;
-      z-index: 100;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      font-weight: 700;
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      background:var(--primary);
+      color:white;
+      border:none;
+      padding:18px 23px;
+      cursor:pointer;
+      font-size:28px;
+      border-radius:8px;
+      z-index:100;
     }
 
-    .modal-nav:hover {
-      background: var(--primary-dark);
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
-    }
-
-    .modal-nav:active {
-      transform: translateY(-50%) scale(0.95);
-    }
-
-    .modal-prev { left: 20px; }
-    .modal-next { right: 20px; }
+    .modal-prev{left:20px}
+    .modal-next{right:20px}
 
     .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      color: var(--accent);
-      font-size: 40px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .modal-close:hover {
-      transform: rotate(90deg) scale(1.1);
+      position:absolute;
+      top:15px;
+      right:28px;
+      color:var(--accent);
+      font-size:42px;
+      cursor:pointer;
+      z-index:200;
     }
 
     .modal-counter {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 600;
-      font-family: 'Inter', sans-serif;
+      position:absolute;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      background:rgba(0,0,0,.7);
+      padding:8px 16px;
+      border-radius:20px;
     }
+
+    /* PRODUCT QUICK VIEW */
+
+    .quick-modal {
+      display:none;
+      position:fixed;
+      inset:0;
+      z-index:4000;
+      background:rgba(0,0,0,.85);
+      backdrop-filter:blur(8px);
+      padding:25px;
+      overflow-y:auto;
+    }
+
+    .quick-card {
+      max-width:950px;
+      margin:60px auto;
+      background:white;
+      color:#1a1a2e;
+      border-radius:20px;
+      overflow:hidden;
+      position:relative;
+      box-shadow:0 20px 70px rgba(0,0,0,.5);
+      display:grid;
+      grid-template-columns:1fr 1fr;
+    }
+
+    .quick-gallery {
+      min-height:450px;
+      background:#111;
+      position:relative;
+    }
+
+    .quick-gallery img {
+      width:100%;
+      height:100%;
+      min-height:450px;
+      object-fit:contain;
+    }
+
+    .quick-details {
+      padding:35px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .quick-category {
+      display:inline-block;
+      width:max-content;
+      background:#ECFDF5;
+      color:#047857;
+      padding:6px 10px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:800;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+
+    .quick-details h2 {
+      padding:0;
+      text-align:left;
+      color:#064E3B;
+      font-size:32px;
+      font-family:'Playfair Display';
+      background:none;
+      -webkit-text-fill-color:initial;
+    }
+
+    .quick-price {
+      font-size:27px;
+      font-weight:900;
+      color:#059669;
+      margin:8px 0 15px;
+    }
+
+    .quick-description {
+      color:#64748B;
+      line-height:1.7;
+      margin-bottom:18px;
+    }
+
+    .quick-info-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:8px;
+      margin-bottom:20px;
+    }
+
+    .quick-info {
+      padding:9px;
+      background:#F8FAFC;
+      border-radius:8px;
+      font-size:12px;
+    }
+
+    .quick-info strong {
+      display:block;
+      color:#334155;
+    }
+
+    .quick-close {
+      position:absolute;
+      top:12px;
+      right:15px;
+      width:40px;
+      height:40px;
+      border:none;
+      border-radius:50%;
+      background:rgba(0,0,0,.65);
+      color:white;
+      font-size:24px;
+      cursor:pointer;
+      z-index:10;
+    }
+
+    /* EMPTY */
 
     .no-results {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 60px 20px;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 18px;
+      grid-column:1/-1;
+      text-align:center;
+      padding:70px 20px;
+      color:rgba(255,255,255,.7);
     }
 
-    @media (max-width: 768px) {
-      h2 { font-size: var(--text-3xl); }
-      .product { width: 160px; height: 340px; }
-      .image-container { height: 120px; }
-      .share-button, .like-button { width: 35px; height: 35px; font-size: 16px; }
+    .no-results-icon {
+      font-size:55px;
+      margin-bottom:10px;
+    }
+
+    .no-results h3 {
+      font-size:22px;
+      margin-bottom:5px;
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:850px) {
+      .quick-card {
+        grid-template-columns:1fr;
+        margin:30px auto;
+      }
+
+      .quick-gallery,
+      .quick-gallery img {
+        min-height:320px;
+      }
+    }
+
+    @media(max-width:700px) {
+      .stats-bar {
+        grid-template-columns:repeat(2,1fr);
+      }
+
+      #products {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:12px;
+      }
+
+      .product {
+        min-height:350px;
+      }
+
+      .image-container {
+        height:125px;
+      }
+
+      .share-button,
+      .like-button {
+        width:34px;
+        height:34px;
+        font-size:15px;
+        bottom:94px;
+      }
+
+      .like-count {
+        bottom:55px;
+      }
+
+      .product-info {
+        padding:9px;
+      }
+
+      .title {
+        font-size:13px;
+      }
+
+      .price {
+        font-size:14px;
+      }
+
+      .desc {
+        font-size:10px;
+      }
+
+      .filter-select {
+        flex:1;
+        min-width:140px;
+      }
+
+      .hero {
+        padding-top:105px;
+      }
+    }
+
+    @media(max-width:450px) {
+      nav {
+        padding:0 15px;
+      }
+
+      .nav-title {
+        font-size:21px;
+      }
+
+      #products {
+        gap:10px;
+      }
+
+      .product {
+        min-height:345px;
+      }
+
+      .contact-popup {
+        right:15px;
+        bottom:15px;
+      }
+
+      .contact-btn {
+        width:52px;
+        height:52px;
+        font-size:23px;
+      }
+
+      .quick-details {
+        padding:22px;
+      }
+
+      .quick-details h2 {
+        font-size:25px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- FLOATING BACKGROUND FIGURES -->
+<!-- FLOATING BACKGROUND -->
 <div class="floating-figures" aria-hidden="true">
-  <span class="figure" style="left:5%;  font-size:80px; animation-duration:18s; animation-delay:0s;">🚗</span>
-  <span class="figure" style="left:15%; font-size:72px; animation-duration:22s; animation-delay:3s;">🏠</span>
-  <span class="figure" style="left:25%; font-size:88px; animation-duration:16s; animation-delay:6s;">🏨</span>
-  <span class="figure" style="left:35%; font-size:76px; animation-duration:24s; animation-delay:1s;">🚢</span>
-  <span class="figure" style="left:45%; font-size:80px; animation-duration:19s; animation-delay:8s;">🚜</span>
-  <span class="figure" style="left:55%; font-size:72px; animation-duration:21s; animation-delay:4s;">⚡</span>
-  <span class="figure" style="left:65%; font-size:84px; animation-duration:17s; animation-delay:11s;">🏗️</span>
-  <span class="figure" style="left:75%; font-size:76px; animation-duration:23s; animation-delay:2s;">🚗</span>
-  <span class="figure" style="left:85%; font-size:80px; animation-duration:20s; animation-delay:9s;">🏠</span>
-  <span class="figure" style="left:92%; font-size:72px; animation-duration:15s; animation-delay:5s;">🚢</span>
-  <span class="figure" style="left:10%; font-size:68px; animation-duration:26s; animation-delay:13s;">🚜</span>
-  <span class="figure" style="left:30%; font-size:76px; animation-duration:18s; animation-delay:7s;">⚡</span>
-  <span class="figure" style="left:50%; font-size:88px; animation-duration:25s; animation-delay:14s;">🏨</span>
-  <span class="figure" style="left:70%; font-size:72px; animation-duration:20s; animation-delay:10s;">🏗️</span>
-  <span class="figure" style="left:88%; font-size:80px; animation-duration:22s; animation-delay:16s;">🚗</span>
+  <span class="figure" style="left:5%;font-size:80px;animation-duration:18s;">🚗</span>
+  <span class="figure" style="left:15%;font-size:72px;animation-duration:22s;animation-delay:3s;">🏠</span>
+  <span class="figure" style="left:25%;font-size:88px;animation-duration:16s;animation-delay:6s;">🏨</span>
+  <span class="figure" style="left:35%;font-size:76px;animation-duration:24s;animation-delay:1s;">🚢</span>
+  <span class="figure" style="left:45%;font-size:80px;animation-duration:19s;animation-delay:8s;">🚜</span>
+  <span class="figure" style="left:55%;font-size:72px;animation-duration:21s;animation-delay:4s;">⚡</span>
+  <span class="figure" style="left:65%;font-size:84px;animation-duration:17s;animation-delay:11s;">🏗️</span>
+  <span class="figure" style="left:75%;font-size:76px;animation-duration:23s;animation-delay:2s;">🚗</span>
+  <span class="figure" style="left:85%;font-size:80px;animation-duration:20s;animation-delay:9s;">🏠</span>
+  <span class="figure" style="left:92%;font-size:72px;animation-duration:15s;animation-delay:5s;">🚢</span>
+  <span class="figure" style="left:10%;font-size:68px;animation-duration:26s;animation-delay:13s;">🚜</span>
+  <span class="figure" style="left:30%;font-size:76px;animation-duration:18s;animation-delay:7s;">⚡</span>
+  <span class="figure" style="left:50%;font-size:88px;animation-duration:25s;animation-delay:14s;">🏨</span>
+  <span class="figure" style="left:70%;font-size:72px;animation-duration:20s;animation-delay:10s;">🏗️</span>
+  <span class="figure" style="left:88%;font-size:80px;animation-duration:22s;animation-delay:16s;">🚗</span>
 </div>
 
+<!-- NAV -->
 <nav>
   <h1 class="nav-title">🛍️ AKEEM STORE</h1>
+
   <button class="hamburger" id="hamburger" title="Menu">
     <span></span>
     <span></span>
@@ -915,78 +1305,339 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <div class="menu-item" onclick="location.href='index.html'">Home</div>
-  <a href="login.html" class="menu-item admin-login-btn" style="background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%); border-color: #E74C3C; margin-top: 20px;">🔐 Admin Login</a>
+  <div class="menu-item" onclick="location.href='index.html'">🏠 Home</div>
+  <div class="menu-item" onclick="scrollToSection('categories')">📂 Categories</div>
+  <div class="menu-item" onclick="scrollToSection('catalog')">🛍️ All Products</div>
+  <div class="menu-item" onclick="showWishlist()">❤️ My Wishlist</div>
+  <div class="menu-item" onclick="showRecentlyViewed()">🕘 Recently Viewed</div>
+
+  <a href="login.html"
+     class="menu-item"
+     style="background:linear-gradient(135deg,#E74C3C,#C0392B);border-color:#E74C3C;margin-top:20px;">
+    🔐 Admin Login
+  </a>
 </div>
 
-<!-- Contact Popup -->
+<!-- CONTACT -->
 <div class="contact-popup">
-  <a href="https://wa.me/2347034447700" target="_blank" rel="noopener noreferrer" class="contact-btn whatsapp-btn" title="Chat on WhatsApp">💬</a>
-  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=akeemfatai@gmail.com" target="_blank" class="contact-btn email-btn" title="Send Email">✉️</a>
+  <a href="https://wa.me/2347034447700"
+     target="_blank"
+     rel="noopener noreferrer"
+     class="contact-btn whatsapp-btn"
+     title="Chat on WhatsApp">
+    💬
+  </a>
+
+  <a href="https://mail.google.com/mail/?view=cm&fs=1&to=akeemfatai@gmail.com"
+     target="_blank"
+     class="contact-btn email-btn"
+     title="Send Email">
+    ✉️
+  </a>
 </div>
 
-<h2>Products</h2>
+<!-- HERO -->
+<section class="hero">
+  <h1>Products</h1>
 
-<!-- LIVE ACTIVITY FEED -->
-<div class="activity-feed-section">
-  <div class="activity-feed" id="activityFeed">
-    <div class="activity-header">
-      <span class="live-indicator"></span>
-      Live Activity
-    </div>
-    <div id="activityList">
-      <div class="activity-item">
-        <strong>Marketplace initializing...</strong>
-        <span style="color: rgba(255, 255, 255, 0.5); font-size: 11px; margin-top: 4px; display: block;">Just now</span>
-      </div>
-    </div>
+  <p>
+    Discover cars, properties, hotels, machinery, tractors, generators,
+    scrap ships and more from Akeem Store.
+  </p>
+
+  <div class="store-status">
+    <span class="online-dot"></span>
+    <span id="storeStatusText">Marketplace Online</span>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-container">
+  <div class="search-wrap">
+    <input
+      type="text"
+      id="searchBox"
+      class="search-box"
+      placeholder="🔍 Search cars, houses, tractors, generators..."
+      autocomplete="off"
+    >
+    <span class="search-icon">🔎</span>
   </div>
 </div>
 
-<!-- STATS BAR -->
+<!-- CATEGORIES -->
+<section class="category-section" id="categories">
+  <div class="section-label">Browse by Category</div>
+
+  <div class="categories" id="categoryButtons">
+    <button class="category-btn active" data-category="all">
+      🛍️ All
+    </button>
+
+    <button class="category-btn" data-category="cars">
+      🚗 Cars & Vehicles
+    </button>
+
+    <button class="category-btn" data-category="properties">
+      🏠 Houses & Properties
+    </button>
+
+    <button class="category-btn" data-category="hotels">
+      🏨 Hotels
+    </button>
+
+    <button class="category-btn" data-category="ships">
+      🚢 Ships
+    </button>
+
+    <button class="category-btn" data-category="tractors">
+      🚜 Tractors
+    </button>
+
+    <button class="category-btn" data-category="generators">
+      ⚡ Generators
+    </button>
+
+    <button class="category-btn" data-category="machinery">
+      🏗️ Machinery
+    </button>
+
+    <button class="category-btn" data-category="other">
+      📦 Other
+    </button>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters">
+
+  <select id="priceFilter" class="filter-select">
+    <option value="default">💰 Price: Default</option>
+    <option value="low">💰 Price: Low to High</option>
+    <option value="high">💰 Price: High to Low</option>
+  </select>
+
+  <select id="sortFilter" class="filter-select">
+    <option value="newest">🆕 Newest Listings</option>
+    <option value="views">👁 Most Viewed</option>
+    <option value="likes">❤️ Most Liked</option>
+    <option value="name">🔤 Name A-Z</option>
+  </select>
+
+  <select id="availabilityFilter" class="filter-select">
+    <option value="all">📦 All Availability</option>
+    <option value="available">🟢 Available</option>
+    <option value="reserved">🟡 Reserved</option>
+    <option value="sold">🔴 Sold</option>
+  </select>
+
+  <select id="locationFilter" class="filter-select">
+    <option value="all">📍 All Locations</option>
+  </select>
+
+  <button class="clear-filters" id="clearFilters">
+    ✕ Clear Filters
+  </button>
+
+</div>
+
+<!-- ACTIVITY -->
+<div class="activity-feed-section">
+  <div class="activity-feed">
+
+    <div class="activity-header">
+      <span class="live-indicator"></span>
+      Live Marketplace Activity
+    </div>
+
+    <div id="activityList">
+      <div class="activity-item">
+        <strong>Marketplace initializing...</strong>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STATS -->
 <div class="stats-bar">
+
   <div class="stat-card">
     <div class="stat-value" id="totalProductsStat">0</div>
     <div class="stat-label">Active Listings</div>
   </div>
+
   <div class="stat-card">
     <div class="stat-value" id="totalViewsStat">0</div>
     <div class="stat-label">Total Views</div>
   </div>
+
   <div class="stat-card">
     <div class="stat-value" id="onlineNowStat">0</div>
     <div class="stat-label">Browsing Now</div>
   </div>
+
   <div class="stat-card">
     <div class="stat-value" id="totalLikesStat">0</div>
     <div class="stat-label">Total Likes</div>
   </div>
+
 </div>
 
-<!-- Search Section -->
-<div class="search-container">
-  <input 
-    type="text" 
-    id="searchBox" 
-    class="search-box" 
-    placeholder="🔍 Search for products..."
-    autocomplete="off"
-  >
-</div>
+<!-- FEATURED -->
+<section class="featured-section" id="featuredSection">
 
-<div id="products"></div>
-
-<div id="imageModal" class="modal">
-  <div class="modal-content">
-    <img id="modalImage" class="modal-image" src="" alt="Product image" crossorigin="anonymous">
-    <button class="modal-nav modal-prev" id="prevBtn">&#10094;</button>
-    <button class="modal-nav modal-next" id="nextBtn">&#10095;</button>
-    <span class="modal-close" id="closeBtn">&times;</span>
-    <div class="modal-counter" id="imageCounter"></div>
+  <div class="section-heading">
+    <h2>⭐ Featured Products</h2>
+    <span>Premium listings</span>
   </div>
+
+  <div class="horizontal-products" id="featuredProducts"></div>
+
+</section>
+
+<!-- RECENT -->
+<section class="recent-section" id="recentSection">
+
+  <div class="section-heading">
+    <h2>🆕 Recently Added</h2>
+    <span>Latest listings</span>
+  </div>
+
+  <div class="horizontal-products" id="recentProducts"></div>
+
+</section>
+
+<!-- CATALOG -->
+<section class="catalog-section" id="catalog">
+
+  <div class="section-heading">
+    <h2>🛍️ All Products</h2>
+    <span id="catalogSubtitle">Browse our complete marketplace</span>
+  </div>
+
+  <div class="catalog-toolbar">
+
+    <div class="result-count">
+      Showing <strong id="resultCount">0</strong> products
+    </div>
+
+  </div>
+
+  <div id="products"></div>
+
+  <div class="load-more-wrap">
+    <button class="load-more" id="loadMoreBtn" style="display:none;">
+      Load More Products
+    </button>
+  </div>
+
+</section>
+
+<!-- IMAGE MODAL -->
+<div id="imageModal" class="modal">
+
+  <div class="modal-content">
+
+    <img
+      id="modalImage"
+      class="modal-image"
+      src=""
+      alt="Product image"
+    >
+
+    <button class="modal-nav modal-prev" id="prevBtn">
+      &#10094;
+    </button>
+
+    <button class="modal-nav modal-next" id="nextBtn">
+      &#10095;
+    </button>
+
+    <span class="modal-close" id="closeBtn">
+      &times;
+    </span>
+
+    <div class="modal-counter" id="imageCounter"></div>
+
+  </div>
+
+</div>
+
+<!-- QUICK VIEW MODAL -->
+<div id="quickModal" class="quick-modal">
+
+  <div class="quick-card">
+
+    <button class="quick-close" onclick="closeQuickView()">
+      &times;
+    </button>
+
+    <div class="quick-gallery">
+      <img id="quickImage" src="" alt="Product">
+    </div>
+
+    <div class="quick-details">
+
+      <span class="quick-category" id="quickCategory">
+        PRODUCT
+      </span>
+
+      <h2 id="quickName">Product</h2>
+
+      <div class="quick-price" id="quickPrice">
+        ₦0
+      </div>
+
+      <div class="quick-description" id="quickDescription">
+        Product description
+      </div>
+
+      <div class="quick-info-grid">
+
+        <div class="quick-info">
+          <strong>📦 Status</strong>
+          <span id="quickStatus">Available</span>
+        </div>
+
+        <div class="quick-info">
+          <strong>📍 Location</strong>
+          <span id="quickLocation">Nigeria</span>
+        </div>
+
+        <div class="quick-info">
+          <strong>🔧 Condition</strong>
+          <span id="quickCondition">Not specified</span>
+        </div>
+
+        <div class="quick-info">
+          <strong>👁 Views</strong>
+          <span id="quickViews">0</span>
+        </div>
+
+      </div>
+
+      <a
+        id="quickWhatsapp"
+        href="#"
+        target="_blank"
+        class="order-btn"
+      >
+        💬 Enquire on WhatsApp
+      </a>
+
+    </div>
+
+  </div>
+
 </div>
 
 <script type="module">
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
 let db = null;
 let collection = null;
 let getDocs = null;
@@ -995,486 +1646,2275 @@ let doc = null;
 let increment = null;
 
 try {
+
   const firebaseModule = await import('./firebase.js');
+
   db = firebaseModule.db;
-  const firestoreModule = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+  const firestoreModule =
+    await import(
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
+    );
+
   collection = firestoreModule.collection;
   getDocs = firestoreModule.getDocs;
   updateDoc = firestoreModule.updateDoc;
   doc = firestoreModule.doc;
   increment = firestoreModule.increment;
-} catch (error) {
-  console.warn('Firebase not available:', error);
+
+} catch(error) {
+
+  console.warn("Firebase not available:",error);
+
 }
+
+/* =========================================================
+   SETTINGS
+========================================================= */
 
 const OWNER_PHONE = "2347034447700";
 
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  mobileMenu.classList.toggle('active');
-});
-
-document.addEventListener('click', (e) => {
-  if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('active');
-  }
-});
-
-const container = document.getElementById("products");
-const modal = document.getElementById("imageModal");
-const modalImage = document.getElementById("modalImage");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-const closeBtn = document.getElementById("closeBtn");
-const imageCounter = document.getElementById("imageCounter");
-
-let currentProductImages = [];
-let currentImageIndex = 0;
 let allProducts = [];
 let productStats = {};
 let userLikes = {};
+let currentCategory = "all";
+let currentFilteredProducts = [];
+let visibleProducts = 12;
 
-function openImageGallery(images, index = 0) {
-  currentProductImages = images.filter(url => url && url.trim() !== '');
-  if (!currentProductImages.length) {
-    console.warn('No valid images to display');
-    return;
-  }
-
-  currentImageIndex = index;
-  modalImage.src = currentProductImages[currentImageIndex];
-  updateImageCounter();
-  modal.style.display = "block";
-  document.body.style.overflow = "hidden";
-  console.log(`Gallery opened with ${currentProductImages.length} images`);
-}
-
-function closeModal() {
-  modal.style.display = "none";
-  document.body.style.overflow = "auto";
-}
-
-function updateImageCounter() {
-  if (currentProductImages.length > 1) {
-    imageCounter.textContent = `${currentImageIndex + 1} / ${currentProductImages.length}`;
-    imageCounter.style.display = 'block';
-    prevBtn.style.display = 'block';
-    nextBtn.style.display = 'block';
-  } else {
-    imageCounter.style.display = 'none';
-    prevBtn.style.display = 'none';
-    nextBtn.style.display = 'none';
-  }
-}
-
+let currentProductImages = [];
+let currentImageIndex = 0;
 let isLoadingImage = false;
 
-function changeImage(direction) {
-  if (currentProductImages.length <= 1) {
-    console.warn('Only one image available or no images loaded');
-    return;
-  }
-  
-  // Prevent rapid clicking while loading
-  if (isLoadingImage) {
-    console.warn('⏳ Image still loading, please wait...');
-    return;
-  }
-  
-  currentImageIndex += direction;
-  
-  // Loop around
-  if (currentImageIndex >= currentProductImages.length) {
-    currentImageIndex = 0;
-  }
-  if (currentImageIndex < 0) {
-    currentImageIndex = currentProductImages.length - 1;
-  }
-  
-  const nextImageUrl = currentProductImages[currentImageIndex];
-  console.log(`Loading image ${currentImageIndex + 1}/${currentProductImages.length}...`);
-  console.log(`URL: ${nextImageUrl}`);
-  
-  if (nextImageUrl) {
-    isLoadingImage = true;
-    modalImage.style.opacity = '0.4';
-    updateImageCounter(); // Update counter immediately
-    
-    // Create a new image to preload
-    const testImg = new Image();
-    testImg.crossOrigin = 'anonymous';
-    
-    testImg.onload = () => {
-      console.log('✅ Image fully loaded! Displaying now...');
-      modalImage.src = nextImageUrl;
-      modalImage.style.opacity = '1';
-      isLoadingImage = false;
-    };
-    
-    testImg.onerror = () => {
-      console.error('❌ Image failed to load');
-      modalImage.src = nextImageUrl;
-      modalImage.style.opacity = '1';
-      isLoadingImage = false;
-    };
-    
-    testImg.src = nextImageUrl;
-  }
-}
+/* =========================================================
+   DOM
+========================================================= */
 
-prevBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  changeImage(-1);
+const hamburger =
+  document.getElementById("hamburger");
+
+const mobileMenu =
+  document.getElementById("mobileMenu");
+
+const container =
+  document.getElementById("products");
+
+const searchBox =
+  document.getElementById("searchBox");
+
+const priceFilter =
+  document.getElementById("priceFilter");
+
+const sortFilter =
+  document.getElementById("sortFilter");
+
+const availabilityFilter =
+  document.getElementById("availabilityFilter");
+
+const locationFilter =
+  document.getElementById("locationFilter");
+
+const clearFilters =
+  document.getElementById("clearFilters");
+
+const resultCount =
+  document.getElementById("resultCount");
+
+const loadMoreBtn =
+  document.getElementById("loadMoreBtn");
+
+const featuredProducts =
+  document.getElementById("featuredProducts");
+
+const recentProducts =
+  document.getElementById("recentProducts");
+
+const quickModal =
+  document.getElementById("quickModal");
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+hamburger.addEventListener("click",() => {
+
+  hamburger.classList.toggle("active");
+  mobileMenu.classList.toggle("active");
+
 });
 
-nextBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  changeImage(1);
+document.addEventListener("click",(e) => {
+
+  if(
+    !hamburger.contains(e.target) &&
+    !mobileMenu.contains(e.target)
+  ){
+
+    hamburger.classList.remove("active");
+    mobileMenu.classList.remove("active");
+
+  }
+
 });
 
-closeBtn.addEventListener("click", closeModal);
+window.scrollToSection = function(id){
 
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
-});
-
-document.addEventListener("keydown", (e) => {
-  if (modal.style.display === "block") {
-    if (e.key === "ArrowLeft") changeImage(-1);
-    if (e.key === "ArrowRight") changeImage(1);
-    if (e.key === "Escape") closeModal();
-  }
-});
-
-// Convert image URL to Base64
-async function urlToBase64(url) {
-  try {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(blob);
-    });
-  } catch (error) {
-    console.error('Error converting image:', error);
-    return null;
-  }
-}
-
-// Create HTML card with image and details
-function createShareCard(productId) {
-  const product = allProducts.find(p => p.id === productId);
-  if (!product) return;
-
-  const productName = product.name || "Product";
-  const productPrice = product.price || 0;
-  const productDesc = product.description || "";
-  const productImage = Array.isArray(product.imageUrls) && product.imageUrls[0] ? product.imageUrls[0] : '';
-  const baseUrl = window.location.origin + window.location.pathname;
-  const productUrl = baseUrl + '#product-' + productId;
-
-  const fullDetails = `🛍️ PRODUCT DETAILS\n\n📦 NAME: ${productName}\n💰 PRICE: ₦${productPrice.toLocaleString()}\n📝 DESCRIPTION: ${productDesc}\n\n🔗 VIEW PRODUCT: ${productUrl}\n\n✨ Visit Akeem Store`;
-
-  return {
-    name: productName,
-    price: productPrice,
-    desc: productDesc,
-    image: productImage,
-    url: productUrl,
-    text: fullDetails
-  };
-}
-
-window.shareProduct = async function(productId, platform) {
-  const cardData = createShareCard(productId);
-  if (!cardData) return;
-
-  const { name, price, desc, image, url } = cardData;
-
-  if (platform === 'whatsapp') {
-    // WhatsApp: Send formatted message with image URL embedded
-    let whatsappText = `🛍️ *AMAZING PRODUCT!*\n\n`;
-    whatsappText += `📦 *${name}*\n`;
-    whatsappText += `💰 *Price: ₦${price.toLocaleString()}*\n\n`;
-    whatsappText += `📝 *Description:*\n${desc}\n\n`;
-    
-    if (image) {
-      whatsappText += `📸 *See Full Product Image:*\n${image}\n\n`;
-    }
-    
-    whatsappText += `🔗 *View on Store:*\n${url}\n\n`;
-    whatsappText += `✨ *Akeem Store - Quality Products*`;
-    
-    const msg = encodeURIComponent(whatsappText);
-    window.open(`https://wa.me/?text=${msg}`, '_blank');
-  } 
-  else if (platform === 'facebook') {
-    // Facebook: Share with all details
-    let facebookText = `🛍️ Check out this amazing product!\n\n`;
-    facebookText += `📦 ${name}\n`;
-    facebookText += `💰 Price: ₦${price.toLocaleString()}\n\n`;
-    facebookText += `${desc}\n\n`;
-    if (image) {
-      facebookText += `View product image: ${image}\n\n`;
-    }
-    facebookText += `Visit Akeem Store: ${url}`;
-    
-    const msg = encodeURIComponent(facebookText);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${msg}`, '_blank');
-  } 
-  else if (platform === 'instagram') {
-    // Instagram: Copy formatted text with image instructions
-    let instagramText = `🛍️ CHECK THIS OUT! 🛍️\n\n`;
-    instagramText += `📦 ${name}\n`;
-    instagramText += `💰 ₦${price.toLocaleString()}\n\n`;
-    instagramText += `${desc}\n\n`;
-    instagramText += `🔗 Link: ${url}\n\n`;
-    instagramText += `#AkeemStore #Shopping #Deals #BestPrice`;
-    
-    navigator.clipboard.writeText(instagramText).then(() => {
-      alert(`✅ Product details copied!\n\n📸 TO SHARE WITH IMAGE:\n\n1️⃣ Open Instagram\n2️⃣ Click CREATE POST\n3️⃣ SELECT THE PRODUCT IMAGE:\n${image}\n4️⃣ PASTE text in CAPTION\n5️⃣ SHARE\n\n✨ The BIG product image will show first, then all details below it!`);
-    });
-  }
-  else if (platform === 'copy') {
-    // Copy everything formatted
-    let fullText = `🛍️ PRODUCT SHARE\n\n`;
-    fullText += `📦 Name: ${name}\n`;
-    fullText += `💰 Price: ₦${price.toLocaleString()}\n\n`;
-    fullText += `📝 Description:\n${desc}\n\n`;
-    if (image) {
-      fullText += `📸 Product Image: ${image}\n\n`;
-    }
-    fullText += `🔗 View Full Product: ${url}\n\n`;
-    fullText += `✨ From Akeem Store`;
-    
-    navigator.clipboard.writeText(fullText).then(() => {
-      alert(`✅ ALL PRODUCT DETAILS COPIED!\n\nIncludes:\n✓ Product Name\n✓ Price\n✓ Full Description\n✓ Product Image Link\n✓ Direct Store Link\n\nPaste anywhere and share!`);
-    });
-  }
-
-  // Close menu
-  const menu = document.querySelector(`.share-menu[data-product-id="${productId}"]`);
-  if (menu) menu.classList.remove('active');
-};
-
-// TOGGLE SHARE MENU
-window.toggleShareMenu = function(productId, event) {
-  event.stopPropagation();
-  const menu = document.querySelector(`.share-menu[data-product-id="${productId}"]`);
-  document.querySelectorAll('.share-menu.active').forEach(m => {
-    if (m.getAttribute('data-product-id') !== productId) m.classList.remove('active');
+  document.getElementById(id)?.scrollIntoView({
+    behavior:"smooth"
   });
-  menu.classList.toggle('active');
+
+  hamburger.classList.remove("active");
+  mobileMenu.classList.remove("active");
+
 };
 
-// LIKE FUNCTION
-window.handleLike = async function(productId) {
-  try {
-    if (!db || !updateDoc || !doc || !increment) {
-      userLikes[productId] = !userLikes[productId];
-      updateLikeUI(productId);
-      return;
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function normalize(value){
+
+  return String(value || "")
+    .toLowerCase()
+    .trim();
+
+}
+
+function escapeHTML(value){
+
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+function getCategory(product){
+
+  const raw = normalize(
+    product.category ||
+    product.type ||
+    ""
+  );
+
+  if(
+    raw.includes("car") ||
+    raw.includes("vehicle") ||
+    raw.includes("auto")
+  ) return "cars";
+
+  if(
+    raw.includes("house") ||
+    raw.includes("property") ||
+    raw.includes("land") ||
+    raw.includes("real estate")
+  ) return "properties";
+
+  if(
+    raw.includes("hotel") ||
+    raw.includes("hospitality")
+  ) return "hotels";
+
+  if(
+    raw.includes("ship") ||
+    raw.includes("vessel") ||
+    raw.includes("boat")
+  ) return "ships";
+
+  if(
+    raw.includes("tractor")
+  ) return "tractors";
+
+  if(
+    raw.includes("generator") ||
+    raw.includes("power")
+  ) return "generators";
+
+  if(
+    raw.includes("machinery") ||
+    raw.includes("machine") ||
+    raw.includes("equipment") ||
+    raw.includes("construction")
+  ) return "machinery";
+
+  /* Infer from product name if category is missing */
+
+  const text = normalize(
+    `${product.name || ""} ${product.description || ""}`
+  );
+
+  if(/car|toyota|lexus|mercedes|benz|bmw|vehicle|suv/.test(text))
+    return "cars";
+
+  if(/house|home|land|estate|property|building/.test(text))
+    return "properties";
+
+  if(/hotel|resort|lodge/.test(text))
+    return "hotels";
+
+  if(/ship|vessel|boat|scrap/.test(text))
+    return "ships";
+
+  if(/tractor/.test(text))
+    return "tractors";
+
+  if(/generator|genset/.test(text))
+    return "generators";
+
+  if(/machine|machinery|excavator|bulldozer|equipment|crane/.test(text))
+    return "machinery";
+
+  return "other";
+
+}
+
+function categoryName(category){
+
+  const names = {
+
+    cars:"Cars & Vehicles",
+    properties:"Houses & Properties",
+    hotels:"Hotels",
+    ships:"Ships",
+    tractors:"Tractors",
+    generators:"Generators",
+    machinery:"Machinery",
+    other:"Other"
+
+  };
+
+  return names[category] || "Other";
+
+}
+
+function getStatus(product){
+
+  if(product.sold === true)
+    return "sold";
+
+  const status =
+    normalize(product.status);
+
+  if(status === "sold")
+    return "sold";
+
+  if(
+    status === "reserved" ||
+    status === "pending"
+  )
+    return "reserved";
+
+  return "available";
+
+}
+
+function getLocation(product){
+
+  return (
+    product.location ||
+    product.city ||
+    product.state ||
+    "Nigeria"
+  );
+
+}
+
+function getCondition(product){
+
+  return (
+    product.condition ||
+    product.quality ||
+    "Not specified"
+  );
+
+}
+
+function getDate(product){
+
+  if(!product.createdAt)
+    return 0;
+
+  try{
+
+    if(
+      typeof product.createdAt === "object" &&
+      typeof product.createdAt.toMillis === "function"
+    ){
+
+      return product.createdAt.toMillis();
+
     }
 
-    if (userLikes[productId]) {
-      userLikes[productId] = false;
-      await updateDoc(doc(db, "products", productId), {
-        likes: increment(-1)
-      });
-      productStats[productId].likes--;
-    } else {
-      userLikes[productId] = true;
-      await updateDoc(doc(db, "products", productId), {
-        likes: increment(1)
-      });
-      productStats[productId].likes++;
-    }
+    return new Date(product.createdAt).getTime() || 0;
 
-    updateLikeUI(productId);
-    updateStats();
-  } catch (error) {
-    console.error('Error updating like:', error);
+  }catch{
+
+    return 0;
+
   }
+
+}
+
+function isNew(product){
+
+  const date = getDate(product);
+
+  if(!date)
+    return false;
+
+  return (
+    Date.now() - date <
+    7 * 24 * 60 * 60 * 1000
+  );
+
+}
+
+/* =========================================================
+   WISHLIST
+========================================================= */
+
+function loadWishlist(){
+
+  try{
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem("akeemWishlist") || "[]"
+      );
+
+    saved.forEach(id => {
+      userLikes[`wish_${id}`] = true;
+    });
+
+  }catch{}
+
+}
+
+function getWishlist(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem("akeemWishlist") || "[]"
+    );
+
+  }catch{
+
+    return [];
+
+  }
+
+}
+
+function isWishlisted(id){
+
+  return getWishlist().includes(id);
+
+}
+
+function toggleWishlist(id){
+
+  let list = getWishlist();
+
+  if(list.includes(id)){
+
+    list = list.filter(x => x !== id);
+
+  }else{
+
+    list.push(id);
+
+  }
+
+  localStorage.setItem(
+    "akeemWishlist",
+    JSON.stringify(list)
+  );
+
+  renderCurrentProducts();
+
+}
+
+window.toggleWishlist = toggleWishlist;
+
+/* =========================================================
+   RECENTLY VIEWED
+========================================================= */
+
+function saveRecentlyViewed(id){
+
+  let list = [];
+
+  try{
+
+    list =
+      JSON.parse(
+        localStorage.getItem("akeemRecentlyViewed") || "[]"
+      );
+
+  }catch{}
+
+  list =
+    list.filter(x => x !== id);
+
+  list.unshift(id);
+
+  list = list.slice(0,10);
+
+  localStorage.setItem(
+    "akeemRecentlyViewed",
+    JSON.stringify(list)
+  );
+
+}
+
+function getRecentlyViewed(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem("akeemRecentlyViewed") || "[]"
+    );
+
+  }catch{
+
+    return [];
+
+  }
+
+}
+
+window.showRecentlyViewed = function(){
+
+  const ids = getRecentlyViewed();
+
+  const products =
+    ids
+      .map(id => allProducts.find(p => p.id === id))
+      .filter(Boolean);
+
+  if(!products.length){
+
+    alert("You have not viewed any products yet.");
+
+    return;
+
+  }
+
+  renderHorizontal(
+    recentProducts,
+    products,
+    "No recently viewed products"
+  );
+
+  document.getElementById("recentSection")
+    .scrollIntoView({behavior:"smooth"});
+
 };
 
-function updateLikeUI(productId) {
-  const btn = document.querySelector(`.like-button[data-product-id="${productId}"]`);
-  const count = document.querySelector(`.like-count[data-product-id="${productId}"]`);
-  if (btn && count) {
-    btn.textContent = userLikes[productId] ? '❤️' : '🤍';
-    btn.classList.toggle('liked');
-    count.textContent = '❤️ ' + (productStats[productId]?.likes || 0);
+/* =========================================================
+   PRODUCT SHARE
+========================================================= */
+
+function createProductURL(id){
+
+  return (
+    window.location.origin +
+    window.location.pathname +
+    "#product-" +
+    encodeURIComponent(id)
+  );
+
+}
+
+window.shareProduct = async function(
+  productId,
+  platform
+){
+
+  const product =
+    allProducts.find(
+      p => p.id === productId
+    );
+
+  if(!product)
+    return;
+
+  const name =
+    product.name || "Product";
+
+  const price =
+    Number(product.price || 0);
+
+  const desc =
+    product.description || "";
+
+  const image =
+    Array.isArray(product.imageUrls)
+      ? product.imageUrls[0] || ""
+      : "";
+
+  const url =
+    createProductURL(productId);
+
+  const text =
+`🛍️ AKEEM STORE
+
+📦 ${name}
+
+💰 Price: ₦${price.toLocaleString()}
+
+📝 ${desc}
+
+📍 Location: ${getLocation(product)}
+
+🔗 View Product:
+${url}
+
+✨ Akeem Store`;
+
+  if(platform === "whatsapp"){
+
+    window.open(
+      "https://wa.me/?text=" +
+      encodeURIComponent(text),
+      "_blank"
+    );
+
   }
-}
 
-// ACTIVITY FEED
-const messages = ["❤️ liked a product", "👁 viewed a listing", "📤 shared a product", "🎯 interested in"];
-const locations = ["Lagos", "Abuja", "Port Harcourt", "Kano", "Ibadan"];
+  else if(platform === "facebook"){
 
-function updateActivityFeed() {
-  const list = document.getElementById('activityList');
-  list.innerHTML = '';
-  for (let i = 0; i < 5; i++) {
-    const div = document.createElement('div');
-    div.className = 'activity-item';
-    const time = Math.floor(Math.random() * 59) + 1;
-    div.innerHTML = `<strong>${locations[Math.floor(Math.random() * locations.length)]}</strong> ${messages[Math.floor(Math.random() * messages.length)]}<span style="color: rgba(255, 255, 255, 0.5); font-size: 11px; margin-top: 4px; display: block;">${time} min ago</span>`;
-    list.appendChild(div);
+    window.open(
+      "https://www.facebook.com/sharer/sharer.php?u=" +
+      encodeURIComponent(url),
+      "_blank"
+    );
+
   }
-}
 
-function updateStats() {
-  const views = Object.values(productStats).reduce((sum, p) => sum + (p.views || 0), 0);
-  const likes = Object.values(productStats).reduce((sum, p) => sum + (p.likes || 0), 0);
-  document.getElementById('totalProductsStat').textContent = allProducts.length;
-  document.getElementById('totalViewsStat').textContent = views.toLocaleString();
-  document.getElementById('onlineNowStat').textContent = (Math.floor(Math.random() * 20) + 5);
-  document.getElementById('totalLikesStat').textContent = likes;
-}
+  else if(platform === "instagram"){
 
-// TRACK VIEW
-async function trackView(productId) {
-  try {
-    if (!db || !updateDoc || !doc || !increment) return;
-    await updateDoc(doc(db, "products", productId), { views: increment(1) });
-    productStats[productId].views++;
-    updateStats();
-  } catch (error) {
-    console.error('Error tracking view:', error);
+    try{
+
+      await navigator.clipboard.writeText(text);
+
+      alert(
+        "Product details copied.\n\n" +
+        "Open Instagram and paste the caption."
+      );
+
+    }catch{
+
+      alert(text);
+
+    }
+
   }
-}
 
-// RENDER PRODUCTS
-function renderProducts(products) {
-  container.innerHTML = "";
-  products.forEach((product) => {
-    const productId = product.id;
-    const isSold = product.sold === true;
-    const views = productStats[productId]?.views || 0;
-    const likes = productStats[productId]?.likes || 0;
-    const isHot = likes > 5;
+  else if(platform === "copy"){
 
-    const images = Array.isArray(product.imageUrls) ? product.imageUrls.filter(url => url && url.trim() !== '') : [];
-    const firstImage = images[0] || '';
-    
-    // Check if it's a video
-    const isVideo = firstImage && (firstImage.includes('.mp4') || firstImage.includes('.webm') || firstImage.includes('video'));
+    try{
 
-    let imageHTML = '';
-    if (firstImage) {
-      if (isVideo) {
-        imageHTML = `<div class="image-container" style="background: #000;"><video src="${firstImage}" class="product-img" style="width:100%;height:100%;object-fit:cover;" controls></video><div class="product-stats"><span class="stat-badge">👁 ${views}</span></div>${images.length > 1 ? `<div class="image-counter">${images.length} items</div>` : ''}</div>`;
-      } else {
-        imageHTML = `<div class="image-container" onclick="openProductImage('${productId}')"><img src="${firstImage}" class="product-img" alt="${product.name}" onerror="this.src='https://via.placeholder.com/220x160?text=No+Image'"><div class="product-stats"><span class="stat-badge">👁 ${views}</span></div>${images.length > 1 ? `<div class="image-counter">${images.length} items</div>` : ''}</div>`;
+      await navigator.clipboard.writeText(text);
+
+      alert("Product details copied!");
+
+    }catch{
+
+      alert(text);
+
+    }
+
+  }
+
+  document
+    .querySelectorAll(".share-menu.active")
+    .forEach(m =>
+      m.classList.remove("active")
+    );
+
+};
+
+window.toggleShareMenu =
+function(productId,event){
+
+  event.stopPropagation();
+
+  const menu =
+    document.querySelector(
+      `.share-menu[data-product-id="${productId}"]`
+    );
+
+  document
+    .querySelectorAll(".share-menu.active")
+    .forEach(m => {
+
+      if(
+        m !== menu
+      ){
+
+        m.classList.remove("active");
+
       }
-    } else {
-      imageHTML = `<div class="image-container" style="background: #f0f0f0; display: flex; align-items: center; justify-content: center;"><span style="color: #999;">No image</span></div>`;
+
+    });
+
+  menu?.classList.toggle("active");
+
+};
+
+/* =========================================================
+   LIKES
+========================================================= */
+
+window.handleLike =
+async function(productId){
+
+  try{
+
+    if(
+      !db ||
+      !updateDoc ||
+      !doc ||
+      !increment
+    ){
+
+      return;
+
     }
 
-    const price = product.price || 0;
-    const whatsappLink = `https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(`I'm interested in: ${product.name} - ₦${price}`)}`;
+    const currentlyLiked =
+      !!userLikes[productId];
 
-    container.innerHTML += `
-      <div class="product ${isSold ? 'sold' : ''}" data-product-id="${productId}">
-        ${isSold ? '<div class="sold-badge">SOLD</div>' : ''}
-        ${imageHTML}
-        
-        <button class="share-button" onclick="toggleShareMenu('${productId}', event)" title="Share">📤</button>
-        <div class="share-menu" data-product-id="${productId}">
-          <button class="share-option whatsapp" onclick="shareProduct('${productId}', 'whatsapp')" title="WhatsApp">📱</button>
-          <button class="share-option facebook" onclick="shareProduct('${productId}', 'facebook')" title="Facebook">f</button>
-          <button class="share-option instagram" onclick="shareProduct('${productId}', 'instagram')" title="Instagram">📷</button>
-          <button class="share-option copy" onclick="shareProduct('${productId}', 'copy')" title="Copy">🔗</button>
-        </div>
+    userLikes[productId] =
+      !currentlyLiked;
 
-        <button class="like-button ${userLikes[productId] ? 'liked' : ''}" onclick="handleLike('${productId}')" data-product-id="${productId}" title="Like">
-          ${userLikes[productId] ? '❤️' : '🤍'}
-        </button>
-        <div class="like-count" data-product-id="${productId}">❤️ ${likes}</div>
+    await updateDoc(
+      doc(db,"products",productId),
+      {
+        likes:
+          increment(
+            currentlyLiked ? -1 : 1
+          )
+      }
+    );
 
-        <div class="product-info">
-          <div>
-            <div class="title">${product.name}</div>
-            <div class="price">₦${price.toLocaleString()}</div>
+    if(!productStats[productId])
+      productStats[productId] = {
+        likes:0,
+        views:0
+      };
+
+    productStats[productId].likes =
+      Math.max(
+        0,
+        (productStats[productId].likes || 0) +
+        (currentlyLiked ? -1 : 1)
+      );
+
+    updateStats();
+    renderCurrentProducts();
+
+  }catch(error){
+
+    console.error(
+      "Like error:",
+      error
+    );
+
+  }
+
+};
+
+/* =========================================================
+   IMAGE GALLERY
+========================================================= */
+
+function openImageGallery(
+  images,
+  index=0
+){
+
+  currentProductImages =
+    images.filter(
+      url =>
+        url &&
+        String(url).trim() !== ""
+    );
+
+  if(!currentProductImages.length)
+    return;
+
+  currentImageIndex = index;
+
+  modalImage.src =
+    currentProductImages[currentImageIndex];
+
+  updateImageCounter();
+
+  imageModal.style.display = "block";
+
+  document.body.style.overflow = "hidden";
+
+}
+
+function closeModal(){
+
+  imageModal.style.display = "none";
+
+  document.body.style.overflow = "auto";
+
+}
+
+function updateImageCounter(){
+
+  if(currentProductImages.length > 1){
+
+    imageCounter.textContent =
+      `${currentImageIndex + 1} / ${currentProductImages.length}`;
+
+    imageCounter.style.display = "block";
+    prevBtn.style.display = "block";
+    nextBtn.style.display = "block";
+
+  }else{
+
+    imageCounter.style.display = "none";
+    prevBtn.style.display = "none";
+    nextBtn.style.display = "none";
+
+  }
+
+}
+
+function changeImage(direction){
+
+  if(
+    currentProductImages.length <= 1 ||
+    isLoadingImage
+  )
+    return;
+
+  currentImageIndex += direction;
+
+  if(
+    currentImageIndex >=
+    currentProductImages.length
+  )
+    currentImageIndex = 0;
+
+  if(currentImageIndex < 0)
+    currentImageIndex =
+      currentProductImages.length - 1;
+
+  const url =
+    currentProductImages[currentImageIndex];
+
+  isLoadingImage = true;
+
+  modalImage.style.opacity = ".4";
+
+  updateImageCounter();
+
+  const testImg = new Image();
+
+  testImg.onload = () => {
+
+    modalImage.src = url;
+    modalImage.style.opacity = "1";
+    isLoadingImage = false;
+
+  };
+
+  testImg.onerror = () => {
+
+    modalImage.src = url;
+    modalImage.style.opacity = "1";
+    isLoadingImage = false;
+
+  };
+
+  testImg.src = url;
+
+}
+
+const imageModal =
+  document.getElementById("imageModal");
+
+const modalImage =
+  document.getElementById("modalImage");
+
+const prevBtn =
+  document.getElementById("prevBtn");
+
+const nextBtn =
+  document.getElementById("nextBtn");
+
+const closeBtn =
+  document.getElementById("closeBtn");
+
+const imageCounter =
+  document.getElementById("imageCounter");
+
+prevBtn.addEventListener(
+  "click",
+  e => {
+    e.stopPropagation();
+    changeImage(-1);
+  }
+);
+
+nextBtn.addEventListener(
+  "click",
+  e => {
+    e.stopPropagation();
+    changeImage(1);
+  }
+);
+
+closeBtn.addEventListener(
+  "click",
+  closeModal
+);
+
+imageModal.addEventListener(
+  "click",
+  e => {
+    if(e.target === imageModal)
+      closeModal();
+  }
+);
+
+document.addEventListener(
+  "keydown",
+  e => {
+
+    if(
+      imageModal.style.display === "block"
+    ){
+
+      if(e.key === "ArrowLeft")
+        changeImage(-1);
+
+      if(e.key === "ArrowRight")
+        changeImage(1);
+
+      if(e.key === "Escape")
+        closeModal();
+
+    }
+
+  }
+);
+
+/* =========================================================
+   QUICK VIEW
+========================================================= */
+
+window.openQuickView =
+function(productId){
+
+  const product =
+    allProducts.find(
+      p => p.id === productId
+    );
+
+  if(!product)
+    return;
+
+  saveRecentlyViewed(productId);
+
+  const images =
+    Array.isArray(product.imageUrls)
+      ? product.imageUrls.filter(
+          url =>
+            url &&
+            !String(url).includes(".mp4") &&
+            !String(url).includes(".webm") &&
+            !String(url).includes("video")
+        )
+      : [];
+
+  document.getElementById("quickImage").src =
+    images[0] ||
+    "https://via.placeholder.com/700x500?text=Akeem+Store";
+
+  document.getElementById("quickCategory")
+    .textContent =
+      categoryName(
+        getCategory(product)
+      );
+
+  document.getElementById("quickName")
+    .textContent =
+      product.name || "Product";
+
+  document.getElementById("quickPrice")
+    .textContent =
+      `₦${Number(product.price || 0).toLocaleString()}`;
+
+  document.getElementById("quickDescription")
+    .textContent =
+      product.description ||
+      "Contact us for more information about this product.";
+
+  document.getElementById("quickStatus")
+    .textContent =
+      getStatus(product).toUpperCase();
+
+  document.getElementById("quickLocation")
+    .textContent =
+      getLocation(product);
+
+  document.getElementById("quickCondition")
+    .textContent =
+      getCondition(product);
+
+  document.getElementById("quickViews")
+    .textContent =
+      productStats[productId]?.views || 0;
+
+  const message =
+`Hello Akeem Store,
+
+I'm interested in:
+
+📦 ${product.name}
+💰 Price: ₦${Number(product.price || 0).toLocaleString()}
+📍 Location: ${getLocation(product)}
+
+Is this product still available?`;
+
+  document.getElementById("quickWhatsapp")
+    .href =
+      `https://wa.me/${OWNER_PHONE}?text=${
+        encodeURIComponent(message)
+      }`;
+
+  quickModal.style.display = "block";
+
+  document.body.style.overflow = "hidden";
+
+  trackView(productId);
+
+};
+
+window.closeQuickView =
+function(){
+
+  quickModal.style.display = "none";
+
+  document.body.style.overflow = "auto";
+
+};
+
+quickModal.addEventListener(
+  "click",
+  e => {
+
+    if(e.target === quickModal)
+      closeQuickView();
+
+  }
+);
+
+/* =========================================================
+   TRACK VIEW
+========================================================= */
+
+async function trackView(productId){
+
+  if(
+    !db ||
+    !updateDoc ||
+    !doc ||
+    !increment
+  )
+    return;
+
+  try{
+
+    await updateDoc(
+      doc(db,"products",productId),
+      {
+        views:increment(1)
+      }
+    );
+
+    if(!productStats[productId])
+      productStats[productId] = {
+        views:0,
+        likes:0
+      };
+
+    productStats[productId].views++;
+
+    updateStats();
+
+  }catch(error){
+
+    console.error(
+      "View error:",
+      error
+    );
+
+  }
+
+}
+
+/* =========================================================
+   PRODUCT CARD
+========================================================= */
+
+function createProductCard(
+  product
+){
+
+  const id = product.id;
+
+  const stats =
+    productStats[id] || {
+      views:0,
+      likes:0
+    };
+
+  const views =
+    stats.views || 0;
+
+  const likes =
+    stats.likes || 0;
+
+  const category =
+    getCategory(product);
+
+  const status =
+    getStatus(product);
+
+  const location =
+    getLocation(product);
+
+  const condition =
+    getCondition(product);
+
+  const images =
+    Array.isArray(product.imageUrls)
+      ? product.imageUrls.filter(
+          url =>
+            url &&
+            String(url).trim() !== ""
+        )
+      : [];
+
+  const firstImage =
+    images[0] || "";
+
+  const isVideo =
+    firstImage &&
+    (
+      firstImage.includes(".mp4") ||
+      firstImage.includes(".webm") ||
+      firstImage.includes("video")
+    );
+
+  const price =
+    Number(product.price || 0);
+
+  const wishlisted =
+    isWishlisted(id);
+
+  let imageHTML = "";
+
+  if(firstImage){
+
+    if(isVideo){
+
+      imageHTML = `
+        <div class="image-container"
+             onclick="openQuickView('${id}')"
+             style="background:#000;">
+
+          <video
+            src="${escapeHTML(firstImage)}"
+            class="product-img"
+            muted
+            playsinline
+            preload="metadata">
+          </video>
+
+          <div class="product-stats">
+            <span class="stat-badge">
+              👁 ${views}
+            </span>
           </div>
-          <div class="desc">${product.description || ""}</div>
-          ${isSold ? `<button class="order-btn" disabled>Sold Out</button>` : `<a href="${whatsappLink}" target="_blank" class="order-btn">Order Now</a>`}
+
         </div>
+      `;
+
+    }else{
+
+      imageHTML = `
+        <div
+          class="image-container"
+          onclick="openProductImage('${id}')"
+        >
+
+          ${
+            product.featured === true
+              ? `<span class="featured-badge">⭐ FEATURED</span>`
+              : ""
+          }
+
+          ${
+            isNew(product)
+              ? `<span class="new-badge">NEW</span>`
+              : ""
+          }
+
+          ${
+            status === "sold"
+              ? `<span class="sold-badge">SOLD</span>`
+              : ""
+          }
+
+          ${
+            status === "reserved"
+              ? `<span class="reserved-badge">RESERVED</span>`
+              : ""
+          }
+
+          <img
+            src="${escapeHTML(firstImage)}"
+            class="product-img"
+            alt="${escapeHTML(product.name || "Product")}"
+            onerror="this.src='https://via.placeholder.com/500x350?text=No+Image'"
+          >
+
+          <div class="product-stats">
+            <span class="stat-badge">
+              👁 ${views}
+            </span>
+          </div>
+
+          ${
+            images.length > 1
+              ? `<div class="image-counter">
+                   ${images.length} images
+                 </div>`
+              : ""
+          }
+
+          <div class="category-badge">
+            ${escapeHTML(categoryName(category))}
+          </div>
+
+        </div>
+      `;
+
+    }
+
+  }else{
+
+    imageHTML = `
+      <div
+        class="image-container"
+        onclick="openQuickView('${id}')"
+        style="
+          background:#e5e7eb;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          color:#64748B;
+        "
+      >
+        📦 No image available
       </div>
     `;
-  });
+
+  }
+
+  let buttonHTML = "";
+
+  const whatsappMessage =
+`Hello Akeem Store,
+
+I'm interested in:
+
+📦 ${product.name || "Product"}
+💰 Price: ₦${price.toLocaleString()}
+📍 Location: ${location}
+
+Is this product still available?`;
+
+  if(status === "sold"){
+
+    buttonHTML = `
+      <button class="order-btn sold" disabled>
+        🔴 Sold Out
+      </button>
+    `;
+
+  }else if(status === "reserved"){
+
+    buttonHTML = `
+      <a
+        href="https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(whatsappMessage)}"
+        target="_blank"
+        class="order-btn reserved"
+      >
+        🟡 Ask About Reservation
+      </a>
+    `;
+
+  }else{
+
+    buttonHTML = `
+      <a
+        href="https://wa.me/${OWNER_PHONE}?text=${encodeURIComponent(whatsappMessage)}"
+        target="_blank"
+        class="order-btn"
+      >
+        💬 Enquire on WhatsApp
+      </a>
+    `;
+
+  }
+
+  return `
+    <article
+      class="product ${status === "sold" ? "sold" : ""}"
+      data-product-id="${id}"
+    >
+
+      ${imageHTML}
+
+      <button
+        class="share-button"
+        onclick="toggleShareMenu('${id}',event)"
+        title="Share product"
+      >
+        📤
+      </button>
+
+      <div
+        class="share-menu"
+        data-product-id="${id}"
+      >
+
+        <button
+          class="share-option whatsapp"
+          onclick="shareProduct('${id}','whatsapp')"
+          title="WhatsApp"
+        >
+          📱
+        </button>
+
+        <button
+          class="share-option facebook"
+          onclick="shareProduct('${id}','facebook')"
+          title="Facebook"
+        >
+          f
+        </button>
+
+        <button
+          class="share-option instagram"
+          onclick="shareProduct('${id}','instagram')"
+          title="Instagram"
+        >
+          📷
+        </button>
+
+        <button
+          class="share-option copy"
+          onclick="shareProduct('${id}','copy')"
+          title="Copy"
+        >
+          🔗
+        </button>
+
+      </div>
+
+      <button
+        class="like-button ${wishlisted ? "wishlist-active" : ""}"
+        onclick="toggleWishlist('${id}')"
+        title="Save to wishlist"
+      >
+        ${wishlisted ? "❤️" : "🤍"}
+      </button>
+
+      <div class="like-count">
+        ❤️ ${likes}
+      </div>
+
+      <div class="product-info">
+
+        <div>
+
+          <div class="title">
+            ${escapeHTML(product.name || "Unnamed Product")}
+          </div>
+
+          <div class="price">
+            ₦${price.toLocaleString()}
+          </div>
+
+          <div class="product-meta">
+
+            <span class="meta-item">
+              📍 ${escapeHTML(location)}
+            </span>
+
+            <span class="meta-item">
+              🔧 ${escapeHTML(condition)}
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="desc">
+          ${escapeHTML(
+            product.description ||
+            "No description available."
+          )}
+        </div>
+
+        <button
+          class="order-btn"
+          onclick="openQuickView('${id}')"
+          style="
+            margin-bottom:6px;
+            background:linear-gradient(
+              135deg,
+              #0f3460,
+              #16213e
+            );
+          "
+        >
+          👁 View Details
+        </button>
+
+        ${buttonHTML}
+
+      </div>
+
+    </article>
+  `;
+
 }
 
-window.openProductImage = function(productId) {
-  const product = allProducts.find(p => p.id === productId);
-  if (product && product.imageUrls) {
-    // Filter to only include image files, not videos
-    const images = product.imageUrls.filter(url => {
-      if (!url || !url.trim()) return false;
-      // Exclude video files
-      if (url.includes('.mp4') || url.includes('.webm') || url.includes('video')) return false;
-      return true;
-    });
-    
-    if (images.length > 0) {
-      console.log('Opening gallery with', images.length, 'images:', images);
-      openImageGallery(images, 0);
-      trackView(productId);
-    } else {
-      console.warn('No images found for product', productId);
-      alert('No images available for this product.');
-    }
-  }
-};
+/* =========================================================
+   RENDER
+========================================================= */
 
-// SEARCH
-const searchBox = document.getElementById('searchBox');
-searchBox.addEventListener('input', (e) => {
-  const search = e.target.value.toLowerCase();
-  if (!search) {
-    renderProducts(allProducts);
+function renderProducts(
+  products,
+  target=container
+){
+
+  target.innerHTML = "";
+
+  if(!products.length){
+
+    target.innerHTML = `
+      <div class="no-results">
+
+        <div class="no-results-icon">
+          🔎
+        </div>
+
+        <h3>
+          No products found
+        </h3>
+
+        <p>
+          Try another search or change your filters.
+        </p>
+
+        <button
+          class="load-more"
+          onclick="resetAllFilters()"
+          style="margin-top:15px;"
+        >
+          Clear Filters
+        </button>
+
+      </div>
+    `;
+
     return;
+
   }
-  const filtered = allProducts.filter(p => 
-    (p.name || "").toLowerCase().includes(search) ||
-    (p.description || "").toLowerCase().includes(search) ||
-    (p.price || "").toString().includes(search)
+
+  products.forEach(product => {
+
+    target.insertAdjacentHTML(
+      "beforeend",
+      createProductCard(product)
+    );
+
+  });
+
+}
+
+function renderHorizontal(
+  target,
+  products
+){
+
+  target.innerHTML = "";
+
+  if(!products.length){
+
+    target.innerHTML = `
+      <div style="
+        color:rgba(255,255,255,.55);
+        padding:20px;
+      ">
+        No products available.
+      </div>
+    `;
+
+    return;
+
+  }
+
+  products.forEach(product => {
+
+    target.insertAdjacentHTML(
+      "beforeend",
+      createProductCard(product)
+    );
+
+  });
+
+}
+
+function renderCurrentProducts(){
+
+  currentFilteredProducts =
+    filterProducts();
+
+  const visible =
+    currentFilteredProducts.slice(
+      0,
+      visibleProducts
+    );
+
+  renderProducts(visible);
+
+  resultCount.textContent =
+    currentFilteredProducts.length;
+
+  loadMoreBtn.style.display =
+    visibleProducts <
+    currentFilteredProducts.length
+      ? "inline-block"
+      : "none";
+
+}
+
+/* =========================================================
+   FILTERING
+========================================================= */
+
+function filterProducts(){
+
+  const search =
+    normalize(searchBox.value);
+
+  const price =
+    priceFilter.value;
+
+  const sort =
+    sortFilter.value;
+
+  const availability =
+    availabilityFilter.value;
+
+  const location =
+    normalize(locationFilter.value);
+
+  let products =
+    allProducts.filter(product => {
+
+      const category =
+        getCategory(product);
+
+      if(
+        currentCategory !== "all" &&
+        category !== currentCategory
+      ){
+
+        return false;
+
+      }
+
+      const productStatus =
+        getStatus(product);
+
+      if(
+        availability !== "all" &&
+        productStatus !== availability
+      ){
+
+        return false;
+
+      }
+
+      if(
+        location !== "all" &&
+        normalize(getLocation(product)) !== location
+      ){
+
+        return false;
+
+      }
+
+      if(search){
+
+        const searchable =
+          normalize(`
+            ${product.name || ""}
+            ${product.description || ""}
+            ${product.category || ""}
+            ${getLocation(product)}
+            ${getCondition(product)}
+            ${product.id || ""}
+            ${product.price || ""}
+          `);
+
+        if(!searchable.includes(search))
+          return false;
+
+      }
+
+      return true;
+
+    });
+
+  if(price === "low"){
+
+    products.sort(
+      (a,b) =>
+        Number(a.price || 0) -
+        Number(b.price || 0)
+    );
+
+  }else if(price === "high"){
+
+    products.sort(
+      (a,b) =>
+        Number(b.price || 0) -
+        Number(a.price || 0)
+    );
+
+  }else if(sort === "views"){
+
+    products.sort(
+      (a,b) =>
+        (productStats[b.id]?.views || 0) -
+        (productStats[a.id]?.views || 0)
+    );
+
+  }else if(sort === "likes"){
+
+    products.sort(
+      (a,b) =>
+        (productStats[b.id]?.likes || 0) -
+        (productStats[a.id]?.likes || 0)
+    );
+
+  }else if(sort === "name"){
+
+    products.sort(
+      (a,b) =>
+        String(a.name || "")
+          .localeCompare(
+            String(b.name || "")
+          )
+    );
+
+  }else{
+
+    products.sort(
+      (a,b) =>
+        getDate(b) -
+        getDate(a)
+    );
+
+  }
+
+  return products;
+
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+searchBox.addEventListener(
+  "input",
+  () => {
+
+    visibleProducts = 12;
+
+    renderCurrentProducts();
+
+  }
+);
+
+/* =========================================================
+   CATEGORY BUTTONS
+========================================================= */
+
+document
+  .querySelectorAll(".category-btn")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        document
+          .querySelectorAll(".category-btn")
+          .forEach(btn =>
+            btn.classList.remove("active")
+          );
+
+        button.classList.add("active");
+
+        currentCategory =
+          button.dataset.category;
+
+        visibleProducts = 12;
+
+        renderCurrentProducts();
+
+        document
+          .getElementById("catalog")
+          .scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+          });
+
+      }
+    );
+
+  });
+
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
+
+[
+  priceFilter,
+  sortFilter,
+  availabilityFilter,
+  locationFilter
+].forEach(select => {
+
+  select.addEventListener(
+    "change",
+    () => {
+
+      visibleProducts = 12;
+
+      renderCurrentProducts();
+
+    }
   );
-  renderProducts(filtered.length ? filtered : allProducts);
+
 });
 
-// LOAD PRODUCTS
-async function loadProducts() {
-  if (!db || !getDocs || !collection) {
-    container.innerHTML = '<p style="text-align:center; color:white; padding:50px;">Firebase not configured</p>';
+clearFilters.addEventListener(
+  "click",
+  resetAllFilters
+);
+
+window.resetAllFilters =
+function(){
+
+  searchBox.value = "";
+
+  currentCategory = "all";
+
+  priceFilter.value = "default";
+
+  sortFilter.value = "newest";
+
+  availabilityFilter.value = "all";
+
+  locationFilter.value = "all";
+
+  document
+    .querySelectorAll(".category-btn")
+    .forEach(btn =>
+      btn.classList.remove("active")
+    );
+
+  document
+    .querySelector(
+      '.category-btn[data-category="all"]'
+    )
+    .classList.add("active");
+
+  visibleProducts = 12;
+
+  renderCurrentProducts();
+
+};
+
+/* =========================================================
+   LOAD MORE
+========================================================= */
+
+loadMoreBtn.addEventListener(
+  "click",
+  () => {
+
+    visibleProducts += 12;
+
+    renderCurrentProducts();
+
+  }
+);
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+window.openProductImage =
+function(productId){
+
+  const product =
+    allProducts.find(
+      p => p.id === productId
+    );
+
+  if(!product)
     return;
+
+  saveRecentlyViewed(productId);
+
+  const images =
+    Array.isArray(product.imageUrls)
+      ? product.imageUrls.filter(
+          url => {
+
+            if(!url)
+              return false;
+
+            const lower =
+              String(url).toLowerCase();
+
+            return !(
+              lower.includes(".mp4") ||
+              lower.includes(".webm") ||
+              lower.includes("video")
+            );
+
+          }
+        )
+      : [];
+
+  if(images.length){
+
+    openImageGallery(images,0);
+
+    trackView(productId);
+
+  }else{
+
+    openQuickView(productId);
+
   }
 
-  const snap = await getDocs(collection(db, "products"));
-  allProducts = [];
-  productStats = {};
+};
 
-  snap.forEach((docSnap) => {
-    const data = docSnap.data();
-    allProducts.push({ ...data, id: docSnap.id });
-    productStats[docSnap.id] = {
-      views: data.views || 0,
-      likes: data.likes || 0
-    };
-  });
+/* =========================================================
+   STATS
+========================================================= */
 
-  updateStats();
-  updateActivityFeed();
-  renderProducts(allProducts);
+function updateStats(){
+
+  const views =
+    Object.values(productStats)
+      .reduce(
+        (sum,p) =>
+          sum + (p.views || 0),
+        0
+      );
+
+  const likes =
+    Object.values(productStats)
+      .reduce(
+        (sum,p) =>
+          sum + (p.likes || 0),
+        0
+      );
+
+  const available =
+    allProducts.filter(
+      p => getStatus(p) !== "sold"
+    ).length;
+
+  document.getElementById(
+    "totalProductsStat"
+  ).textContent =
+    available;
+
+  document.getElementById(
+    "totalViewsStat"
+  ).textContent =
+    views.toLocaleString();
+
+  document.getElementById(
+    "onlineNowStat"
+  ).textContent =
+    Math.floor(
+      Math.random() * 15
+    ) + 3;
+
+  document.getElementById(
+    "totalLikesStat"
+  ).textContent =
+    likes.toLocaleString();
+
+  document.getElementById(
+    "storeStatusText"
+  ).textContent =
+    `${available} Listings Available`;
+
 }
 
-setInterval(updateActivityFeed, 15000);
+/* =========================================================
+   ACTIVITY FEED
+========================================================= */
+
+const activityMessages = [
+  "❤️ liked a product",
+  "👁 viewed a listing",
+  "📤 shared a product",
+  "💬 enquired about a product",
+  "🔎 searched the marketplace"
+];
+
+const locations = [
+  "Lagos",
+  "Abuja",
+  "Port Harcourt",
+  "Kano",
+  "Ibadan"
+];
+
+function updateActivityFeed(){
+
+  const list =
+    document.getElementById(
+      "activityList"
+    );
+
+  list.innerHTML = "";
+
+  for(let i=0;i<5;i++){
+
+    const location =
+      locations[
+        Math.floor(
+          Math.random() *
+          locations.length
+        )
+      ];
+
+    const message =
+      activityMessages[
+        Math.floor(
+          Math.random() *
+          activityMessages.length
+        )
+      ];
+
+    const time =
+      Math.floor(
+        Math.random() * 59
+      ) + 1;
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "activity-item";
+
+    div.innerHTML = `
+      <strong>
+        ${location}
+      </strong>
+      ${message}
+
+      <span style="
+        color:rgba(255,255,255,.5);
+        font-size:11px;
+        display:block;
+        margin-top:3px;
+      ">
+        ${time} min ago
+      </span>
+    `;
+
+    list.appendChild(div);
+
+  }
+
+}
+
+/* =========================================================
+   LOCATION FILTER
+========================================================= */
+
+function buildLocationFilter(){
+
+  const locations =
+    [
+      ...new Set(
+        allProducts
+          .map(
+            p => getLocation(p)
+          )
+          .filter(Boolean)
+      )
+    ]
+    .sort(
+      (a,b) =>
+        String(a).localeCompare(
+          String(b)
+        )
+    );
+
+  locationFilter.innerHTML =
+    `
+      <option value="all">
+        📍 All Locations
+      </option>
+    `;
+
+  locations.forEach(location => {
+
+    const option =
+      document.createElement("option");
+
+    option.value =
+      location;
+
+    option.textContent =
+      `📍 ${location}`;
+
+    locationFilter.appendChild(
+      option
+    );
+
+  });
+
+}
+
+/* =========================================================
+   FEATURED + RECENT
+========================================================= */
+
+function renderFeatured(){
+
+  let featured =
+    allProducts.filter(
+      p => p.featured === true
+    );
+
+  /*
+    If there are no explicitly featured
+    products, use highly liked products.
+  */
+
+  if(!featured.length){
+
+    featured =
+      [...allProducts]
+        .sort(
+          (a,b) =>
+            (productStats[b.id]?.likes || 0) -
+            (productStats[a.id]?.likes || 0)
+        )
+        .slice(0,6);
+
+  }
+
+  renderHorizontal(
+    featuredProducts,
+    featured.slice(0,8)
+  );
+
+}
+
+function renderRecent(){
+
+  const recent =
+    [...allProducts]
+      .sort(
+        (a,b) =>
+          getDate(b) -
+          getDate(a)
+      )
+      .slice(0,8);
+
+  renderHorizontal(
+    recentProducts,
+    recent
+  );
+
+}
+
+/* =========================================================
+   WISHLIST VIEW
+========================================================= */
+
+window.showWishlist =
+function(){
+
+  const ids =
+    getWishlist();
+
+  const products =
+    ids
+      .map(
+        id =>
+          allProducts.find(
+            p => p.id === id
+          )
+      )
+      .filter(Boolean);
+
+  if(!products.length){
+
+    alert(
+      "Your wishlist is empty.\n\n" +
+      "Tap ❤️ on products to save them."
+    );
+
+    return;
+
+  }
+
+  currentFilteredProducts =
+    products;
+
+  container.innerHTML = "";
+
+  renderProducts(products);
+
+  resultCount.textContent =
+    products.length;
+
+  document
+    .getElementById("catalog")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
+
+  hamburger.classList.remove("active");
+  mobileMenu.classList.remove("active");
+
+};
+
+/* =========================================================
+   LOAD PRODUCTS
+========================================================= */
+
+async function loadProducts(){
+
+  if(
+    !db ||
+    !getDocs ||
+    !collection
+  ){
+
+    container.innerHTML = `
+      <div class="no-results">
+
+        <div class="no-results-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Firebase Not Configured
+        </h3>
+
+        <p>
+          Connect Firebase to display products.
+        </p>
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+  try{
+
+    const snap =
+      await getDocs(
+        collection(db,"products")
+      );
+
+    allProducts = [];
+
+    productStats = {};
+
+    snap.forEach(
+      docSnap => {
+
+        const data =
+          docSnap.data();
+
+        const product = {
+          ...data,
+          id:docSnap.id
+        };
+
+        allProducts.push(product);
+
+        productStats[
+          docSnap.id
+        ] = {
+
+          views:
+            Number(data.views || 0),
+
+          likes:
+            Number(data.likes || 0)
+
+        };
+
+      }
+    );
+
+    loadWishlist();
+
+    buildLocationFilter();
+
+    updateStats();
+
+    updateActivityFeed();
+
+    renderFeatured();
+
+    renderRecent();
+
+    renderCurrentProducts();
+
+    handleHashProduct();
+
+  }catch(error){
+
+    console.error(
+      "Error loading products:",
+      error
+    );
+
+    container.innerHTML = `
+      <div class="no-results">
+
+        <div class="no-results-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Unable to Load Products
+        </h3>
+
+        <p>
+          Please refresh the page and try again.
+        </p>
+
+      </div>
+    `;
+
+  }
+
+}
+
+/* =========================================================
+   HASH PRODUCT
+========================================================= */
+
+function handleHashProduct(){
+
+  const hash =
+    window.location.hash;
+
+  if(!hash.startsWith("#product-"))
+    return;
+
+  const id =
+    decodeURIComponent(
+      hash.replace(
+        "#product-",
+        ""
+      )
+    );
+
+  const product =
+    allProducts.find(
+      p => p.id === id
+    );
+
+  if(product){
+
+    setTimeout(
+      () =>
+        openQuickView(id),
+      500
+    );
+
+  }
+
+}
+
+window.addEventListener(
+  "hashchange",
+  handleHashProduct
+);
+
+/* =========================================================
+   CLOSE SHARE MENUS
+========================================================= */
+
+document.addEventListener(
+  "click",
+  () => {
+
+    document
+      .querySelectorAll(
+        ".share-menu.active"
+      )
+      .forEach(menu =>
+        menu.classList.remove("active")
+      );
+
+  }
+);
+
+/* =========================================================
+   START
+========================================================= */
+
+setInterval(
+  updateActivityFeed,
+  15000
+);
+
 loadProducts();
+
 </script>
 
 </body>
