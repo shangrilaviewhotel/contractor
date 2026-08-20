@@ -55,11 +55,15 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     console.warn("Optional storefront enhancements unavailable:", error);
   });
 
-  // Stable category controller for the public marketplace. It is intentionally
-  // presentation-only and never writes to Firestore.
   if (location.pathname === "/" || /index\.html$/i.test(location.pathname) || /Contractor-\/?$/i.test(location.pathname)) {
     import("./main-category-filter.js?v=20260820-6").catch(error => {
       console.warn("Marketplace category controller unavailable:", error);
+    });
+  }
+
+  if (/sell\.html$/i.test(location.pathname)) {
+    import("./public-category-options.js?v=20260820-1").catch(error => {
+      console.warn("Public seller category compatibility layer unavailable:", error);
     });
   }
 
