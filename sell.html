@@ -7,33 +7,66 @@
 <meta name="description" content="Post your car, tractor, land, house, generator, marine asset or other product for review on Akeem Store.">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
-:root{--green:#059669;--green2:#10b981;--orange:#ea580c;--blue:#16213e;--blue2:#0f3460;--card:rgba(255,255,255,.96);--text:#17202a;--muted:#667085;--border:#dfe5ec}
+:root{--green:#059669;--green2:#10b981;--orange:#ea580c;--blue:#16213e;--blue2:#0f3460;--card:rgba(255,255,255,.97);--text:#17202a;--muted:#667085;--border:#dfe5ec;--soft:#f8fafc;--good:#065f46;--bad:#991b1b}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Rubik,Arial,sans-serif}body{color:#fff;background:linear-gradient(135deg,#1a1a2e,#16213e 50%,#0f3460);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 50%,rgba(5,150,105,.14),transparent 50%),radial-gradient(circle at 80% 80%,rgba(234,88,12,.12),transparent 50%);z-index:0}.float{position:fixed;z-index:0;pointer-events:none;opacity:.16;font-size:60px;animation:drift 20s linear infinite}.f1{left:5%;bottom:-80px}.f2{left:28%;top:-80px;animation-delay:5s}.f3{right:20%;bottom:-80px;animation-delay:9s}.f4{right:3%;top:-80px;animation-delay:13s}@keyframes drift{0%{transform:translateY(0) rotate(0)}50%{transform:translateY(50vh) rotate(15deg)}100%{transform:translateY(110vh) rotate(30deg)}}
 header{position:sticky;top:0;z-index:10;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;background:rgba(15,20,25,.78);backdrop-filter:blur(18px);border-bottom:1px solid rgba(16,185,129,.3)}.brand{font:900 25px 'Playfair Display',serif;background:linear-gradient(135deg,var(--green2),var(--orange));-webkit-background-clip:text;color:transparent}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.2);padding:10px 15px;border-radius:9px;font-weight:700;font-size:13px}.back:hover{background:rgba(255,255,255,.1)}
-main{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:40px 16px 70px}.intro{text-align:center;margin-bottom:25px}.intro h1{font:900 clamp(32px,6vw,50px) 'Playfair Display',serif;margin:0 0 7px}.intro p{margin:0;color:#d6dce6;font-size:14px}.card{background:var(--card);color:var(--text);border-radius:18px;box-shadow:0 20px 55px rgba(0,0,0,.25);padding:24px}.notice{background:#ecfdf3;color:#065f46;border:1px solid #a7f3d0;padding:13px 15px;border-radius:10px;font-size:12px;line-height:1.55;margin-bottom:20px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#475467;margin:4px 0 6px}input,textarea,select{width:100%;border:1px solid var(--border);border-radius:9px;padding:12px;font:500 14px Rubik;background:#fff;color:var(--text);outline:none}input:focus,textarea:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(5,150,105,.1)}textarea{resize:vertical;min-height:105px}.hint{font-size:11px;color:var(--muted);margin-top:4px}.media{border:2px dashed #cbd5e1;border-radius:12px;padding:18px;background:#f8fafc}.media input{border:0;padding:4px;background:transparent}.preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:9px;margin-top:12px}.preview img,.preview video{width:100%;height:90px;object-fit:cover;border-radius:8px;background:#e5e7eb}.contact-box{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:15px}.contact-box h3{margin:0 0 5px;font-size:15px}.contact-box p{margin:0 0 12px;font-size:11px;color:#7c2d12}.submit{width:100%;border:0;border-radius:10px;padding:14px;background:linear-gradient(135deg,var(--green),var(--orange));color:#fff;font-weight:900;font-size:14px;cursor:pointer;margin-top:18px}.submit:disabled{opacity:.55;cursor:not-allowed}.status{display:none;margin-top:15px;padding:13px;border-radius:10px;font-size:13px}.status.show{display:block}.status.ok{background:#ecfdf3;color:#065f46;border:1px solid #a7f3d0}.status.err{background:#fef2f2;color:#991b1b;border:1px solid #fecaca}.small{font-size:11px;color:#667085;margin-top:8px}.required{color:#dc2626}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.card{padding:17px}header{padding:0 14px}.brand{font-size:21px}}
+main{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:40px 16px 70px}.intro{text-align:center;margin-bottom:25px}.intro h1{font:900 clamp(32px,6vw,50px) 'Playfair Display',serif;margin:0 0 7px}.intro p{margin:0;color:#d6dce6;font-size:14px}.card{background:var(--card);color:var(--text);border-radius:18px;box-shadow:0 20px 55px rgba(0,0,0,.25);padding:24px}.notice{background:#ecfdf3;color:#065f46;border:1px solid #a7f3d0;padding:13px 15px;border-radius:10px;font-size:12px;line-height:1.55;margin-bottom:20px}.section-title{display:flex;align-items:center;gap:10px;margin:24px 0 9px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#667085}.section-title:first-child{margin-top:0}.section-title:after{content:"";height:1px;flex:1;background:#e5e7eb}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{display:block;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#475467;margin:4px 0 6px}input,textarea,select{width:100%;border:1px solid var(--border);border-radius:9px;padding:12px;font:500 14px Rubik;background:#fff;color:var(--text);outline:none}input:focus,textarea:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(5,150,105,.1)}textarea{resize:vertical;min-height:105px}.hint{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.45}.readonly{background:#f3f4f6;color:#667085}.media{border:2px dashed #cbd5e1;border-radius:12px;padding:18px;background:var(--soft)}.media input[type=file]{border:0;padding:4px;background:transparent}.drop-title{font-weight:800;font-size:13px;color:#344054}.preview{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:9px;margin-top:12px}.preview-item{position:relative}.preview img,.preview video{display:block;width:100%;height:100px;object-fit:cover;border-radius:8px;background:#e5e7eb}.preview video{object-fit:contain}.remove-media{position:absolute;top:5px;right:5px;width:25px;height:25px;border:0;border-radius:50%;background:#111b;color:#fff;cursor:pointer;font-weight:800}.contact-box{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:15px}.contact-box h3{margin:0 0 5px;font-size:15px}.contact-box p{margin:0 0 12px;font-size:11px;color:#7c2d12}.progress{display:none;margin-top:14px;padding:12px;border:1px solid #e5e7eb;border-radius:10px;background:#f8fafc}.progress.show{display:block}.progress-top{display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:#475467;margin-bottom:7px}.bar{height:7px;border-radius:99px;background:#e5e7eb;overflow:hidden}.bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--orange));transition:width .15s ease}.submit{width:100%;border:0;border-radius:10px;padding:14px;background:linear-gradient(135deg,var(--green),var(--orange));color:#fff;font-weight:900;font-size:14px;cursor:pointer;margin-top:18px}.submit:disabled{opacity:.55;cursor:not-allowed}.status{display:none;margin-top:15px;padding:13px;border-radius:10px;font-size:13px;line-height:1.5}.status.show{display:block}.status.ok{background:#ecfdf3;color:var(--good);border:1px solid #a7f3d0}.status.err{background:#fef2f2;color:var(--bad);border:1px solid #fecaca}.small{font-size:11px;color:#667085;margin-top:8px;line-height:1.45}.required{color:#dc2626}.check-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.check-card{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--border);border-radius:9px;background:#fff;font-size:12px;font-weight:700;color:#475467}.check-card input{width:auto;margin:0}.price-preview{font-size:11px;color:#059669;font-weight:800;margin-top:4px;min-height:14px}@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.card{padding:17px}.check-row{grid-template-columns:1fr}header{padding:0 14px}.brand{font-size:21px}}
 </style>
 </head>
 <body>
 <div class="float f1">🚗</div><div class="float f2">🚜</div><div class="float f3">🏠</div><div class="float f4">🚢</div>
 <header><div class="brand">🛍️ AKEEM STORE</div><a class="back" href="index.html">← Back to Store</a></header>
 <main>
-<section class="intro"><h1>Sell on Akeem Store</h1><p>List your product for buyers to discover. Every public listing is reviewed before it goes live.</p></section>
+<section class="intro"><h1>Sell on Akeem Store</h1><p>Use the same product-posting workflow as the owner. Your listing is sent to the admin for review before publication.</p></section>
 <section class="card">
-<div class="notice"><strong>How it works:</strong> Submit your product → the owner reviews it → if approved, it is published on the marketplace. Your contact details are sent with the listing so interested buyers can reach you.</div>
+<div class="notice"><strong>How it works:</strong> Fill in your product → upload photos/videos → add your contact → submit → the owner reviews it → approved listings are published on the marketplace.</div>
 <form id="sellForm">
+<div class="section-title">Basics</div>
 <div class="grid">
-<div><label for="name">Product name <span class="required">*</span></label><input id="name" required placeholder="e.g. Toyota Camry 2018"></div>
+<div><label for="name">Product Name <span class="required">*</span></label><input id="name" required placeholder="e.g. Toyota Hilux 2019"></div>
+<div><label for="sku">SKU</label><input id="sku" class="readonly" readonly placeholder="Auto-generated"></div>
 <div><label for="category">Category <span class="required">*</span></label><select id="category" required><option value="">Loading categories...</option></select></div>
-<div><label for="brand">Brand</label><input id="brand" placeholder="e.g. Toyota, CAT, Samsung"></div>
-<div><label for="price">Price <span class="required">*</span></label><input id="price" required inputmode="decimal" placeholder="e.g. 6500000"></div>
-<div><label for="location">Location</label><input id="location" placeholder="e.g. Lekki, Lagos"></div>
-<div><label for="condition">Condition</label><select id="condition"><option value="">Select condition</option><option>Brand New</option><option>Foreign Used</option><option>Nigerian Used</option><option>Used</option><option>Refurbished</option><option>Other</option></select></div>
-<div class="full"><label for="description">Description <span class="required">*</span></label><textarea id="description" required placeholder="Describe the product, features, specifications, history, availability, etc."></textarea></div>
-<div class="full"><label>Product photos / video <span class="required">*</span></label><div class="media"><input id="media" type="file" accept="image/*,video/*" multiple required><div class="hint">Add clear photos. You may also add a product video. Media is uploaded only when you submit.</div><div id="preview" class="preview"></div></div></div>
-<div class="full contact-box"><h3>How can buyers contact you?</h3><p>At least one contact method is required. This information is only attached to your listing for buyer enquiries after approval.</p><div class="grid"><div><label for="phone">Phone / WhatsApp</label><input id="phone" inputmode="tel" placeholder="e.g. 08012345678"></div><div><label for="email">Email / Gmail</label><input id="email" type="email" placeholder="e.g. seller@gmail.com"></div><div class="full"><label for="otherContact">Other contact (optional)</label><input id="otherContact" placeholder="Instagram, alternate number, etc."></div></div></div>
+<div><label for="brand">Brand / Make</label><select id="brand"><option value="">Loading brands...</option></select></div>
+<div class="full"><label for="shortDesc">Short Description</label><input id="shortDesc" maxlength="180" placeholder="One-line summary buyers will see"></div>
+<div class="full"><label for="description">Full Description <span class="required">*</span></label><textarea id="description" required placeholder="Full details, features, specifications, history, availability, etc."></textarea></div>
+<div class="full"><label for="tags">Tags</label><input id="tags" placeholder="e.g. Toyota, Hilux, diesel, 4x4"></div>
 </div>
-<button id="submitBtn" class="submit" type="submit">Submit Product for Review</button>
-<div id="status" class="status"></div><div class="small">By submitting, you confirm that the information and media you provide are yours to publish and that the store owner may review the listing before publication.</div>
+
+<div class="section-title">Pricing</div>
+<div class="grid">
+<div><label for="price">Price (₦) <span class="required">*</span></label><input id="price" required inputmode="numeric" placeholder="e.g. 6500000"><div id="pricePreview" class="price-preview"></div></div>
+<div><label for="comparePrice">Compare-at Price (₦)</label><input id="comparePrice" inputmode="numeric" placeholder="Original price, optional"><div id="discountPreview" class="price-preview"></div></div>
+</div>
+
+<div class="section-title">Stock</div>
+<div class="grid">
+<div><label for="stockQuantity">Stock Quantity</label><input id="stockQuantity" type="number" min="0" value="1"></div>
+<div><label for="minStock">Low-stock Alert Threshold</label><input id="minStock" type="number" min="0" value="1"></div>
+</div>
+<div class="hint">The listing will remain <strong>pending</strong> until the store owner approves it. You cannot publish or feature your own listing directly.</div>
+
+<div class="section-title">Media</div>
+<div class="media">
+<div class="drop-title">Click or drag photos &amp; videos here</div>
+<div class="hint">Multiple images and videos are supported, using the same Cloudinary media workflow as the admin product form. At least one file is required.</div>
+<input id="media" type="file" accept="image/*,video/*" multiple required>
+<div id="preview" class="preview"></div>
+</div>
+<div id="progress" class="progress"><div class="progress-top"><span id="progressLabel">Uploading files...</span><span id="progressPercent">0%</span></div><div class="bar"><span id="progressFill"></span></div></div>
+
+<div class="section-title">Search &amp; Listing Information</div>
+<div class="grid">
+<div><label for="seoTitle">SEO Title</label><input id="seoTitle" placeholder="Optional — auto-generated if empty"></div>
+<div><label for="imageAlt">Image Alt Text</label><input id="imageAlt" placeholder="Describe the main product image"></div>
+<div class="full"><label for="seoDesc">SEO Description</label><input id="seoDesc" placeholder="Optional — auto-generated if empty"></div>
+</div>
+
+<div class="section-title">Seller Contact</div>
+<div class="contact-box"><h3>How can buyers contact you?</h3><p>At least one contact method is required. These details stay with your submission and are only published if the owner approves the listing.</p><div class="grid"><div><label for="phone">Phone / WhatsApp</label><input id="phone" inputmode="tel" placeholder="e.g. 08012345678"></div><div><label for="email">Email / Gmail</label><input id="email" type="email" placeholder="e.g. seller@gmail.com"></div><div class="full"><label for="otherContact">Other Contact (optional)</label><input id="otherContact" placeholder="Instagram, alternate number, etc."></div></div></div>
+
+<button id="submitBtn" class="submit" type="submit">Upload Product for Admin Review</button>
+<div id="status" class="status"></div>
+<div class="small">By submitting, you confirm that the information and media you provide are yours to publish and that Akeem Store may review, edit, approve or reject the listing before publication.</div>
 </form>
 </section>
 </main>
@@ -43,41 +76,105 @@ import { collection, getDocs, addDoc } from 'https://www.gstatic.com/firebasejs/
 
 const CLOUD_NAME='dpaltarvh';
 const UPLOAD_PRESET='Tobifatai';
+const fallbackCategories=['Cars & Vehicles','Tractors','Houses & Apartments','Land & Plots','Hotels & Accommodation','Generators & Power','Ships & Marine','Heavy Equipment','Other Products'];
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));
-const fallbackCategories=['Cars & Vehicles','Tractors','Houses & Apartments','Land & Plots','Hotels & Accommodation','Generators & Power','Ships & Marine','Heavy Equipment','Other Products'];
+const num=v=>Number(String(v??'').replace(/[^0-9.]/g,''))||0;
+const money=v=>num(v)?`₦${num(v).toLocaleString('en-NG')}`:'';
+const files=[];
 
-async function loadCategories(){
-  const select=$('category');
+async function loadLists(){
   try{
-    const snap=await getDocs(collection(db,'categories'));
-    const cats=[];snap.forEach(d=>{const x=d.data();if(x.name)cats.push(x.name)});
-    cats.sort((a,b)=>a.localeCompare(b));
-    const names=cats.length?cats:[...fallbackCategories];
-    select.innerHTML='<option value="">Select category...</option>'+names.map(x=>`<option>${esc(x)}</option>`).join('');
-  }catch(e){select.innerHTML='<option value="">Select category...</option>'+fallbackCategories.map(x=>`<option>${esc(x)}</option>`).join('');}
+    const [catSnap,brandSnap]=await Promise.all([getDocs(collection(db,'categories')),getDocs(collection(db,'brands'))]);
+    const cats=[];catSnap.forEach(d=>{const x=d.data();if(x.name)cats.push(x.name)});
+    const brands=[];brandSnap.forEach(d=>{const x=d.data();if(x.name)brands.push(x.name)});
+    cats.sort((a,b)=>a.localeCompare(b));brands.sort((a,b)=>a.localeCompare(b));
+    $('category').innerHTML='<option value="">Select category...</option>'+ (cats.length?cats:fallbackCategories).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+    $('brand').innerHTML='<option value="">Select brand...</option>'+brands.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+  }catch(e){
+    $('category').innerHTML='<option value="">Select category...</option>'+fallbackCategories.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
+    $('brand').innerHTML='<option value="">Enter brand in description/tags if not listed</option>';
+  }
 }
 
-function show(type,msg){const s=$('status');s.className='status show '+type;s.textContent=msg}
-async function upload(file){const form=new FormData();form.append('file',file);form.append('upload_preset',UPLOAD_PRESET);if(file.type.startsWith('video/'))form.append('resource_type','video');const res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`,{method:'POST',body:form});if(!res.ok)throw new Error('Media upload failed');const data=await res.json();return data.secure_url}
+function slugify(s){return String(s||'').toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')}
+function genSKU(category){const prefix=String(category||'PRD').replace(/[^a-zA-Z]/g,'').slice(0,3).toUpperCase().padEnd(3,'X');return `AS-${prefix}-${Date.now().toString(36).slice(-5).toUpperCase()}`}
+function refreshComputed(){
+  const name=$('name').value.trim();
+  $('sku').value=name?genSKU($('category').value):'';
+  $('pricePreview').textContent=money($('price').value);
+  const p=num($('price').value),cmp=num($('comparePrice').value);
+  $('discountPreview').textContent=cmp>p&&p>0?`${Math.round(((cmp-p)/cmp)*100)}% off`:'';
+}
+['name','category','price','comparePrice'].forEach(id=>$(id).addEventListener('input',refreshComputed));
 
-$('media').addEventListener('change',()=>{$('preview').innerHTML='';[...$('media').files].forEach(f=>{const el=f.type.startsWith('video/')?document.createElement('video'):document.createElement('img');el.src=URL.createObjectURL(f);if(el.tagName==='VIDEO')el.muted=true;el.controls=el.tagName==='VIDEO';$('preview').appendChild(el)})});
+function show(type,msg){const s=$('status');s.className='status show '+type;s.textContent=msg}
+function renderPreview(){
+  $('preview').innerHTML='';
+  files.forEach((item,i)=>{
+    const wrap=document.createElement('div');wrap.className='preview-item';
+    const el=item.file.type.startsWith('video/')?document.createElement('video'):document.createElement('img');
+    el.src=item.localUrl;if(el.tagName==='VIDEO'){el.muted=true;el.controls=true}
+    const remove=document.createElement('button');remove.type='button';remove.className='remove-media';remove.textContent='×';remove.title='Remove file';remove.onclick=()=>{URL.revokeObjectURL(item.localUrl);files.splice(i,1);renderPreview()};
+    wrap.append(el,remove);$('preview').appendChild(wrap);
+  });
+}
+$('media').addEventListener('change',e=>{[...e.target.files].forEach(file=>files.push({file,localUrl:URL.createObjectURL(file)}));e.target.value='';renderPreview()});
+
+async function uploadMedia(file,onProgress){
+  const form=new FormData();form.append('file',file);form.append('upload_preset',UPLOAD_PRESET);if(file.type.startsWith('video/'))form.append('resource_type','video');
+  return new Promise((resolve,reject)=>{
+    const xhr=new XMLHttpRequest();
+    xhr.upload.onprogress=e=>{if(e.lengthComputable&&onProgress)onProgress((e.loaded/e.total)*100)};
+    xhr.onload=()=>{try{const data=JSON.parse(xhr.responseText);if(xhr.status>=200&&xhr.status<300&&data.secure_url)resolve(data.secure_url);else reject(new Error(data.error?.message||'Media upload failed'))}catch(e){reject(new Error('Media upload failed'))}};
+    xhr.onerror=()=>reject(new Error('Media upload network error'));
+    xhr.open('POST',`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`);xhr.send(form);
+  });
+}
 
 $('sellForm').addEventListener('submit',async e=>{
  e.preventDefault();
  const phone=$('phone').value.trim(),email=$('email').value.trim(),other=$('otherContact').value.trim();
  if(!phone&&!email&&!other){show('err','Please provide at least one contact method.');return}
- if(!$('media').files.length){show('err','Please add at least one product image or video.');return}
- const btn=$('submitBtn');btn.disabled=true;btn.textContent='Uploading and submitting...';show('ok','Preparing your listing...');
+ if(!files.length){show('err','Please add at least one product image or video.');return}
+ if(!$('category').value){show('err','Please select a category.');return}
+ const btn=$('submitBtn');btn.disabled=true;btn.textContent='Uploading & submitting...';$('progress').classList.add('show');
  try{
-  const imageUrls=[];for(const file of [...$('media').files])imageUrls.push(await upload(file));
-  const docData={name:$('name').value.trim(),price:$('price').value.trim(),description:$('description').value.trim(),category:$('category').value,brand:$('brand').value.trim(),location:$('location').value.trim(),condition:$('condition').value,shortDescription:$('description').value.trim().slice(0,160),imageUrls,sellerContact:{phone,email,other},sellerName:'',source:'public-seller',status:'pending',reviewStatus:'pending',createdAt:Date.now(),updatedAt:Date.now()};
-  await addDoc(collection(db,'pendingProductSubmissions'),docData);
-  $('sellForm').reset();$('preview').innerHTML='';show('ok','Your product has been submitted successfully. It is now waiting for the store owner to review and approve it before it appears publicly.');window.scrollTo({top:0,behavior:'smooth'});
- }catch(err){console.error(err);show('err',err.message.includes('permission')?'The submission was blocked by Firebase permissions. The store owner needs to enable public pending submissions in Firebase rules.':'Submission failed: '+err.message)}
- btn.disabled=false;btn.textContent='Submit Product for Review';
+   const urls=[];
+   for(let i=0;i<files.length;i++){
+     $('progressLabel').textContent=`Uploading ${i+1} of ${files.length}...`;
+     const base=i/files.length;const url=await uploadMedia(files[i].file,pct=>{const total=Math.round((base+(pct/100/files.length))*100);$('progressFill').style.width=total+'%';$('progressPercent').textContent=total+'%'});urls.push(url);
+   }
+   $('progressFill').style.width='100%';$('progressPercent').textContent='100%';
+   const name=$('name').value.trim(),price=$('price').value.trim(),description=$('description').value.trim(),category=$('category').value,brand=$('brand').value.trim();
+   const shortDescription=$('shortDesc').value.trim()||description.slice(0,160);
+   const tags=$('tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+   const now=Date.now();
+   const docData={
+     name,price,description,shortDescription,
+     sku:genSKU(category),category,brand,tags,
+     comparePrice:$('comparePrice').value.trim(),
+     stockQuantity:parseInt($('stockQuantity').value,10)||0,
+     minStock:parseInt($('minStock').value,10)||1,
+     seoTitle:$('seoTitle').value.trim()||name,
+     seoDescription:$('seoDesc').value.trim()||shortDescription,
+     slug:slugify(name),
+     imageAlt:$('imageAlt').value.trim()||name,
+     imageUrls:urls,
+     sellerContact:{phone,email,other},
+     sellerName:'',
+     source:'public-seller',
+     status:'pending',reviewStatus:'pending',published:false,
+     featured:false,bestSeller:false,trending:false,newArrival:true,sold:false,
+     createdAt:now,updatedAt:now
+   };
+   await addDoc(collection(db,'pendingProductSubmissions'),docData);
+   $('sellForm').reset();files.splice(0).forEach(x=>URL.revokeObjectURL(x.localUrl));renderPreview();refreshComputed();$('progress').classList.remove('show');$('progressFill').style.width='0';$('progressPercent').textContent='0%';
+   show('ok','Your product was submitted successfully. It is now waiting for the store owner to review and approve it before it appears publicly.');window.scrollTo({top:0,behavior:'smooth'});
+ }catch(err){console.error(err);show('err',err.message.includes('permission')?'The submission was blocked by Firebase permissions. The store owner needs to allow anonymous creation of pendingProductSubmissions without allowing public product writes.':'Submission failed: '+err.message);$('progress').classList.remove('show')}
+ btn.disabled=false;btn.textContent='Upload Product for Admin Review';
 });
-loadCategories();
+loadLists();
 </script>
 </body>
 </html>
