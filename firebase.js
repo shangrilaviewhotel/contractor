@@ -1,7 +1,7 @@
 // firebase.js
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
@@ -16,10 +16,34 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+/*
+ * Wait for Firebase Auth to restore the existing browser session before
+ * allowing pages that immediately query Firestore (especially the admin
+ * dashboard) to continue. Without this, a refresh can briefly look like
+ * there is no authenticated admin and the protected Firestore reads fail.
+ *
+ * The timeout keeps public pages from being held indefinitely if Auth is
+ * temporarily unavailable. The normal Auth callback resolves immediately
+ * once Firebase knows the current user (including null for signed-out users).
+ */
+await new Promise(resolve => {
+  let settled = false;
+  let unsubscribe = () => {};
+  const finish = () => {
+    if (settled) return;
+    settled = true;
+    try { unsubscribe(); } catch (_) {}
+    resolve();
+  };
+  unsubscribe = onAuthStateChanged(auth, finish);
+  setTimeout(finish, 4000);
+});
+
+export { auth, db, storage };
 
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   const loadStyles = () => {
@@ -47,7 +71,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     loadMarketplaceDesign();
   }
 
-  import("./public-seller-link.js?v=20260820-1").catch(error => {
+  import("./public-seller-link.js?v=20260820-2").catch(error => {
     console.warn("Public seller link module unavailable:", error);
   });
 
@@ -56,7 +80,6 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   });
 
   if (location.pathname === "/" || /index\.html$/i.test(location.pathname) || /Contractor-\/?$/i.test(location.pathname)) {
-    // Version bumped so browsers cannot keep the previous category controller cached.
     import("./main-category-filter.js?v=20260820-7").catch(error => {
       console.warn("Marketplace category controller unavailable:", error);
     });
@@ -66,9 +89,6 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     import("./public-category-options.js?v=20260820-1").catch(error => {
       console.warn("Public seller category compatibility layer unavailable:", error);
     });
-    // The visitor seller form maintains its own media queue. This module
-    // disables conflicting native file-input validation without changing the
-    // existing Cloudinary upload or Firestore submission workflow.
     import("./public-seller-upload-fix.js?v=20260820-1").catch(error => {
       console.warn("Public seller upload compatibility layer unavailable:", error);
     });
@@ -79,7 +99,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   });
 
   if (location.pathname.toLowerCase().includes("admindashboard")) {
-    import("./admin-public-submissions.js?v=20260820-1").catch(error => {
+    import("./admin-public-submissions.js?v=20260820-2").catch(error => {
       console.warn("Public submission review module unavailable:", error);
     });
   }
