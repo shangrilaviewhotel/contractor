@@ -15,7 +15,7 @@ const firebaseConfig = {
   measurementId: "G-ZYB3J8BW72"
 };
 
-// Firebase must initialize independently of every optional visual enhancement.
+// Firebase initializes independently of every optional visual enhancement.
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
@@ -32,28 +32,30 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     if (!document.querySelector('link[data-akeem-background]')) {
       const backgroundStyle = document.createElement("link");
       backgroundStyle.rel = "stylesheet";
-      backgroundStyle.href = "./marketplace-background-restore.css?v=20260820-3";
+      backgroundStyle.href = "./marketplace-background-restore.css?v=20260820-4";
       backgroundStyle.dataset.akeemBackground = "true";
       document.head.appendChild(backgroundStyle);
     }
   };
 
   const loadMarketplaceDesign = () => {
-    import("./jiji-reference-marketplace.js?v=20260820-3")
-      .catch(error => console.warn("Marketplace visual layer unavailable:", error));
+    import("./jiji-reference-marketplace.js?v=20260820-4")
+      .then(() => loadStyles())
+      .catch(error => {
+        console.warn("Marketplace visual layer unavailable:", error);
+        loadStyles();
+      });
   };
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => {
-      loadStyles();
       loadMarketplaceDesign();
     }, { once: true });
   } else {
-    loadStyles();
     loadMarketplaceDesign();
   }
 
-  import("./store-enhancements.js?v=20260820-3").catch(error => {
+  import("./store-enhancements.js?v=20260820-4").catch(error => {
     console.warn("Optional storefront enhancements unavailable:", error);
   });
 
