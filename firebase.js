@@ -23,11 +23,14 @@ export const storage = getStorage(app);
 
 /*
  * Additive storefront enhancements.
- * This import leaves the Firebase configuration and existing exports intact.
- * store-enhancements.js is pathname-scoped so admin/login pages are unaffected.
+ * These imports leave Firebase configuration and existing exports intact.
+ * Both enhancement files are pathname-scoped so admin/login pages are unaffected.
  */
 if (typeof window !== "undefined") {
   import("./store-enhancements.js").catch(error => {
     console.warn("Optional storefront enhancements unavailable:", error);
+  });
+  import("./main-category-filter.js").catch(error => {
+    console.warn("Optional marketplace category filter unavailable:", error);
   });
 }
