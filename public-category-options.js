@@ -16,10 +16,12 @@
     ['Other Products','📦']
   ];
 
+  let repairing=false;
   function addCanonicalOptions(){
     const select=document.getElementById('category');
     if(!select)return false;
     const existing=new Set([...select.options].map(o=>String(o.value||'').trim().toLowerCase()));
+    repairing=true;
     CATEGORIES.forEach(([name,icon])=>{
       if(existing.has(name.toLowerCase()))return;
       const option=document.createElement('option');
@@ -27,12 +29,17 @@
       option.textContent=`${icon} ${name}`;
       select.appendChild(option);
     });
+    repairing=false;
     return true;
   }
 
   function start(){
-    if(addCanonicalOptions())return;
-    setTimeout(start,100);
+    if(!addCanonicalOptions()){setTimeout(start,100);return;}
+    const select=document.getElementById('category');
+    if(select&&!select.dataset.akeemCategoryObserver){
+      select.dataset.akeemCategoryObserver='1';
+      new MutationObserver(()=>{if(!repairing)addCanonicalOptions()}).observe(select,{childList:true});
+    }
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
