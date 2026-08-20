@@ -21,17 +21,15 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-/*
- * Additive storefront enhancements.
- * Cache-busting query strings ensure GitHub Pages/browser caches do not keep
- * an older version of the marketplace category controller after an update.
- * Firebase configuration and exports remain unchanged.
- */
+/* Additive storefront/admin enhancements. */
 if (typeof window !== "undefined") {
   import("./store-enhancements.js?v=20260820-2").catch(error => {
     console.warn("Optional storefront enhancements unavailable:", error);
   });
   import("./main-category-filter.js?v=20260820-4").catch(error => {
     console.warn("Optional marketplace category filter unavailable:", error);
+  });
+  import("./admin-product-upgrade.js?v=20260820-1").catch(error => {
+    console.warn("Optional admin product form enhancement unavailable:", error);
   });
 }
