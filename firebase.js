@@ -5,6 +5,10 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-aut
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
+// Load the marketplace presentation directly so it does not depend on the
+// optional enhancement chain or Firebase timing. It is presentation-only.
+import "./jiji-reference-marketplace.js?v=20260820-2";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDhwIAmuZrY5Xqo6Ql7LDKxrPiklpG5GTE",
   authDomain: "shangrila-booking.firebaseapp.com",
@@ -26,13 +30,7 @@ if (typeof window !== "undefined") {
   import("./store-enhancements.js?v=20260820-2").catch(error => {
     console.warn("Optional storefront enhancements unavailable:", error);
   });
-  import("./main-category-filter.js?v=20260820-4").catch(error => {
-    console.warn("Optional marketplace category filter unavailable:", error);
-  });
   import("./admin-product-upgrade.js?v=20260820-1").catch(error => {
     console.warn("Optional admin product form enhancement unavailable:", error);
-  });
-  import("./jiji-reference-marketplace.js?v=20260820-1").catch(error => {
-    console.warn("Optional marketplace presentation unavailable:", error);
   });
 }
