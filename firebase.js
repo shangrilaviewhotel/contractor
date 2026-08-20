@@ -66,6 +66,12 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     import("./public-category-options.js?v=20260820-1").catch(error => {
       console.warn("Public seller category compatibility layer unavailable:", error);
     });
+    // The visitor seller form maintains its own media queue. This module
+    // disables conflicting native file-input validation without changing the
+    // existing Cloudinary upload or Firestore submission workflow.
+    import("./public-seller-upload-fix.js?v=20260820-1").catch(error => {
+      console.warn("Public seller upload compatibility layer unavailable:", error);
+    });
   }
 
   import("./admin-product-upgrade.js?v=20260820-2").catch(error => {
