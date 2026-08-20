@@ -1,0 +1,21 @@
+/* Akeem Store marketplace: restore the original background treatment only.
+   The Jiji-inspired layout remains unchanged. */
+body{
+  background:radial-gradient(circle at top,#0f172a,#020617)!important;
+  background-attachment:scroll!important;
+}
+/* The existing floating background elements are part of the original storefront.
+   Bring them back without changing their original positioning/animation. */
+body:before,
+body:after,
+.floating-figures{
+  opacity:1!important;
+  display:block!important;
+}
+/* Keep the marketplace cards/sections readable over the restored background. */
+.page-header h1{color:#fff!important}
+.page-header p{color:rgba(255,255,255,.78)!important}
+.as-section-title{color:#fff!important}
+.as-section-sub{color:rgba(255,255,255,.72)!important}
+.as-toolbar{color:rgba(255,255,255,.78)!important}
+.results-count{color:rgba(255,255,255,.72)!important}
