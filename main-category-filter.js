@@ -17,7 +17,7 @@
 
   const CATEGORIES=[
     {id:'all',label:'All Products',icon:'🛍️',keys:[]},
-    {id:'cars',label:'Cars & Vehicles',icon:'🚗',keys:['car','cars','vehicle','vehicles','automobile','auto','suv','sedan','saloon','wagon','coupe','jeep','pickup','pick-up','truck','trucks','bus','buses','van','vans','motorcycle','motorbike','motorcycle','bike','toyota','lexus','mercedes','benz','bmw','honda','nissan','ford','kia','hyundai','volkswagen','volvo','land cruiser','range rover','prado']},
+    {id:'cars',label:'Cars & Vehicles',icon:'🚗',keys:['car','cars','vehicle','vehicles','automobile','auto','suv','sedan','saloon','wagon','coupe','jeep','pickup','pick-up','truck','trucks','bus','buses','van','vans','motorcycle','motorbike','bike','toyota','lexus','mercedes','benz','bmw','honda','nissan','ford','kia','hyundai','volkswagen','volvo','land cruiser','range rover','prado']},
     {id:'tractors',label:'Tractors',icon:'🚜',keys:['tractor','tractors','farm tractor','agricultural tractor','agriculture','agricultural','farm equipment','farm machinery','harvester','combine harvester','plough','plow','cultivator','sprayer','seeder','tiller','john deere','massey ferguson','new holland','kubota','case ih']},
     {id:'houses',label:'Houses & Apartments',icon:'🏠',keys:['house','houses','home','homes','apartment','apartments','flat','flats','duplex','bungalow','mansion','villa','building','buildings','estate','real estate','property','properties','office','shop','commercial property']},
     {id:'land',label:'Land & Plots',icon:'🌍',keys:['land','plot','plots','parcel','acre','acres','hectare','hectares','farmland','land for sale','land for rent','dry land','fenced land']},
@@ -28,16 +28,8 @@
     {id:'other',label:'Other Products',icon:'📦',keys:[]}
   ];
 
-  const norm=s=>String(s||'')
-    .toLowerCase()
-    .replace(/[–—]/g,'-')
-    .replace(/[^a-z0-9\s&-]/g,' ')
-    .replace(/\s+/g,' ')
-    .trim();
-
-  const GENERIC_CATEGORY_WORDS=new Set([
-    'order','orders','product','products','item','items','other','others','general','default','uncategorized','uncategorised','category'
-  ]);
+  const norm=s=>String(s||'').toLowerCase().replace(/[–—]/g,'-').replace(/[^a-z0-9\s&-]/g,' ').replace(/\s+/g,' ').trim();
+  const GENERIC_CATEGORY_WORDS=new Set(['order','orders','product','products','item','items','other','others','general','default','uncategorized','uncategorised','category']);
 
   function categoryText(card){
     const categoryLabel=card.querySelector('.category-label');
@@ -53,7 +45,6 @@
         if(norm(category.label)===explicitValue || category.keys.some(key=>explicitValue.includes(norm(key))))return category.id;
       }
     }
-
     const hay=norm(text);
     for(const category of CATEGORIES.slice(1,-1)){
       if(category.keys.some(key=>hay.includes(norm(key))))return category.id;
@@ -67,19 +58,11 @@
   let renderingCategories=false;
   let applying=false;
 
-  function controls(){
-    return {
-      list:document.getElementById('categoryList'),
-      products:document.getElementById('products'),
-      clear:document.getElementById('clearFilters'),
-      results:document.getElementById('resultsCount')
-    };
-  }
+  function controls(){return {list:document.getElementById('categoryList'),products:document.getElementById('products'),clear:document.getElementById('clearFilters'),results:document.getElementById('resultsCount')}}
 
   function renderButtons(){
     const {list}=controls();
     if(!list)return false;
-
     renderingCategories=true;
     list.innerHTML='';
     CATEGORIES.forEach(category=>{
@@ -105,6 +88,15 @@
     });
   }
 
+  function syncMarketplaceSections(){
+    const products=controls().products;
+    if(!products)return;
+    let marker=products.querySelector('[data-akeem-category-sync]');
+    if(!marker){marker=document.createElement('span');marker.dataset.akeemCategorySync='';marker.style.display='none';products.appendChild(marker);}
+    const replacement=marker.cloneNode(false);
+    marker.replaceWith(replacement);
+  }
+
   function applyFilter(){
     if(applying)return;
     const {products,results}=controls();
@@ -115,6 +107,7 @@
     cards.forEach(card=>{
       const info=categoryText(card);
       const match=selected==='all' || classifyText(info.full,info.explicit)===selected;
+      card.style.display=match?'':'none';
       card.hidden=!match;
       card.setAttribute('aria-hidden',match?'false':'true');
       if(match)visible++;
@@ -125,6 +118,7 @@
       results.textContent=`Showing ${visible} product${visible===1?'':'s'} • ${label}`;
     }
     applying=false;
+    syncMarketplaceSections();
   }
 
   function select(id){
@@ -158,13 +152,7 @@
     const clear=controls().clear;
     if(clear&&!clear.dataset.akeemMainReset){
       clear.dataset.akeemMainReset='1';
-      clear.addEventListener('click',()=>{
-        setTimeout(()=>{
-          selected='all';
-          renderButtons();
-          applyFilter();
-        },0);
-      });
+      clear.addEventListener('click',()=>setTimeout(()=>{selected='all';renderButtons();applyFilter()},0));
     }
     return true;
   }
@@ -179,17 +167,9 @@
   }
 
   const style=document.createElement('style');
-  style.textContent=`
-    #categoryList{scrollbar-width:thin;scroll-behavior:smooth}
-    #categoryList .category-btn{display:flex;align-items:center;justify-content:center;gap:4px}
-    #categoryList:not(.akeem-category-ready){visibility:hidden;min-height:48px}
-    #products > .product[hidden]{display:none!important}
-  `;
+  style.textContent=`#categoryList{scrollbar-width:thin;scroll-behavior:smooth}#categoryList .category-btn{display:flex;align-items:center;justify-content:center;gap:4px}#categoryList:not(.akeem-category-ready){visibility:hidden;min-height:48px}#products > .product[hidden]{display:none!important}`;
   document.head.appendChild(style);
 
-  function start(){
-    if(init())return;
-    setTimeout(start,150);
-  }
+  function start(){if(init())return;setTimeout(start,150)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
