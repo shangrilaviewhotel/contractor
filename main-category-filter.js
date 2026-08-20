@@ -1,8 +1,5 @@
-/*
- * Main marketplace category filter.
- * Additive only: it does not write to Firebase or change product data.
- * It works against the cards rendered by the existing index.html renderer,
- * so old and newly-added Firebase products are covered automatically.
+/* Stable Akeem Store main category filter.
+ * Presentation/filter layer only. It never writes to Firebase.
  */
 (function(){
   'use strict';
@@ -15,7 +12,7 @@
     {id:'tractors',label:'Tractors',icon:'🚜',keys:['tractor','tractors','farm tractor','agricultural tractor','agriculture','agricultural','farm equipment','farm machinery','harvester','combine harvester','plough','plow','cultivator','sprayer','seeder','tiller']},
     {id:'houses',label:'Houses & Apartments',icon:'🏠',keys:['house','houses','home','homes','apartment','apartments','flat','flats','duplex','bungalow','mansion','villa','building','buildings','estate','real estate','property','properties','office','shop','commercial property']},
     {id:'land',label:'Land & Plots',icon:'🌍',keys:['land','plot','plots','parcel','acre','acres','hectare','hectares','farmland','land for sale','land for rent']},
-    {id:'hotels',label:'Hotels & Accommodation',icon:'🏨',keys:['hotel','hotels','guest house','guesthouse','resort','lodge','lodging','accommodation','shortlet','short-let','serviced apartment','hotel room','room']},
+    {id:'hotels',label:'Hotels & Accommodation',icon:'🏨',keys:['hotel','hotels','guest house','guesthouse','resort','lodge','lodging','accommodation','shortlet','short-let','serviced apartment','hotel room']},
     {id:'generators',label:'Generators & Power',icon:'⚡',keys:['generator','generators','gen set','genset','power generator','inverter','solar','battery','transformer','alternator','power equipment']},
     {id:'ships',label:'Ships & Marine',icon:'🚢',keys:['ship','ships','boat','boats','barge','barges','vessel','vessels','marine','yacht','ferry','tanker','cargo ship','scrap ship','scrap vessel']},
     {id:'heavy',label:'Heavy Equipment',icon:'🏗️',keys:['heavy equipment','heavy machinery','excavator','excavators','bulldozer','bulldozers','loader','loaders','crane','cranes','grader','rollers','roller','forklift','construction equipment','construction machinery','caterpillar','cat machine']},
@@ -23,50 +20,51 @@
   ];
 
   const norm=s=>String(s||'').toLowerCase().replace(/[–—]/g,'-').replace(/[^a-z0-9\s&-]/g,' ').replace(/\s+/g,' ').trim();
-  const has=(hay,key)=>norm(hay).includes(norm(key));
-
-  function getCardText(card){return norm(card.innerText||card.textContent||'');}
-
-  function classify(card){
-    const text=getCardText(card);
-    // The old "Order" value is a UI/action value, not a useful marketplace category.
-    // When it is present, classification is driven by the product's name/description text.
+  const classifyText=text=>{
+    const hay=norm(text);
     for(const category of CATEGORIES.slice(1,-1)){
-      if(category.keys.some(key=>has(text,key)))return category.id;
+      if(category.keys.some(key=>hay.includes(norm(key))))return category.id;
     }
     return 'other';
-  }
+  };
 
   let selected='all';
-  let ready=false;
+  let categoryObserver=null;
+  let productObserver=null;
+  let applying=false;
+  let initialized=false;
 
-  function getControls(){
-    return {
-      list:document.getElementById('categoryList'),
-      products:document.getElementById('products'),
-      search:document.getElementById('searchBox'),
-      clear:document.getElementById('clearFilters'),
-      results:document.getElementById('resultsCount')
-    };
+  function controls(){return {
+    list:document.getElementById('categoryList'),
+    products:document.getElementById('products'),
+    search:document.getElementById('searchBox'),
+    clear:document.getElementById('clearFilters'),
+    results:document.getElementById('resultsCount')
+  };}
+
+  function cardMatches(card){
+    if(selected==='all')return true;
+    return classifyText(card.innerText||card.textContent||'')===selected;
   }
 
   function renderButtons(){
-    const {list}=getControls();
-    if(!list)return;
-    if(list.dataset.akeemMainCategories==='1')return;
-    list.dataset.akeemMainCategories='1';
+    const {list}=controls();
+    if(!list)return false;
+    applying=true;
     list.innerHTML='';
     CATEGORIES.forEach(category=>{
       const button=document.createElement('button');
       button.type='button';
-      button.className='category-btn'+(category.id==='all'?' active':'');
+      button.className='category-btn'+(category.id===selected?' active':'');
       button.dataset.marketCategory=category.id;
+      button.setAttribute('aria-pressed',category.id===selected?'true':'false');
       button.innerHTML=`${category.icon} ${category.label}`;
-      button.setAttribute('aria-pressed',category.id==='all'?'true':'false');
       button.addEventListener('click',()=>select(category.id));
       list.appendChild(button);
     });
-    ready=true;
+    list.classList.add('akeem-category-ready');
+    applying=false;
+    return true;
   }
 
   function updateButtons(){
@@ -77,17 +75,11 @@
     });
   }
 
-  function cardMatches(card){
-    if(selected==='all')return true;
-    if(selected==='other')return classify(card)==='other';
-    return classify(card)===selected;
-  }
-
-  function apply(){
-    const {products,results}=getControls();
+  function applyFilter(){
+    const {products,results}=controls();
     if(!products)return;
     const cards=[...products.querySelectorAll(':scope > .product')];
-    if(!cards.length)return;
+    if(!cards.length){updateButtons();return;}
     let visible=0;
     cards.forEach(card=>{
       const show=cardMatches(card);
@@ -98,41 +90,65 @@
     updateButtons();
     if(results){
       const label=CATEGORIES.find(c=>c.id===selected)?.label||'All Products';
-      const search=getControls().search?.value?.trim();
-      results.textContent=`Showing ${visible} product${visible===1?'':'s'}${search?' matching your search':''} • ${label}`;
+      results.textContent=`Showing ${visible} product${visible===1?'':'s'} • ${label}`;
     }
   }
 
   function select(id){
     selected=id;
-    apply();
-    const {products}=getControls();
+    updateButtons();
+    applyFilter();
+    const {products}=controls();
     if(products)products.scrollIntoView({behavior:'smooth',block:'start'});
   }
 
-  function reset(){selected='all';apply();}
+  function installObservers(){
+    const {list,products}=controls();
+    if(!list||!products)return false;
+
+    if(!categoryObserver){
+      categoryObserver=new MutationObserver(()=>{
+        // The original Firebase renderer calls buildCategories() after async data loads.
+        // Re-render our category bar immediately whenever that code tries to replace it.
+        if(!applying)renderButtons();
+      });
+      categoryObserver.observe(list,{childList:true});
+    }
+
+    if(!productObserver){
+      productObserver=new MutationObserver(()=>{
+        // renderProducts() replaces the grid after Firebase/search/sort changes.
+        // Re-apply the selected marketplace category to the new cards.
+        if(selected!=='all')setTimeout(applyFilter,0);
+      });
+      productObserver.observe(products,{childList:true});
+    }
+
+    if(!list.dataset.akeemScrollLocked){
+      list.dataset.akeemScrollLocked='1';
+      list.addEventListener('click',e=>{
+        const button=e.target.closest('.category-btn[data-market-category]');
+        if(!button)return;
+        e.stopPropagation();
+      },true);
+    }
+
+    const clear=controls().clear;
+    if(clear&&!clear.dataset.akeemMainReset){
+      clear.dataset.akeemMainReset='1';
+      clear.addEventListener('click',()=>setTimeout(()=>{selected='all';renderButtons();applyFilter()},0));
+    }
+
+    return true;
+  }
 
   function init(){
-    const controls=getControls();
-    if(!controls.list||!controls.products)return false;
+    const c=controls();
+    if(!c.list||!c.products)return false;
     renderButtons();
-    apply();
-    if(!controls.products.dataset.akeemCategoryObserver){
-      controls.products.dataset.akeemCategoryObserver='1';
-      new MutationObserver(()=>{
-        // Existing Firebase renderer may replace the cards after search/sort.
-        // Re-apply the selected marketplace category to the newly-rendered cards.
-        if(selected!=='all')apply();
-      }).observe(controls.products,{childList:true,subtree:false});
-    }
-    if(controls.clear&&!controls.clear.dataset.akeemCategoryReset){
-      controls.clear.dataset.akeemCategoryReset='1';
-      controls.clear.addEventListener('click',()=>setTimeout(reset,0));
-    }
-    if(controls.search&&!controls.search.dataset.akeemCategorySearch){
-      controls.search.dataset.akeemCategorySearch='1';
-      controls.search.addEventListener('input',()=>setTimeout(()=>{if(selected!=='all')apply()},40));
-    }
+    installObservers();
+    applyFilter();
+    initialized=true;
     return true;
   }
 
@@ -140,14 +156,15 @@
   style.textContent=`
     #categoryList{scrollbar-width:thin;scroll-behavior:smooth}
     #categoryList .category-btn{display:inline-flex;align-items:center;gap:6px}
+    #categoryList:not(.akeem-category-ready){visibility:hidden;min-height:48px}
     #products > .product[hidden]{display:none!important}
     .category-btn[data-market-category="tractors"]{border-color:rgba(16,185,129,.55)}
   `;
   document.head.appendChild(style);
 
-  const start=()=>{
+  function start(){
     if(init())return;
-    setTimeout(start,250);
-  };
+    setTimeout(start,150);
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
