@@ -62,6 +62,7 @@ import { collection, getDocs, getDoc, updateDoc, doc, query, where, writeBatch }
         name:p.name||'',price:p.price||'',description:publicDescription,shortDescription:p.shortDescription||'',
         sku:p.sku||`AS-PRD-${Date.now().toString(36).slice(-5).toUpperCase()}`,
         category:p.category||'',brand:p.brand||'',tags:Array.isArray(p.tags)?p.tags:[],
+        location:p.location||'',condition:p.condition||'',
         comparePrice:p.comparePrice||'',costPrice:'',stockQuantity:Number(p.stockQuantity)||0,minStock:Number(p.minStock)||1,
         status:'published',featured:false,bestSeller:false,trending:false,newArrival:true,sold:false,
         seoTitle:p.seoTitle||p.name||'',seoDescription:p.seoDescription||p.shortDescription||'',slug:p.slug||'',imageAlt:p.imageAlt||p.name||'',adminNotes:'Public seller submission approved.',
