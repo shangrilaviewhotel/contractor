@@ -31,26 +31,30 @@
   let selected='all';
   let categoryObserver=null;
   let productObserver=null;
-  let applying=false;
-  let initialized=false;
+  let renderingCategories=false;
 
   function controls(){return {
     list:document.getElementById('categoryList'),
     products:document.getElementById('products'),
-    search:document.getElementById('searchBox'),
     clear:document.getElementById('clearFilters'),
     results:document.getElementById('resultsCount')
   };}
 
-  function cardMatches(card){
-    if(selected==='all')return true;
-    return classifyText(card.innerText||card.textContent||'')===selected;
+  function categoryBarIsOurs(list){
+    const buttons=[...list.querySelectorAll('.category-btn')];
+    return buttons.length===CATEGORIES.length && buttons.every(button=>button.dataset.marketCategory);
   }
 
   function renderButtons(){
     const {list}=controls();
     if(!list)return false;
-    applying=true;
+    if(categoryBarIsOurs(list)){
+      updateButtons();
+      list.classList.add('akeem-category-ready');
+      return true;
+    }
+
+    renderingCategories=true;
     list.innerHTML='';
     CATEGORIES.forEach(category=>{
       const button=document.createElement('button');
@@ -63,7 +67,7 @@
       list.appendChild(button);
     });
     list.classList.add('akeem-category-ready');
-    applying=false;
+    renderingCategories=false;
     return true;
   }
 
@@ -75,11 +79,15 @@
     });
   }
 
+  function cardMatches(card){
+    if(selected==='all')return true;
+    return classifyText(card.innerText||card.textContent||'')===selected;
+  }
+
   function applyFilter(){
     const {products,results}=controls();
     if(!products)return;
     const cards=[...products.querySelectorAll(':scope > .product')];
-    if(!cards.length){updateButtons();return;}
     let visible=0;
     cards.forEach(card=>{
       const show=cardMatches(card);
@@ -108,29 +116,19 @@
 
     if(!categoryObserver){
       categoryObserver=new MutationObserver(()=>{
-        // The original Firebase renderer calls buildCategories() after async data loads.
-        // Re-render our category bar immediately whenever that code tries to replace it.
-        if(!applying)renderButtons();
+        if(renderingCategories)return;
+        // The original Firebase buildCategories() may replace the bar after async loading.
+        // Only rebuild when the DOM is actually the old category bar.
+        if(!categoryBarIsOurs(list))renderButtons();
       });
       categoryObserver.observe(list,{childList:true});
     }
 
     if(!productObserver){
       productObserver=new MutationObserver(()=>{
-        // renderProducts() replaces the grid after Firebase/search/sort changes.
-        // Re-apply the selected marketplace category to the new cards.
         if(selected!=='all')setTimeout(applyFilter,0);
       });
       productObserver.observe(products,{childList:true});
-    }
-
-    if(!list.dataset.akeemScrollLocked){
-      list.dataset.akeemScrollLocked='1';
-      list.addEventListener('click',e=>{
-        const button=e.target.closest('.category-btn[data-market-category]');
-        if(!button)return;
-        e.stopPropagation();
-      },true);
     }
 
     const clear=controls().clear;
@@ -138,7 +136,6 @@
       clear.dataset.akeemMainReset='1';
       clear.addEventListener('click',()=>setTimeout(()=>{selected='all';renderButtons();applyFilter()},0));
     }
-
     return true;
   }
 
@@ -148,7 +145,6 @@
     renderButtons();
     installObservers();
     applyFilter();
-    initialized=true;
     return true;
   }
 
