@@ -20,3 +20,14 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+
+/*
+ * Additive storefront enhancements.
+ * This import leaves the Firebase configuration and existing exports intact.
+ * store-enhancements.js is pathname-scoped so admin/login pages are unaffected.
+ */
+if (typeof window !== "undefined") {
+  import("./store-enhancements.js").catch(error => {
+    console.warn("Optional storefront enhancements unavailable:", error);
+  });
+}
