@@ -20,16 +20,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-/*
- * Wait for Firebase Auth to restore the existing browser session before
- * allowing pages that immediately query Firestore (especially the admin
- * dashboard) to continue. Without this, a refresh can briefly look like
- * there is no authenticated admin and the protected Firestore reads fail.
- *
- * The timeout keeps public pages from being held indefinitely if Auth is
- * temporarily unavailable. The normal Auth callback resolves immediately
- * once Firebase knows the current user (including null for signed-out users).
- */
+// Give Firebase Auth a chance to restore the existing admin session before
+// protected Firestore reads begin. Public pages are never blocked forever.
 await new Promise(resolve => {
   let settled = false;
   let unsubscribe = () => {};
@@ -71,7 +63,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     loadMarketplaceDesign();
   }
 
-  import("./public-seller-link.js?v=20260820-2").catch(error => {
+  import("./public-seller-link.js?v=20260820-3").catch(error => {
     console.warn("Public seller link module unavailable:", error);
   });
 
@@ -89,8 +81,8 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     import("./public-category-options.js?v=20260820-1").catch(error => {
       console.warn("Public seller category compatibility layer unavailable:", error);
     });
-    import("./public-seller-upload-fix.js?v=20260820-1").catch(error => {
-      console.warn("Public seller upload compatibility layer unavailable:", error);
+    import("./public-seller-upload-fix.js?v=20260820-2").catch(error => {
+      console.warn("Public seller upload runtime unavailable:", error);
     });
   }
 
@@ -101,6 +93,9 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   if (location.pathname.toLowerCase().includes("admindashboard")) {
     import("./admin-public-submissions.js?v=20260820-2").catch(error => {
       console.warn("Public submission review module unavailable:", error);
+    });
+    import("./admin-data-recovery.js?v=20260820-1").catch(error => {
+      console.warn("Admin data recovery module unavailable:", error);
     });
   }
 }
