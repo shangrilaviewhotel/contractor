@@ -26,15 +26,21 @@
   function categoryText(card){
     const categoryLabel=card.querySelector('.category-label');
     const explicit=categoryLabel ? categoryLabel.textContent : '';
-    const dataCategory=card.dataset.category||card.getAttribute('data-category')||'';
-    return {explicit:norm(explicit),full:norm(`${dataCategory} ${card.innerText||card.textContent||''}`)};
+    const dataCategory=card.dataset.marketCategory||card.dataset.category||card.getAttribute('data-category')||'';
+    return {explicit:norm(explicit),data:norm(dataCategory),full:norm(`${dataCategory} ${card.innerText||card.textContent||''}`)};
   }
 
-  function classifyText(text,explicit=''){
+  function classifyText(text,explicit='',data=''){
     const explicitValue=norm(explicit);
     if(explicitValue && !GENERIC_CATEGORY_WORDS.has(explicitValue)){
       for(const category of CATEGORIES.slice(1,-1)){
         if(norm(category.label)===explicitValue || category.keys.some(key=>explicitValue.includes(norm(key))))return category.id;
+      }
+    }
+    const dataValue=norm(data);
+    if(dataValue && !GENERIC_CATEGORY_WORDS.has(dataValue)){
+      for(const category of CATEGORIES.slice(1,-1)){
+        if(norm(category.label)===dataValue || category.keys.some(key=>dataValue.includes(norm(key))))return category.id;
       }
     }
     const hay=norm(text);
@@ -42,6 +48,19 @@
       if(category.keys.some(key=>hay.includes(norm(key))))return category.id;
     }
     return 'other';
+  }
+
+  function categoryById(id){return CATEGORIES.find(c=>c.id===id)||CATEGORIES[CATEGORIES.length-1]}
+
+  function repairLegacyCategoryLabel(card,categoryId,info){
+    const label=card.querySelector('.category-label');
+    if(!label)return;
+    const generic=GENERIC_CATEGORY_WORDS.has(info.explicit);
+    const known=categoryId!=='other' || info.explicit==='other products' || info.explicit==='other';
+    if(generic || !info.explicit || (!known && info.explicit!=='other products')){
+      label.textContent=categoryById(categoryId).label;
+    }
+    card.dataset.marketCategory=categoryId;
   }
 
   let selected='all', categoryObserver=null, productObserver=null, renderingCategories=false, applying=false;
@@ -94,7 +113,9 @@
     let visible=0;
     cards.forEach(card=>{
       const info=categoryText(card);
-      const match=selected==='all' || classifyText(info.full,info.explicit)===selected;
+      const inferred=classifyText(info.full,info.explicit,info.data);
+      repairLegacyCategoryLabel(card,inferred,info);
+      const match=selected==='all' || inferred===selected;
       card.style.display=match?'':'none';
       card.hidden=!match;
       card.setAttribute('aria-hidden',match?'false':'true');
@@ -102,7 +123,7 @@
     });
     updateButtons();
     if(results){
-      const label=CATEGORIES.find(c=>c.id===selected)?.label||'All Products';
+      const label=categoryById(selected).label;
       results.textContent=`Showing ${visible} product${visible===1?'':'s'} • ${label}`;
     }
     applying=false;
