@@ -32,4 +32,7 @@ if (typeof window !== "undefined") {
   import("./admin-product-upgrade.js?v=20260820-1").catch(error => {
     console.warn("Optional admin product form enhancement unavailable:", error);
   });
+  import("./jiji-reference-marketplace.js?v=20260820-1").catch(error => {
+    console.warn("Optional marketplace presentation unavailable:", error);
+  });
 }
