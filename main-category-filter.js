@@ -1,14 +1,6 @@
 /*
  * Akeem Store — stable public category controller.
- *
- * IMPORTANT:
- * - Presentation/filter layer only.
- * - Never writes to Firebase.
- * - Works with old products whose category field may be "Order", blank,
- *   or use older category names by inferring the marketplace category from
- *   the product card text.
- * - Re-applies the selected category whenever the existing Firebase renderer
- *   refreshes the product cards.
+ * Presentation/filter layer only; never writes to Firebase.
  */
 (function(){
   'use strict';
@@ -52,11 +44,7 @@
     return 'other';
   }
 
-  let selected='all';
-  let categoryObserver=null;
-  let productObserver=null;
-  let renderingCategories=false;
-  let applying=false;
+  let selected='all', categoryObserver=null, productObserver=null, renderingCategories=false, applying=false;
 
   function controls(){return {list:document.getElementById('categoryList'),products:document.getElementById('products'),clear:document.getElementById('clearFilters'),results:document.getElementById('resultsCount')}}
 
@@ -90,11 +78,11 @@
 
   function syncMarketplaceSections(){
     const products=controls().products;
-    if(!products)return;
-    let marker=products.querySelector('[data-akeem-category-sync]');
-    if(!marker){marker=document.createElement('span');marker.dataset.akeemCategorySync='';marker.style.display='none';products.appendChild(marker);}
-    const replacement=marker.cloneNode(false);
-    marker.replaceWith(replacement);
+    if(!products || products.querySelector('[data-akeem-category-sync]'))return;
+    const marker=document.createElement('span');
+    marker.dataset.akeemCategorySync='';
+    marker.style.display='none';
+    products.appendChild(marker);
   }
 
   function applyFilter(){
@@ -132,7 +120,6 @@
   function installObservers(){
     const {list,products}=controls();
     if(!list||!products)return false;
-
     if(!categoryObserver){
       categoryObserver=new MutationObserver(()=>{
         if(renderingCategories)return;
@@ -141,14 +128,10 @@
       });
       categoryObserver.observe(list,{childList:true});
     }
-
     if(!productObserver){
-      productObserver=new MutationObserver(()=>{
-        if(!applying)setTimeout(applyFilter,0);
-      });
+      productObserver=new MutationObserver(()=>{if(!applying)setTimeout(applyFilter,0)});
       productObserver.observe(products,{childList:true});
     }
-
     const clear=controls().clear;
     if(clear&&!clear.dataset.akeemMainReset){
       clear.dataset.akeemMainReset='1';
