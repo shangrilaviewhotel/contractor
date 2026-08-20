@@ -1,5 +1,14 @@
-/* Stable Akeem Store main category filter.
- * Presentation/filter layer only. It never writes to Firebase.
+/*
+ * Akeem Store — stable public category controller.
+ *
+ * IMPORTANT:
+ * - Presentation/filter layer only.
+ * - Never writes to Firebase.
+ * - Works with old products whose category field may be "Order", blank,
+ *   or use older category names by inferring the marketplace category from
+ *   the product card text.
+ * - Re-applies the selected category whenever the existing Firebase renderer
+ *   refreshes the product cards.
  */
 (function(){
   'use strict';
@@ -8,51 +17,68 @@
 
   const CATEGORIES=[
     {id:'all',label:'All Products',icon:'🛍️',keys:[]},
-    {id:'cars',label:'Cars & Vehicles',icon:'🚗',keys:['car','cars','vehicle','vehicles','automobile','auto','suv','sedan','coupe','saloon','wagon','jeep','pickup','pick-up','truck','trucks','bus','buses','van','vans','motorcycle','motorbike','bike','toyota','lexus','mercedes','benz','bmw','honda','nissan','ford','kia','hyundai','volkswagen','volvo','land cruiser','range rover','prado']},
-    {id:'tractors',label:'Tractors',icon:'🚜',keys:['tractor','tractors','farm tractor','agricultural tractor','agriculture','agricultural','farm equipment','farm machinery','harvester','combine harvester','plough','plow','cultivator','sprayer','seeder','tiller']},
+    {id:'cars',label:'Cars & Vehicles',icon:'🚗',keys:['car','cars','vehicle','vehicles','automobile','auto','suv','sedan','saloon','wagon','coupe','jeep','pickup','pick-up','truck','trucks','bus','buses','van','vans','motorcycle','motorbike','motorcycle','bike','toyota','lexus','mercedes','benz','bmw','honda','nissan','ford','kia','hyundai','volkswagen','volvo','land cruiser','range rover','prado']},
+    {id:'tractors',label:'Tractors',icon:'🚜',keys:['tractor','tractors','farm tractor','agricultural tractor','agriculture','agricultural','farm equipment','farm machinery','harvester','combine harvester','plough','plow','cultivator','sprayer','seeder','tiller','john deere','massey ferguson','new holland','kubota','case ih']},
     {id:'houses',label:'Houses & Apartments',icon:'🏠',keys:['house','houses','home','homes','apartment','apartments','flat','flats','duplex','bungalow','mansion','villa','building','buildings','estate','real estate','property','properties','office','shop','commercial property']},
-    {id:'land',label:'Land & Plots',icon:'🌍',keys:['land','plot','plots','parcel','acre','acres','hectare','hectares','farmland','land for sale','land for rent']},
+    {id:'land',label:'Land & Plots',icon:'🌍',keys:['land','plot','plots','parcel','acre','acres','hectare','hectares','farmland','land for sale','land for rent','dry land','fenced land']},
     {id:'hotels',label:'Hotels & Accommodation',icon:'🏨',keys:['hotel','hotels','guest house','guesthouse','resort','lodge','lodging','accommodation','shortlet','short-let','serviced apartment','hotel room']},
-    {id:'generators',label:'Generators & Power',icon:'⚡',keys:['generator','generators','gen set','genset','power generator','inverter','solar','battery','transformer','alternator','power equipment']},
-    {id:'ships',label:'Ships & Marine',icon:'🚢',keys:['ship','ships','boat','boats','barge','barges','vessel','vessels','marine','yacht','ferry','tanker','cargo ship','scrap ship','scrap vessel']},
-    {id:'heavy',label:'Heavy Equipment',icon:'🏗️',keys:['heavy equipment','heavy machinery','excavator','excavators','bulldozer','bulldozers','loader','loaders','crane','cranes','grader','rollers','roller','forklift','construction equipment','construction machinery','caterpillar','cat machine']},
+    {id:'generators',label:'Generators & Power',icon:'⚡',keys:['generator','generators','gen set','genset','power generator','inverter','solar','battery','transformer','alternator','power equipment','power system']},
+    {id:'ships',label:'Ships & Marine',icon:'🚢',keys:['ship','ships','boat','boats','barge','barges','vessel','vessels','marine','yacht','ferry','tanker','cargo ship','scrap ship','scrap vessel','marine equipment']},
+    {id:'heavy',label:'Heavy Equipment',icon:'🏗️',keys:['heavy equipment','heavy machinery','excavator','excavators','bulldozer','bulldozers','loader','loaders','crane','cranes','grader','rollers','roller','forklift','construction equipment','construction machinery','caterpillar','cat machine','backhoe','compactor','industrial machine']},
     {id:'other',label:'Other Products',icon:'📦',keys:[]}
   ];
 
-  const norm=s=>String(s||'').toLowerCase().replace(/[–—]/g,'-').replace(/[^a-z0-9\s&-]/g,' ').replace(/\s+/g,' ').trim();
-  const classifyText=text=>{
+  const norm=s=>String(s||'')
+    .toLowerCase()
+    .replace(/[–—]/g,'-')
+    .replace(/[^a-z0-9\s&-]/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+
+  const GENERIC_CATEGORY_WORDS=new Set([
+    'order','orders','product','products','item','items','other','others','general','default','uncategorized','uncategorised','category'
+  ]);
+
+  function categoryText(card){
+    const categoryLabel=card.querySelector('.category-label');
+    const explicit=categoryLabel ? categoryLabel.textContent : '';
+    const dataCategory=card.dataset.category||card.getAttribute('data-category')||'';
+    return {explicit:norm(explicit),full:norm(`${dataCategory} ${card.innerText||card.textContent||''}`)};
+  }
+
+  function classifyText(text,explicit=''){
+    const explicitValue=norm(explicit);
+    if(explicitValue && !GENERIC_CATEGORY_WORDS.has(explicitValue)){
+      for(const category of CATEGORIES.slice(1,-1)){
+        if(norm(category.label)===explicitValue || category.keys.some(key=>explicitValue.includes(norm(key))))return category.id;
+      }
+    }
+
     const hay=norm(text);
     for(const category of CATEGORIES.slice(1,-1)){
       if(category.keys.some(key=>hay.includes(norm(key))))return category.id;
     }
     return 'other';
-  };
+  }
 
   let selected='all';
   let categoryObserver=null;
   let productObserver=null;
   let renderingCategories=false;
+  let applying=false;
 
-  function controls(){return {
-    list:document.getElementById('categoryList'),
-    products:document.getElementById('products'),
-    clear:document.getElementById('clearFilters'),
-    results:document.getElementById('resultsCount')
-  };}
-
-  function categoryBarIsOurs(list){
-    const buttons=[...list.querySelectorAll('.category-btn')];
-    return buttons.length===CATEGORIES.length && buttons.every(button=>button.dataset.marketCategory);
+  function controls(){
+    return {
+      list:document.getElementById('categoryList'),
+      products:document.getElementById('products'),
+      clear:document.getElementById('clearFilters'),
+      results:document.getElementById('resultsCount')
+    };
   }
 
   function renderButtons(){
     const {list}=controls();
     if(!list)return false;
-    if(categoryBarIsOurs(list)){
-      updateButtons();
-      list.classList.add('akeem-category-ready');
-      return true;
-    }
 
     renderingCategories=true;
     list.innerHTML='';
@@ -62,7 +88,7 @@
       button.className='category-btn'+(category.id===selected?' active':'');
       button.dataset.marketCategory=category.id;
       button.setAttribute('aria-pressed',category.id===selected?'true':'false');
-      button.innerHTML=`${category.icon} ${category.label}`;
+      button.innerHTML=`<span style="display:block;font-size:24px;line-height:1.1;margin-bottom:4px">${category.icon}</span><span>${category.label}</span>`;
       button.addEventListener('click',()=>select(category.id));
       list.appendChild(button);
     });
@@ -79,27 +105,26 @@
     });
   }
 
-  function cardMatches(card){
-    if(selected==='all')return true;
-    return classifyText(card.innerText||card.textContent||'')===selected;
-  }
-
   function applyFilter(){
+    if(applying)return;
     const {products,results}=controls();
     if(!products)return;
+    applying=true;
     const cards=[...products.querySelectorAll(':scope > .product')];
     let visible=0;
     cards.forEach(card=>{
-      const show=cardMatches(card);
-      card.hidden=!show;
-      card.setAttribute('aria-hidden',show?'false':'true');
-      if(show)visible++;
+      const info=categoryText(card);
+      const match=selected==='all' || classifyText(info.full,info.explicit)===selected;
+      card.hidden=!match;
+      card.setAttribute('aria-hidden',match?'false':'true');
+      if(match)visible++;
     });
     updateButtons();
     if(results){
       const label=CATEGORIES.find(c=>c.id===selected)?.label||'All Products';
       results.textContent=`Showing ${visible} product${visible===1?'':'s'} • ${label}`;
     }
+    applying=false;
   }
 
   function select(id){
@@ -117,16 +142,15 @@
     if(!categoryObserver){
       categoryObserver=new MutationObserver(()=>{
         if(renderingCategories)return;
-        // The original Firebase buildCategories() may replace the bar after async loading.
-        // Only rebuild when the DOM is actually the old category bar.
-        if(!categoryBarIsOurs(list))renderButtons();
+        if(!list.querySelector('.category-btn[data-market-category]'))renderButtons();
+        else updateButtons();
       });
       categoryObserver.observe(list,{childList:true});
     }
 
     if(!productObserver){
       productObserver=new MutationObserver(()=>{
-        if(selected!=='all')setTimeout(applyFilter,0);
+        if(!applying)setTimeout(applyFilter,0);
       });
       productObserver.observe(products,{childList:true});
     }
@@ -134,7 +158,13 @@
     const clear=controls().clear;
     if(clear&&!clear.dataset.akeemMainReset){
       clear.dataset.akeemMainReset='1';
-      clear.addEventListener('click',()=>setTimeout(()=>{selected='all';renderButtons();applyFilter()},0));
+      clear.addEventListener('click',()=>{
+        setTimeout(()=>{
+          selected='all';
+          renderButtons();
+          applyFilter();
+        },0);
+      });
     }
     return true;
   }
@@ -151,10 +181,9 @@
   const style=document.createElement('style');
   style.textContent=`
     #categoryList{scrollbar-width:thin;scroll-behavior:smooth}
-    #categoryList .category-btn{display:inline-flex;align-items:center;gap:6px}
+    #categoryList .category-btn{display:flex;align-items:center;justify-content:center;gap:4px}
     #categoryList:not(.akeem-category-ready){visibility:hidden;min-height:48px}
     #products > .product[hidden]{display:none!important}
-    .category-btn[data-market-category="tractors"]{border-color:rgba(16,185,129,.55)}
   `;
   document.head.appendChild(style);
 
