@@ -15,31 +15,25 @@ const firebaseConfig = {
   measurementId: "G-ZYB3J8BW72"
 };
 
-// Firebase initializes independently of every optional visual enhancement.
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-/*
- * Presentation-only files are loaded after Firebase has initialized.
- * A styling failure can therefore never make the storefront report that
- * Firebase is unavailable.
- */
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   const loadStyles = () => {
     if (!document.querySelector('link[data-akeem-background]')) {
       const backgroundStyle = document.createElement("link");
       backgroundStyle.rel = "stylesheet";
-      backgroundStyle.href = "./marketplace-background-restore.css?v=20260820-4";
+      backgroundStyle.href = "./marketplace-background-restore.css?v=20260820-5";
       backgroundStyle.dataset.akeemBackground = "true";
       document.head.appendChild(backgroundStyle);
     }
   };
 
   const loadMarketplaceDesign = () => {
-    import("./jiji-reference-marketplace.js?v=20260820-4")
+    import("./jiji-reference-marketplace.js?v=20260820-5")
       .then(() => loadStyles())
       .catch(error => {
         console.warn("Marketplace visual layer unavailable:", error);
@@ -48,12 +42,14 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   };
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      loadMarketplaceDesign();
-    }, { once: true });
+    document.addEventListener("DOMContentLoaded", () => loadMarketplaceDesign(), { once: true });
   } else {
     loadMarketplaceDesign();
   }
+
+  import("./public-seller-link.js?v=20260820-1").catch(error => {
+    console.warn("Public seller link module unavailable:", error);
+  });
 
   import("./store-enhancements.js?v=20260820-4").catch(error => {
     console.warn("Optional storefront enhancements unavailable:", error);
@@ -62,4 +58,10 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   import("./admin-product-upgrade.js?v=20260820-1").catch(error => {
     console.warn("Optional admin product form enhancement unavailable:", error);
   });
+
+  if (location.pathname.toLowerCase().includes("admindashboard")) {
+    import("./admin-public-submissions.js?v=20260820-1").catch(error => {
+      console.warn("Public submission review module unavailable:", error);
+    });
+  }
 }
