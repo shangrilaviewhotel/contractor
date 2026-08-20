@@ -19,34 +19,60 @@
     ['Other Products','📦']
   ];
 
+  const GENERIC_VALUES=new Set(['order','orders','product','products','item','items','general','default','uncategorized','uncategorised','category','categories','other']);
   const $=id=>document.getElementById(id);
 
   function addCanonicalCategories(){
     const select=$('category');
     const edit=$('e_category');
-    if(!select)return;
+    if(!select)return false;
 
-    // Keep categories already configured in Firebase, then append the marketplace
-    // categories only when they are missing. This avoids deleting administrator-created categories.
-    const existing=[...select.options].map(o=>String(o.value).trim().toLowerCase());
-    MARKET_CATEGORIES.forEach(([name,icon])=>{
-      if(!existing.includes(name.toLowerCase())){
+    const append=(target)=>{
+      if(!target)return;
+      const existing=new Set([...target.options].map(o=>String(o.value||'').trim().toLowerCase()));
+      MARKET_CATEGORIES.forEach(([name,icon])=>{
+        if(existing.has(name.toLowerCase()))return;
         const opt=document.createElement('option');
         opt.value=name;
         opt.textContent=`${icon} ${name}`;
-        select.appendChild(opt);
-      }
-    });
-    if(edit){
-      const editExisting=[...edit.options].map(o=>String(o.value).trim().toLowerCase());
-      MARKET_CATEGORIES.forEach(([name,icon])=>{
-        if(!editExisting.includes(name.toLowerCase())){
-          const opt=document.createElement('option');
-          opt.value=name;
-          opt.textContent=`${icon} ${name}`;
-          edit.appendChild(opt);
-        }
+        target.appendChild(opt);
+        existing.add(name.toLowerCase());
       });
+    };
+
+    append(select);
+    append(edit);
+    return true;
+  }
+
+  function inferCategory(name,description){
+    const text=String(`${name||''} ${description||''}`).toLowerCase();
+    const groups=[
+      ['Cars & Vehicles',['car','cars','vehicle','toyota','lexus','mercedes','benz','bmw','honda','nissan','ford','kia','hyundai','volkswagen','volvo','camry','corolla','hilux','suv','truck','bus','van','motorcycle','motorbike']],
+      ['Tractors',['tractor','farm tractor','agricultural','farm equipment','farm machinery','harvester','plough','plow','cultivator','sprayer','seeder','tiller','john deere','massey ferguson','new holland','kubota','case ih']],
+      ['Houses & Apartments',['house','home','apartment','flat','duplex','bungalow','mansion','villa','building','estate','property','office','shop','commercial property','terrace','detached']],
+      ['Land & Plots',['land','plot','plots','parcel','acre','hectare','farmland','dry land','fenced land']],
+      ['Hotels & Accommodation',['hotel','guest house','guesthouse','resort','lodge','accommodation','shortlet','short-let','serviced apartment','motel','inn']],
+      ['Generators & Power',['generator','genset','gen set','inverter','solar','battery','transformer','alternator','power system','power equipment','ups']],
+      ['Ships & Marine',['ship','boat','barge','vessel','marine','yacht','ferry','tanker','scrap vessel','scrap ship','speedboat','watercraft','canoe']],
+      ['Heavy Equipment',['excavator','bulldozer','loader','crane','grader','forklift','backhoe','compactor','caterpillar','heavy equipment','heavy machinery','construction machinery','industrial equipment','road equipment']]
+    ];
+    for(const [category,keys] of groups)if(keys.some(k=>text.includes(k)))return category;
+    return '';
+  }
+
+  function repairGenericSelection(){
+    const category=$('category');
+    if(!category)return;
+    const value=String(category.value||'').trim().toLowerCase();
+    if(!GENERIC_VALUES.has(value))return;
+    // Do not overwrite a real administrator-created category. Only replace the
+    // legacy generic value when the product itself clearly identifies a category.
+    const inferred=inferCategory($('name')?.value,$('desc')?.value);
+    if(inferred){
+      addCanonicalCategories();
+      category.value=inferred;
+      category.dispatchEvent(new Event('change',{bubbles:true}));
     }
   }
 
@@ -97,8 +123,25 @@
     };
     if(!category.dataset.akeemUpgradeChange){
       category.dataset.akeemUpgradeChange='1';
-      category.addEventListener('change',sync);
+      category.addEventListener('change',()=>{addCanonicalCategories();sync()});
+      ['input','blur'].forEach(evt=>category.addEventListener(evt,()=>{addCanonicalCategories();sync()}));
     }
+
+    // admindashboard.html repopulates this select from Firestore. A mutation
+    // observer keeps the marketplace categories present after that refresh.
+    if(!category.dataset.akeemCategoryObserver){
+      category.dataset.akeemCategoryObserver='1';
+      new MutationObserver(()=>addCanonicalCategories()).observe(category,{childList:true});
+    }
+
+    // Before the existing CRUD handler reads #category, repair legacy generic
+    // values when the product name/description makes the intended category clear.
+    const submit=$('uploadBtn');
+    if(submit&&!submit.dataset.akeemCategorySubmit){
+      submit.dataset.akeemCategorySubmit='1';
+      submit.addEventListener('click',()=>setTimeout(repairGenericSelection,0),{capture:true});
+    }
+
     sync();
     return true;
   }
