@@ -52,7 +52,13 @@
       search.value=input.value;
       search.dispatchEvent(new Event('input',{bubbles:true}));
     });
-    input.addEventListener('keydown',e=>{if(e.key==='Enter'){search.value=input.value;search.dispatchEvent(new Event('input',{bubbles:true));search.focus()}}});
+    input.addEventListener('keydown',e=>{
+      if(e.key==='Enter'){
+        search.value=input.value;
+        search.dispatchEvent(new Event('input',{bubbles:true}));
+        search.focus();
+      }
+    });
   }
 
   function addNavigation(){
@@ -67,7 +73,11 @@
     const sell=document.createElement('a');
     sell.className='jiji-sell';sell.href='login.html';sell.textContent='SELL';sell.setAttribute('aria-label','Sell a product');
     nav.insertBefore(sell,hamburger);
-    wrap.querySelector('button').addEventListener('click',()=>{const input=wrap.querySelector('input');const search=document.getElementById('searchBox');if(search){search.value=input.value;search.dispatchEvent(new Event('input',{bubbles:true}));search.scrollIntoView({behavior:'smooth',block:'center'})}});
+    wrap.querySelector('button').addEventListener('click',()=>{
+      const input=wrap.querySelector('input');
+      const search=document.getElementById('searchBox');
+      if(search){search.value=input.value;search.dispatchEvent(new Event('input',{bubbles:true}));search.scrollIntoView({behavior:'smooth',block:'center'})}
+    });
   }
 
   function addHero(){
@@ -80,7 +90,11 @@
     hero.innerHTML='<div class="jiji-hero-card"><div class="jiji-hero-eyebrow">Akeem Store Marketplace</div><div class="jiji-hero-title">Find what you need. Sell what you have.</div><div class="jiji-hero-sub">Browse cars, tractors, land, houses, hotels, generators, marine assets and heavy equipment from your existing Akeem Store catalogue.</div><div class="jiji-hero-search"><input type="search" aria-label="Search Akeem Store" placeholder="Search cars, tractors, land, houses, generators..." autocomplete="off"><button type="button">Search</button></div></div></section>';
     header.after(hero);
     wireSearch(hero.querySelector('input'));
-    hero.querySelector('button').addEventListener('click',()=>{const input=hero.querySelector('input');const search=document.getElementById('searchBox');if(search){search.value=input.value;search.dispatchEvent(new Event('input',{bubbles:true}));controls.scrollIntoView({behavior:'smooth',block:'start'})}});
+    hero.querySelector('button').addEventListener('click',()=>{
+      const input=hero.querySelector('input');
+      const search=document.getElementById('searchBox');
+      if(search){search.value=input.value;search.dispatchEvent(new Event('input',{bubbles:true}));controls.scrollIntoView({behavior:'smooth',block:'start'})}
+    });
   }
 
   function decorateCategories(){
