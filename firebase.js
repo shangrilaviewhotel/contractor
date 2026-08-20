@@ -56,7 +56,8 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   });
 
   if (location.pathname === "/" || /index\.html$/i.test(location.pathname) || /Contractor-\/?$/i.test(location.pathname)) {
-    import("./main-category-filter.js?v=20260820-6").catch(error => {
+    // Version bumped so browsers cannot keep the previous category controller cached.
+    import("./main-category-filter.js?v=20260820-7").catch(error => {
       console.warn("Marketplace category controller unavailable:", error);
     });
   }
@@ -67,7 +68,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     });
   }
 
-  import("./admin-product-upgrade.js?v=20260820-1").catch(error => {
+  import("./admin-product-upgrade.js?v=20260820-2").catch(error => {
     console.warn("Optional admin product form enhancement unavailable:", error);
   });
 
