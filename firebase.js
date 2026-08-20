@@ -8,8 +8,19 @@ import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-
 // Load the marketplace presentation directly so it does not depend on the
 // optional enhancement chain or Firebase timing. It is presentation-only.
 import "./jiji-reference-marketplace.js?v=20260820-2";
-// Restore only the original blue background/floating visual treatment.
-import "./marketplace-background-restore.css?v=20260820-1";
+
+// IMPORTANT: Native browser ES modules cannot import a CSS file with a normal
+// JavaScript import. Loading the CSS this way previously prevented this whole
+// Firebase module from evaluating, which made the storefront show
+// "Firebase could not be loaded". Load the stylesheet through a normal link
+// instead so Firebase initialization is never blocked by the visual layer.
+if (typeof document !== "undefined" && !document.querySelector('link[data-akeem-background]')) {
+  const backgroundStyle = document.createElement("link");
+  backgroundStyle.rel = "stylesheet";
+  backgroundStyle.href = "./marketplace-background-restore.css?v=20260820-2";
+  backgroundStyle.dataset.akeemBackground = "true";
+  document.head.appendChild(backgroundStyle);
+}
 
 const firebaseConfig = {
   apiKey: "AIzaSyDhwIAmuZrY5Xqo6Ql7LDKxrPiklpG5GTE",
