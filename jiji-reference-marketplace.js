@@ -6,7 +6,7 @@
   'use strict';
   if(window.__akeemJijiReferenceLoaded)return;
   const path=window.location.pathname;
-  if(!(path.endsWith('/index.html')||path==='/'||path.endsWith('/Contractor-')))return;
+  if(!(path.endsWith('/index.html')||path==='/'||path.endsWith('/Contractor-')||path.endsWith('/Contractor-/')))return;
   window.__akeemJijiReferenceLoaded=true;
 
   const css=`
