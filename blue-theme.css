@@ -1,47 +1,92 @@
-/* Akeem Store — blue brand theme.
-   Converts the marketplace's green accents to blue without changing layout,
-   typography, orange secondary accents, product data, or functionality. */
+/* Akeem Store — subdued blue brand theme.
+   Keeps the existing marketplace layout and orange secondary accent.
+   The blue is intentionally muted/faded rather than bright Jiji-style blue. */
 :root{
-  --primary:#2563EB!important;
-  --primary-light:#3B82F6!important;
-  --primary-dark:#1D4ED8!important;
-  --success:#3B82F6!important;
-  --light:#EFF6FF!important;
-  --card-fg:#1E3A8A!important;
-  --border:#93C5FD!important;
+  --primary:#4F6F9F!important;
+  --primary-light:#6F8DB8!important;
+  --primary-dark:#3D587F!important;
+  --success:#5B789F!important;
+  --light:#EEF3F8!important;
+  --card-fg:#344B68!important;
+  --border:#AAB9CA!important;
+  --brand-blue:#5A78A3!important;
+  --brand-blue-soft:#7891B3!important;
+  --brand-blue-deep:#415F88!important;
+  --brand-blue-glow:rgba(90,120,163,.24)!important;
 }
 
-/* Hard-coded green values used by the existing marketplace layer. */
-nav{border-bottom-color:rgba(37,99,235,.3)!important}
-.hamburger{background:linear-gradient(135deg,#2563EB,var(--accent))!important;box-shadow:0 5px 20px rgba(37,99,235,.3)!important}
-.mobile-menu{border-left-color:#2563EB!important}
-.menu-item{border-color:rgba(37,99,235,.3)!important}
-.menu-item:hover{background:linear-gradient(135deg,#2563EB,var(--accent))!important}
-.nav-title,.page-header h1{background:linear-gradient(135deg,#2563EB,var(--accent))!important}
-.activity-feed{background:linear-gradient(135deg,rgba(37,99,235,.15),rgba(234,88,12,.1))!important;border-color:rgba(37,99,235,.4)!important}
-.activity-header{color:#60A5FA!important}
-.stats-bar .stat-card{background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(234,88,12,.05))!important;border-color:rgba(37,99,235,.3)!important}
-.stat-value{color:#60A5FA!important}
-.search-box,.sort-select{border-color:rgba(37,99,235,.5)!important}
-.search-box:focus{border-color:#2563EB!important;box-shadow:0 5px 20px rgba(37,99,235,.25)!important}
-.category-btn{border-color:rgba(37,99,235,.35)!important}
-.category-btn:hover,.category-btn.active{background:linear-gradient(135deg,#2563EB,var(--accent))!important}
-.product{border-color:rgba(37,99,235,.2)!important;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(239,246,255,.95))!important}
-.product:hover{box-shadow:0 16px 40px rgba(37,99,235,.2)!important;border-color:#2563EB!important}
+/* Core marketplace accents */
+nav{border-bottom-color:rgba(90,120,163,.24)!important}
+.hamburger{background:linear-gradient(135deg,#536F98,var(--accent))!important;box-shadow:0 5px 20px rgba(90,120,163,.20)!important}
+.mobile-menu{border-left-color:#5A78A3!important}
+.menu-item{border-color:rgba(90,120,163,.24)!important}
+.menu-item:hover{background:linear-gradient(135deg,#536F98,var(--accent))!important}
+.menu-item.active{background:linear-gradient(135deg,rgba(90,120,163,.92),var(--accent))!important}
 
-/* Jiji-inspired sections/cards may use these classes. */
-.as-section-title,.as-price,.as-category,.as-accent{color:#2563EB!important}
-.as-chip.active,.as-filter.active,.as-btn-primary{background:#2563EB!important;border-color:#2563EB!important}
-.as-card:hover{border-color:rgba(37,99,235,.45)!important}
+/* Store name: soft blue gradient, matching the intended faded brand look */
+.nav-title,.page-header h1{
+  background:linear-gradient(135deg,#6F8DB8 0%,#536F98 48%,#8AA0BC 100%)!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  color:transparent!important;
+  text-shadow:0 0 22px rgba(90,120,163,.12)!important;
+}
 
-/* Green Tailwind-style utility remnants, if present. */
-.bg-emerald-50{background-color:#EFF6FF!important}
-.bg-emerald-100{background-color:#DBEAFE!important}
-.bg-emerald-500,.bg-emerald-600,.bg-emerald-700{background-color:#2563EB!important}
-.text-emerald-500,.text-emerald-600,.text-emerald-700,.text-emerald-800{color:#2563EB!important}
-.border-emerald-200,.border-emerald-300,.border-emerald-400,.border-emerald-500,.border-emerald-600{border-color:#93C5FD!important}
+.activity-feed{background:linear-gradient(135deg,rgba(90,120,163,.10),rgba(234,88,12,.07))!important;border-color:rgba(90,120,163,.26)!important}
+.activity-header{color:#7891B3!important}
+.stats-bar .stat-card{background:linear-gradient(135deg,rgba(90,120,163,.08),rgba(234,88,12,.04))!important;border-color:rgba(90,120,163,.22)!important}
+.stat-value{color:#607FA7!important}
 
-/* Replace common hard-coded green glow/border declarations. */
+/* Search */
+.search-box,.sort-select{border-color:rgba(90,120,163,.38)!important}
+.search-box:focus{border-color:#5A78A3!important;box-shadow:0 5px 20px rgba(90,120,163,.16)!important}
+
+/* Categories */
+.category-btn{border-color:rgba(90,120,163,.28)!important;color:#536F98!important}
+.category-btn:hover,.category-btn.active{background:linear-gradient(135deg,#5A78A3,var(--accent))!important;color:#fff!important;border-color:#5A78A3!important}
+
+/* Products */
+.product{border-color:rgba(90,120,163,.16)!important;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(238,243,248,.94))!important}
+.product:hover{box-shadow:0 16px 40px rgba(90,120,163,.14)!important;border-color:#6F8DB8!important}
+.price{color:#536F98!important}
+.category-label{color:#607FA7!important}
+
+/* Buttons — subdued blue, never bright electric blue */
+.order-btn,
+.view-details,
+.view-details-btn,
+.as-btn-primary,
+button[class*="primary"],
+a[class*="primary"]{
+  background:linear-gradient(135deg,#536F98,#6F8DB8)!important;
+  border-color:#536F98!important;
+  color:#fff!important;
+  box-shadow:0 6px 18px rgba(90,120,163,.14)!important;
+}
+.order-btn:hover,
+.view-details:hover,
+.view-details-btn:hover,
+.as-btn-primary:hover,
+button[class*="primary"]:hover,
+a[class*="primary"]:hover{
+  background:linear-gradient(135deg,#415F88,#607FA7)!important;
+}
+
+/* Jiji-inspired sections/cards */
+.as-section-title,.as-price,.as-category,.as-accent{color:#536F98!important}
+.as-chip.active,.as-filter.active{background:#5A78A3!important;border-color:#5A78A3!important;color:#fff!important}
+.as-card:hover{border-color:rgba(90,120,163,.38)!important}
+
+/* Green Tailwind-style remnants */
+.bg-emerald-50{background-color:#EEF3F8!important}
+.bg-emerald-100{background-color:#E1E9F2!important}
+.bg-emerald-500,.bg-emerald-600,.bg-emerald-700{background-color:#536F98!important}
+.text-emerald-500,.text-emerald-600,.text-emerald-700,.text-emerald-800{color:#536F98!important}
+.border-emerald-200,.border-emerald-300,.border-emerald-400,.border-emerald-500,.border-emerald-600{border-color:#AAB9CA!important}
+
+/* Muted blue for common hard-coded green declarations */
 [style*="rgb(5,150,105)"],[style*="rgba(5,150,105"],[style*="#059669"],[style*="#10B981"]{
-  --green-replaced:#2563EB!important;
+  color:#536F98!important;
+  border-color:#AAB9CA!important;
+  background-color:#536F98!important;
 }
