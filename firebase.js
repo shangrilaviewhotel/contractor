@@ -24,6 +24,25 @@ const installBlueThemeEarly = () => {
   if (typeof document === "undefined") return;
   if (document.querySelector('link[data-akeem-blue-theme]')) return;
 
+  // Convert the existing inline marketplace stylesheet before the browser gets
+  // a chance to repaint it in the old green palette. This preserves the exact
+  // layout/structure while changing only the green brand tokens.
+  document.querySelectorAll("style").forEach(style => {
+    if (!style.textContent || style.dataset.akeemBlueProcessed) return;
+    const source = style.textContent;
+    if (!/(#059669|#10B981|#047857|#F0FDF4|#064E3B|#A7F3D0|5,150,105|16,185,129)/i.test(source)) return;
+    style.textContent = source
+      .replace(/#059669/gi, "#2563EB")
+      .replace(/#10B981/gi, "#3B82F6")
+      .replace(/#047857/gi, "#1D4ED8")
+      .replace(/#F0FDF4/gi, "#EFF6FF")
+      .replace(/#064E3B/gi, "#1E3A8A")
+      .replace(/#A7F3D0/gi, "#93C5FD")
+      .replace(/5,150,105/g, "37,99,235")
+      .replace(/16,185,129/g, "59,130,246");
+    style.dataset.akeemBlueProcessed = "true";
+  });
+
   const preload = document.createElement("style");
   preload.dataset.akeemBluePreload = "true";
   preload.textContent = `
@@ -52,7 +71,7 @@ const installBlueThemeEarly = () => {
 
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = "./blue-theme.css?v=20260821-1";
+  link.href = "./blue-theme.css?v=20260821-2";
   link.dataset.akeemBlueTheme = "true";
   document.head.appendChild(link);
 };
