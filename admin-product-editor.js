@@ -65,7 +65,11 @@
 
   function showNotice(message,error=false){const n=$('akeemEditorNotice');n.textContent=message;n.style.display='block';n.style.background=error?'#ffecec':'#f2f5f8';n.style.color=error?'#b43b3b':'#536985';}
   function hideNotice(){ $('akeemEditorNotice').style.display='none'; }
-  function statusValue(p){return String(p.status||p.availability||p.conditionStatus||'available').toLowerCase().includes('sold')?'sold':String(p.status||p.availability||'').toLowerCase().includes('reserv')?'reserved':'available';}
+  function statusValue(p){
+    if(p.sold===true)return 'sold';
+    const raw=String(p.status||p.availability||p.conditionStatus||'available').toLowerCase();
+    return raw.includes('sold')?'sold':raw.includes('reserv')?'reserved':'available';
+  }
   function productName(p){return p.name||p.title||p.productName||'Untitled product'}
   function render(){
     const q=String($('akeemEditorSearch').value||'').toLowerCase().trim();
@@ -74,7 +78,7 @@
       const st=statusValue(p);return `<article class="akeem-editor-card"><h3>${escapeHtml(productName(p))}</h3><div class="akeem-editor-meta">${escapeHtml(p.category||'Uncategorized')} · ${escapeHtml(p.location||'No location')}<br>${escapeHtml(formatPrice(p.price))}</div><span class="akeem-editor-status akeem-status-${st}">${st}</span><br><button type="button" data-edit-id="${escapeAttr(p.id)}">Edit product</button></article>`;
     }).join(''):'<div class="akeem-editor-empty">No products found.</div>';
   }
-  function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c));}
   function escapeAttr(v){return escapeHtml(v)}
   function formatPrice(v){if(v===undefined||v===null||v==='')return 'Price not set';const n=Number(String(v).replace(/[^0-9.-]/g,''));return Number.isFinite(n)?`₦${n.toLocaleString('en-NG')}`:String(v)}
 
@@ -104,11 +108,11 @@
 
   $('akeemEditForm').addEventListener('submit',async e=>{
     e.preventDefault();if(!editing)return;
-    const user=auth.currentUser;if(!user||user.uid!==ADMIN_UID){return}
+    const user=auth.currentUser;if(!user||user.uid!==ADMIN_UID)return;
     const save=$('akeemSaveEdit');save.disabled=true;save.textContent='Saving…';
     try{
       const old=editing;const name=$('akeemEditName').value.trim();const category=$('akeemEditCategory').value;const status=$('akeemEditStatus').value;
-      const updates={name,category,status,location:$('akeemEditLocation').value.trim(),condition:$('akeemEditCondition').value.trim(),description:$('akeemEditDescription').value.trim(),updatedAt:serverTimestamp()};
+      const updates={name,category,status,availability:status,location:$('akeemEditLocation').value.trim(),condition:$('akeemEditCondition').value.trim(),description:$('akeemEditDescription').value.trim(),sold:status==='sold',updatedAt:serverTimestamp()};
       const price=$('akeemEditPrice').value.trim();if(price!=='')updates.price=Number(price.replace(/[^0-9.-]/g,''));
       await updateDoc(doc(db,'products',old.id),updates);
       Object.assign(old,updates,{price:updates.price??old.price});
