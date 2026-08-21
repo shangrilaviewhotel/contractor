@@ -1,7 +1,7 @@
 // firebase.js
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
@@ -15,63 +15,40 @@ const firebaseConfig = {
   measurementId: "G-ZYB3J8BW72"
 };
 
-/* Install the authoritative blue layer before any marketplace module is
-   allowed to inject its presentation CSS. */
-if (typeof document !== "undefined") {
-  try {
-    await import("./blue-theme-final.js?v=20260821-3");
-  } catch (error) {
-    console.warn("Blue theme final layer unavailable:", error);
-  }
-  import("./blue-theme-boot.js?v=20260821-2").catch(error => {
-    console.warn("Blue theme boot layer unavailable:", error);
-  });
-}
-
-/* Firebase is shared by the existing public store and protected admin pages. */
+/* Firebase initializes first. Visual modules must never block Firestore. */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-/* Wait for Auth restoration so the admin dashboard does not race its
-   protected Firestore reads immediately after a refresh. */
-await new Promise(resolve => {
-  let settled = false;
-  let unsubscribe = () => {};
-  const finish = () => {
-    if (settled) return;
-    settled = true;
-    try { unsubscribe(); } catch (_) {}
-    resolve();
-  };
-  unsubscribe = onAuthStateChanged(auth, finish);
-  setTimeout(finish, 4000);
-});
-
 export { auth, db, storage };
 
+/* Optional presentation/compatibility modules are deliberately loaded after
+   Firebase has been exported, so a CSS/theme error cannot stop products. */
 if (typeof window !== "undefined" && typeof document !== "undefined") {
-  const loadStyles = () => {
+  const safeImport = (path) => import(path).catch(error => {
+    console.warn(`Optional module unavailable: ${path}`, error);
+    return null;
+  });
+
+  safeImport("./blue-theme-final.js?v=20260821-4");
+  safeImport("./blue-theme-boot.js?v=20260821-3");
+
+  const loadBackground = () => {
     if (!document.querySelector('link[data-akeem-background]')) {
       const backgroundStyle = document.createElement("link");
       backgroundStyle.rel = "stylesheet";
-      backgroundStyle.href = "./marketplace-background-restore.css?v=20260820-5";
+      backgroundStyle.href = "./marketplace-background-restore.css?v=20260820-6";
       backgroundStyle.dataset.akeemBackground = "true";
       document.head.appendChild(backgroundStyle);
     }
   };
 
   const loadMarketplaceDesign = () => {
-    import("./jiji-reference-marketplace.js?v=20260821-6")
-      .then(() => {
-        loadStyles();
-        return import("./blue-theme-final.js?v=20260821-3");
-      })
-      .catch(error => {
-        console.warn("Marketplace visual layer unavailable:", error);
-        loadStyles();
-      });
+    safeImport("./jiji-reference-marketplace.js?v=20260821-7").then(() => {
+      loadBackground();
+      safeImport("./blue-theme-final.js?v=20260821-4");
+    });
   };
 
   if (document.readyState === "loading") {
@@ -80,22 +57,22 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
     loadMarketplaceDesign();
   }
 
-  import("./public-seller-link.js?v=20260821-4").catch(error => console.warn("Public seller link module unavailable:", error));
-  import("./store-enhancements.js?v=20260820-4").catch(error => console.warn("Optional storefront enhancements unavailable:", error));
+  safeImport("./public-seller-link.js?v=20260821-5");
+  safeImport("./store-enhancements.js?v=20260820-4");
 
   if (location.pathname === "/" || /index\.html$/i.test(location.pathname) || /Contractor-\/?$/i.test(location.pathname)) {
-    import("./main-category-filter.js?v=20260820-7").catch(error => console.warn("Marketplace category controller unavailable:", error));
+    safeImport("./main-category-filter.js?v=20260820-8");
   }
 
   if (/sell\.html$/i.test(location.pathname)) {
-    import("./public-category-options.js?v=20260820-1").catch(error => console.warn("Public seller category compatibility layer unavailable:", error));
-    import("./public-seller-upload-fix.js?v=20260820-2").catch(error => console.warn("Public seller upload runtime unavailable:", error));
+    safeImport("./public-category-options.js?v=20260820-1");
+    safeImport("./public-seller-upload-fix.js?v=20260820-3");
   }
 
-  import("./admin-product-upgrade.js?v=20260820-2").catch(error => console.warn("Optional admin product form enhancement unavailable:", error));
+  safeImport("./admin-product-upgrade.js?v=20260820-2");
 
   if (location.pathname.toLowerCase().includes("admindashboard")) {
-    import("./admin-public-submissions.js?v=20260820-2").catch(error => console.warn("Public submission review module unavailable:", error));
-    import("./admin-data-recovery.js?v=20260820-1").catch(error => console.warn("Admin data recovery module unavailable:", error));
+    safeImport("./admin-public-submissions.js?v=20260820-3");
+    safeImport("./admin-data-recovery.js?v=20260820-2");
   }
 }
