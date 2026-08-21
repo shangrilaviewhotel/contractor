@@ -15,6 +15,50 @@ const firebaseConfig = {
   measurementId: "G-ZYB3J8BW72"
 };
 
+/*
+ * Apply the blue brand layer as early as this module can execute. The original
+ * index page contains inline green marketplace CSS, so waiting for the visual
+ * marketplace module would create a noticeable green/old-style flash.
+ */
+const installBlueThemeEarly = () => {
+  if (typeof document === "undefined") return;
+  if (document.querySelector('link[data-akeem-blue-theme]')) return;
+
+  const preload = document.createElement("style");
+  preload.dataset.akeemBluePreload = "true";
+  preload.textContent = `
+    :root{--primary:#2563EB!important;--primary-light:#3B82F6!important;--primary-dark:#1D4ED8!important;--success:#3B82F6!important;--light:#EFF6FF!important;--card-fg:#1E3A8A!important;--border:#93C5FD!important}
+    nav{border-bottom-color:rgba(37,99,235,.3)!important}
+    .hamburger{background:linear-gradient(135deg,#2563EB,var(--accent))!important;box-shadow:0 5px 20px rgba(37,99,235,.3)!important}
+    .mobile-menu{border-left-color:#2563EB!important}
+    .menu-item{border-color:rgba(37,99,235,.3)!important}
+    .menu-item:hover{background:linear-gradient(135deg,#2563EB,var(--accent))!important}
+    .nav-title,.page-header h1{background:linear-gradient(135deg,#2563EB,var(--accent))!important}
+    body:before{background:radial-gradient(circle at 20% 50%,rgba(37,99,235,.12),transparent 50%),radial-gradient(circle at 80% 80%,rgba(234,88,12,.1),transparent 50%),radial-gradient(circle at 40% 20%,rgba(59,130,246,.08),transparent 50%)!important}
+    body:after{background-image:linear-gradient(0deg,transparent 24%,rgba(37,99,235,.03) 25%,rgba(37,99,235,.03) 26%,transparent 27%,transparent 74%,rgba(37,99,235,.03) 75%,rgba(37,99,235,.03) 76%,transparent 77%),linear-gradient(90deg,transparent 24%,rgba(37,99,235,.03) 25%,rgba(37,99,235,.03) 26%,transparent 27%,transparent 74%,rgba(37,99,235,.03) 75%,rgba(37,99,235,.03) 76%,transparent 77%)!important}
+    .activity-feed{background:linear-gradient(135deg,rgba(37,99,235,.15),rgba(234,88,12,.1))!important;border-color:rgba(37,99,235,.4)!important}
+    .activity-header,.stat-value{color:#60A5FA!important}
+    .stat-card{background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(234,88,12,.05))!important;border-color:rgba(37,99,235,.3)!important}
+    .search-box,.sort-select{border-color:rgba(37,99,235,.5)!important}
+    .search-box:focus{border-color:#2563EB!important;box-shadow:0 5px 20px rgba(37,99,235,.25)!important}
+    .category-btn{border-color:rgba(37,99,235,.35)!important}
+    .category-btn:hover,.category-btn.active{background:linear-gradient(135deg,#2563EB,var(--accent))!important}
+    .product{border-color:rgba(37,99,235,.2)!important;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(239,246,255,.95))!important}
+    .product:hover{box-shadow:0 16px 40px rgba(37,99,235,.2)!important;border-color:#2563EB!important}
+    .as-section-title,.as-price,.as-category,.as-accent{color:#2563EB!important}
+    .as-chip.active,.as-filter.active,.as-btn-primary{background:#2563EB!important;border-color:#2563EB!important}
+  `;
+  document.head.appendChild(preload);
+
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "./blue-theme.css?v=20260821-1";
+  link.dataset.akeemBlueTheme = "true";
+  document.head.appendChild(link);
+};
+
+installBlueThemeEarly();
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
