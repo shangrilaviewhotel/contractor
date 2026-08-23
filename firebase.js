@@ -74,6 +74,6 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   if (location.pathname.toLowerCase().includes("admindashboard")) {
     safeImport("./admin-public-submissions.js?v=20260820-3");
     safeImport("./admin-data-recovery.js?v=20260820-2");
-    safeImport("./admin-product-editor.js?v=20260821-2");
+    safeImport("./admin-product-editor.js?v=20260823-1");
   }
 }
