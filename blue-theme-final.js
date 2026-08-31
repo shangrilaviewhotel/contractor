@@ -61,7 +61,10 @@
     document.querySelectorAll('[style]').forEach(el=>{const before=el.getAttribute('style')||'',after=replaceGreenText(before);if(after!==before)el.setAttribute('style',after)});
   }
   function forceSellerLink(){document.querySelectorAll('.jiji-sell').forEach(el=>{el.href='sell.html';el.removeAttribute('target')});}
-  function run(){installStyleInterceptor();rewriteStyleTags();addFinalOverrides();forceInlineStyles();forceSellerLink();document.documentElement.classList.add('akeem-blue-final');}
+  function run(){
+    installStyleInterceptor();rewriteStyleTags();addFinalOverrides();forceInlineStyles();forceSellerLink();document.documentElement.classList.add('akeem-blue-final');
+    import('./public-products-recovery.js?v=20260831-1').catch(error=>console.warn('Public product recovery module unavailable:',error));
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
   [0,30,80,150,300,600,1200,2000].forEach(ms=>setTimeout(run,ms));
   const observer=new MutationObserver(()=>{forceSellerLink();forceInlineStyles();});
