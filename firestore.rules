@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    function isValidBooking(booking) {
+      return booking.keys().hasOnly([
+        'name', 'email', 'phone', 'room', 'roomNumber', 'roomType', 'price',
+        'checkIn', 'checkOut', 'message', 'status', 'createdAt', 'updatedAt'
+      ])
+      && booking.name is string && booking.name.size() > 1 && booking.name.size() <= 100
+      && booking.email is string && booking.email.size() <= 254
+      && booking.phone is string && booking.phone.size() <= 40
+      && booking.room is string && booking.roomNumber is string && booking.roomType is string
+      && booking.price is number && booking.price > 0
+      && booking.checkIn is string && booking.checkOut is string
+      && booking.status == 'pending';
+    }
+
+    function isValidMessage(message) {
+      return message.keys().hasOnly([
+        'name', 'email', 'phone', 'subject', 'message', 'source', 'status',
+        'roomNumber', 'checkIn', 'checkOut', 'createdAt'
+      ])
+      && message.name is string && message.name.size() > 1 && message.name.size() <= 100
+      && message.email is string && message.email.size() <= 254
+      && message.phone is string && message.phone.size() <= 40
+      && message.subject is string && message.subject.size() <= 140
+      && message.message is string && message.message.size() <= 2000
+      && message.source is string && message.source.size() <= 80
+      && message.status == 'new';
+    }
+
+    match /bookings/{bookingId} {
+      allow create: if isValidBooking(request.resource.data);
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /rooms/{roomId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /messages/{messageId} {
+      allow create: if isValidMessage(request.resource.data);
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}
