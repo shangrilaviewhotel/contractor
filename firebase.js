@@ -10,7 +10,7 @@ const firebaseConfig = {
   authDomain: "shangrila-booking.firebaseapp.com",
   projectId: "shangrila-booking",
   storageBucket: "shangrila-booking.firebasestorage.app",
-  messagingSenderId: "981170210173",
+  messagingSenderId: "981170210210",
   appId: "1:981170210173:web:4d74cb3f6109fe1c0a3814",
   measurementId: "G-ZYB3J8BW72"
 };
@@ -59,6 +59,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
 
   safeImport("./public-seller-link.js?v=20260821-5");
   safeImport("./store-enhancements.js?v=20260820-4");
+  safeImport("./public-products-recovery.js?v=20260831-1");
 
   if (location.pathname === "/" || /index\.html$/i.test(location.pathname) || /Contractor-\/?$/i.test(location.pathname)) {
     safeImport("./main-category-filter.js?v=20260820-8");
