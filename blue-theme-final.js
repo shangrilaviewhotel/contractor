@@ -1,4 +1,4 @@
-/* Akeem Store FINAL MUTED BLUE BRAND LAYER */
+/* Akeem Store — final visual layer + single public product recovery path. */
 (function(){
   'use strict';
   const BLUE='#5B6F8F', BLUE_DARK='#465B79', BLUE_LIGHT='#71839E', PALE='#E7ECF2', PALE2='#F2F5F8';
@@ -14,7 +14,6 @@
       .replace(/rgba\(5,150,105,/gi,'rgba(91,111,143,').replace(/rgba\(16,185,129,/gi,'rgba(113,131,158,')
       .replace(/rgba\(0,95,66,/gi,'rgba(48,68,95,').replace(/#e8f8f1/gi,PALE).replace(/#b7e8d4/gi,'#B8C3D0');
   }
-
   function rewriteStyleTags(){
     document.querySelectorAll('style').forEach(style=>{
       if(style.id==='akeem-final-blue-overrides') return;
@@ -22,7 +21,6 @@
       if(after!==before) style.textContent=after;
     });
   }
-
   function installStyleInterceptor(){
     if(window.__akeemBlueStyleInterceptor) return;
     window.__akeemBlueStyleInterceptor=true;
@@ -34,7 +32,6 @@
       return originalAppendChild.call(this,node);
     };
   }
-
   function addFinalOverrides(){
     if(document.getElementById('akeem-final-blue-overrides')) return;
     const s=document.createElement('style'); s.id='akeem-final-blue-overrides';
@@ -56,17 +53,76 @@
     `;
     document.head.appendChild(s);
   }
-
   function forceInlineStyles(){
     document.querySelectorAll('[style]').forEach(el=>{const before=el.getAttribute('style')||'',after=replaceGreenText(before);if(after!==before)el.setAttribute('style',after)});
   }
   function forceSellerLink(){document.querySelectorAll('.jiji-sell').forEach(el=>{el.href='sell.html';el.removeAttribute('target')});}
+
+  async function recoverPublicProducts(){
+    const container=document.getElementById('products');
+    if(!container || container.querySelector('.product') || window.__akeemPublicProductsLoaded) return;
+    window.__akeemPublicProductsLoaded=true;
+    const version='10.12.2';
+    const config={
+      apiKey:'AIzaSyDhwIAmuZrY5Xqo6Ql7LDKxrPiklpG5GTE',
+      authDomain:'shangrila-booking.firebaseapp.com',
+      projectId:'shangrila-booking',
+      storageBucket:'shangrila-booking.firebasestorage.app',
+      messagingSenderId:'981170210173',
+      appId:'1:981170210173:web:4d74cb3f6109fe1c0a3814',
+      measurementId:'G-ZYB3J8BW72'
+    };
+    try{
+      const [{initializeApp},{getAuth,signInAnonymously},{getFirestore,collection,getDocs}]=await Promise.all([
+        import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`),
+        import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`),
+        import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`)
+      ]);
+      const app=initializeApp(config,`publicStoreRecovery-${Date.now()}`);
+      const auth=getAuth(app);
+      let db=getFirestore(app);
+      let snap;
+      try{
+        snap=await getDocs(collection(db,'products'));
+      }catch(firstError){
+        await signInAnonymously(auth);
+        snap=await getDocs(collection(db,'products'));
+      }
+      const products=snap.docs.map(d=>({id:d.id,...d.data()}));
+      if(!products.length){
+        window.__akeemPublicProductsLoaded=false;
+        return;
+      }
+      const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+      const images=p=>{
+        const vals=[p.imageUrls,p.images,p.imageURL,p.imageUrl,p.image,p.photos], out=[];
+        const add=v=>{if(Array.isArray(v))v.forEach(add);else if(v&&typeof v==='object')add(v.url||v.src||v.downloadURL||v.downloadUrl);else if(typeof v==='string'&&v.trim())out.push(v.trim())};
+        vals.forEach(add);return [...new Set(out)];
+      };
+      container.innerHTML=products.map(p=>{
+        const media=images(p), first=media[0]||'', price=Number(String(p.price??'').replace(/[^0-9.-]/g,''))||0;
+        const name=p.name||p.title||p.productName||'Product';
+        const category=p.category||p.type||'Other';
+        const sold=p.sold===true||String(p.status||'').toLowerCase()==='sold';
+        const visual=first
+          ? (/\.(mp4|webm|mov)(\?|$)/i.test(first)?`<video src="${esc(first)}" class="product-img" muted controls preload="metadata"></video>`:`<img src="${esc(first)}" class="product-img" alt="${esc(name)}" loading="lazy">`)
+          : '<div style="height:100%;display:grid;place-items:center;color:#64748b">No image</div>';
+        return `<article class="product${sold?' sold':''}" data-product-id="${esc(p.id)}"><div class="image-container">${visual}</div><div class="product-info"><div class="title">${esc(name)}</div><span class="category-label">${esc(category)}</span><div class="price">₦${price.toLocaleString('en-NG')}</div><div class="desc">${esc(p.description||p.shortDescription||'')}</div>${sold?'<button class="order-btn" type="button" disabled style="background:#999">Sold Out</button>':`<a href="https://wa.me/2347034447700?text=${encodeURIComponent(`Hello, I'm interested in: ${name} - ₦${price.toLocaleString('en-NG')}`)}" target="_blank" rel="noopener noreferrer" class="order-btn">💬 Order Now</a>`}</div></article>`;
+      }).join('');
+      const count=document.getElementById('resultsCount');if(count)count.textContent=`Showing ${products.length} products`;
+      const stat=document.getElementById('totalProductsStat');if(stat)stat.textContent=products.length;
+    }catch(error){
+      console.error('Public product recovery failed:',error);
+      window.__akeemPublicProductsLoaded=false;
+    }
+  }
+
   function run(){
     installStyleInterceptor();rewriteStyleTags();addFinalOverrides();forceInlineStyles();forceSellerLink();document.documentElement.classList.add('akeem-blue-final');
-    import('./public-products-recovery.js?v=20260831-1').catch(error=>console.warn('Public product recovery module unavailable:',error));
+    if(document.getElementById('products')) setTimeout(recoverPublicProducts,1200);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
-  [0,30,80,150,300,600,1200,2000].forEach(ms=>setTimeout(run,ms));
+  [300,800,1500,3000,5000].forEach(ms=>setTimeout(run,ms));
   const observer=new MutationObserver(()=>{forceSellerLink();forceInlineStyles();});
   observer.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['style','href']});
   setTimeout(()=>observer.disconnect(),8000);
