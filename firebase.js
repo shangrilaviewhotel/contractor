@@ -10,7 +10,7 @@ const firebaseConfig = {
   authDomain: "shangrila-booking.firebaseapp.com",
   projectId: "shangrila-booking",
   storageBucket: "shangrila-booking.firebasestorage.app",
-  messagingSenderId: "981170210210",
+  messagingSenderId: "981170210170",
   appId: "1:981170210173:web:4d74cb3f6109fe1c0a3814",
   measurementId: "G-ZYB3J8BW72"
 };
