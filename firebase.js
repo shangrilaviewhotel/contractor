@@ -10,12 +10,11 @@ const firebaseConfig = {
   authDomain: "shangrila-booking.firebaseapp.com",
   projectId: "shangrila-booking",
   storageBucket: "shangrila-booking.firebasestorage.app",
-  messagingSenderId: "981170210170",
+  messagingSenderId: "981170210173",
   appId: "1:981170210173:web:4d74cb3f6109fe1c0a3814",
   measurementId: "G-ZYB3J8BW72"
 };
 
-/* Firebase initializes first. Visual modules must never block Firestore. */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -23,15 +22,14 @@ const storage = getStorage(app);
 
 export { auth, db, storage };
 
-/* Optional presentation/compatibility modules are deliberately loaded after
-   Firebase has been exported, so a CSS/theme error cannot stop products. */
+/* Presentation modules are optional and must never block Firebase exports. */
 if (typeof window !== "undefined" && typeof document !== "undefined") {
   const safeImport = (path) => import(path).catch(error => {
     console.warn(`Optional module unavailable: ${path}`, error);
     return null;
   });
 
-  safeImport("./blue-theme-final.js?v=20260821-4");
+  safeImport("./blue-theme-final.js?v=20260831-2");
   safeImport("./blue-theme-boot.js?v=20260821-3");
 
   const loadBackground = () => {
@@ -47,7 +45,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   const loadMarketplaceDesign = () => {
     safeImport("./jiji-reference-marketplace.js?v=20260821-7").then(() => {
       loadBackground();
-      safeImport("./blue-theme-final.js?v=20260821-4");
+      safeImport("./blue-theme-final.js?v=20260831-2");
     });
   };
 
@@ -59,7 +57,6 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
 
   safeImport("./public-seller-link.js?v=20260821-5");
   safeImport("./store-enhancements.js?v=20260820-4");
-  safeImport("./public-products-recovery.js?v=20260831-1");
 
   if (location.pathname === "/" || /index\.html$/i.test(location.pathname) || /Contractor-\/?$/i.test(location.pathname)) {
     safeImport("./main-category-filter.js?v=20260820-8");
