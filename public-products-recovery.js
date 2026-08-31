@@ -1,6 +1,6 @@
 /* Akeem Store — public product recovery layer.
-   Keeps the existing storefront intact and only takes over when the normal
-   public product renderer leaves #products empty. */
+   Reliable fallback for the public storefront when the normal renderer
+   leaves #products empty. Uses the same Firebase app/config as the site. */
 (function () {
   'use strict';
   if (window.__akeemPublicProductsRecovery) return;
@@ -22,12 +22,15 @@
   }[c]));
 
   const normalizeImages = (p) => {
-    const candidates = [p.imageUrls, p.images, p.imageURL, p.imageUrl, p.image];
-    for (const value of candidates) {
-      if (Array.isArray(value)) return value.filter(Boolean).map(String);
-      if (typeof value === 'string' && value.trim()) return [value.trim()];
-    }
-    return [];
+    const values = [p.imageUrls, p.images, p.imageURL, p.imageUrl, p.image, p.photos];
+    const result = [];
+    const add = value => {
+      if (Array.isArray(value)) value.forEach(add);
+      else if (value && typeof value === 'object') add(value.url || value.src || value.downloadURL || value.downloadUrl);
+      else if (typeof value === 'string' && value.trim()) result.push(value.trim());
+    };
+    values.forEach(add);
+    return [...new Set(result)];
   };
 
   const money = (v) => {
@@ -47,8 +50,7 @@
       const media = first
         ? (/\.(mp4|webm|mov)(\?|$)/i.test(first)
             ? `<video src="${esc(first)}" class="product-img" muted controls preload="metadata"></video>`
-            : `<img src="${esc(first)}" class="product-img" alt="${esc(p.name || 'Product')}" loading="lazy">`)
-          )
+            : `<img src="${esc(first)}" class="product-img" alt="${esc(p.name || p.title || 'Product')}" loading="lazy" onerror="this.style.display='none'">`)
         : '<div style="height:100%;display:grid;place-items:center;color:#64748b">No image</div>';
 
       return `<article class="product${sold ? ' sold' : ''}" data-product-id="${esc(id)}">
@@ -74,7 +76,7 @@
         const modal = document.getElementById('detailsModal');
         if (!modal) return;
         const image = document.getElementById('detailsImage');
-        if (image) image.src = images[0] || 'https://via.placeholder.com/600x400?text=No+Image';
+        if (image) image.src = images[0] || '';
         const name = document.getElementById('detailsName');
         if (name) name.textContent = p.name || p.title || 'Product';
         const category = document.getElementById('detailsCategory');
@@ -97,39 +99,54 @@
     return true;
   }
 
+  async function loadProducts() {
+    const { db } = await import('./firebase.js?v=20260831-2');
+    const firestore = await import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-firestore.js`);
+    const snap = await firestore.getDocs(firestore.collection(db, 'products'));
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  }
+
   async function load() {
     const container = document.getElementById('products');
     if (!container || container.querySelector('.product')) return;
 
     try {
-      const [{ initializeApp }, { getAuth, signInAnonymously }, firestore] = await Promise.all([
-        import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app.js`),
-        import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-auth.js`),
-        import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-firestore.js`)
-      ]);
-
-      const app = initializeApp(config, 'publicProductsRecovery');
-      const auth = getAuth(app);
-      const { collection, getDocs } = firestore;
-      let snap;
-
-      try {
-        snap = await getDocs(collection(app ? firestore.getFirestore(app) : null, 'products'));
-      } catch (firstError) {
-        if (firstError?.code !== 'permission-denied') throw firstError;
-        await signInAnonymously(auth);
-        snap = await getDocs(collection(firestore.getFirestore(app), 'products'));
+      const products = await loadProducts();
+      if (products.length) {
+        render(products);
+        return;
       }
-
-      const products = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      if (products.length) render(products);
+      container.innerHTML = '<div class="no-results"><div class="no-results-icon">📦</div><h3>No products are currently published</h3><p>The storefront can reach the product database, but it returned no listings.</p></div>';
     } catch (error) {
-      console.warn('Public product recovery unavailable:', error);
+      console.warn('Primary public product load failed:', error);
+
+      // If Firestore rules require a signed-in public session, retry anonymously.
+      try {
+        const [{ initializeApp, getApps }, { getAuth, signInAnonymously }, firestore] = await Promise.all([
+          import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app.js`),
+          import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-auth.js`),
+          import(`https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-firestore.js`)
+        ]);
+        const app = getApps().find(a => a.name === 'publicProductsRecovery') || initializeApp(config, 'publicProductsRecovery');
+        const auth = getAuth(app);
+        await signInAnonymously(auth);
+        const db = firestore.getFirestore(app);
+        const snap = await firestore.getDocs(firestore.collection(db, 'products'));
+        const products = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        if (products.length) render(products);
+        else container.innerHTML = '<div class="no-results"><div class="no-results-icon">📦</div><h3>No products are currently published</h3><p>The storefront can reach the product database, but it returned no listings.</p></div>';
+      } catch (retryError) {
+        console.error('Public product recovery failed:', retryError);
+        const message = document.createElement('div');
+        message.className = 'no-results';
+        message.innerHTML = '<div class="no-results-icon">⚠️</div><h3>Products could not be loaded</h3><p>Please refresh the page or contact the store.</p>';
+        if (container && !container.querySelector('.product')) container.replaceChildren(message);
+      }
     }
   }
 
   function schedule() {
-    [1500, 3000, 5000].forEach(ms => setTimeout(() => {
+    [500, 1500, 3000, 5000, 8000].forEach(ms => setTimeout(() => {
       const container = document.getElementById('products');
       if (container && !container.querySelector('.product')) load();
     }, ms));
