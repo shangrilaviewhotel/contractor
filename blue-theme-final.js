@@ -62,32 +62,12 @@
     const container=document.getElementById('products');
     if(!container || container.querySelector('.product') || window.__akeemPublicProductsLoaded) return;
     window.__akeemPublicProductsLoaded=true;
-    const version='10.12.2';
-    const config={
-      apiKey:'AIzaSyDhwIAmuZrY5Xqo6Ql7LDKxrPiklpG5GTE',
-      authDomain:'shangrila-booking.firebaseapp.com',
-      projectId:'shangrila-booking',
-      storageBucket:'shangrila-booking.firebasestorage.app',
-      messagingSenderId:'981170210173',
-      appId:'1:981170210173:web:4d74cb3f6109fe1c0a3814',
-      measurementId:'G-ZYB3J8BW72'
-    };
     try{
-      const [{initializeApp},{getAuth,signInAnonymously},{getFirestore,collection,getDocs}]=await Promise.all([
-        import(`https://www.gstatic.com/firebasejs/${version}/firebase-app.js`),
-        import(`https://www.gstatic.com/firebasejs/${version}/firebase-auth.js`),
-        import(`https://www.gstatic.com/firebasejs/${version}/firebase-firestore.js`)
+      const [{db},{collection,getDocs}]=await Promise.all([
+        import('./firebase.js'),
+        import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
       ]);
-      const app=initializeApp(config,`publicStoreRecovery-${Date.now()}`);
-      const auth=getAuth(app);
-      let db=getFirestore(app);
-      let snap;
-      try{
-        snap=await getDocs(collection(db,'products'));
-      }catch(firstError){
-        await signInAnonymously(auth);
-        snap=await getDocs(collection(db,'products'));
-      }
+      const snap=await getDocs(collection(db,'products'));
       const products=snap.docs.map(d=>({id:d.id,...d.data()}));
       if(!products.length){
         window.__akeemPublicProductsLoaded=false;
