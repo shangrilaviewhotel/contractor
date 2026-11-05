@@ -1973,7 +1973,7 @@ setInterval(tickClock, 1000); tickClock();
 /* =====================================================================
    INIT
 ===================================================================== */
-const AKEEM_STORE_ADMIN_UID = 'oNTRbdjXWAcklCBY5I1arXISOct2';
+const AKEEM_STORE_ADMIN_EMAIL = 'akeemfatai@gmail.com';
 async function init(){
   const user = await new Promise(resolve => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
@@ -1981,7 +1981,7 @@ async function init(){
       resolve(currentUser);
     }, () => resolve(null));
   });
-  if (!user || user.uid !== AKEEM_STORE_ADMIN_UID) {
+  if (!user || !user.emailVerified || (user.email || '').toLowerCase() !== AKEEM_STORE_ADMIN_EMAIL) {
     window.location.replace('login.html');
     return;
   }
