@@ -6,13 +6,13 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebas
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDhwIAmuZrY5Xqo6Ql7LDKxrPiklpG5GTE",
-  authDomain: "shangrila-booking.firebaseapp.com",
-  projectId: "shangrila-booking",
-  storageBucket: "shangrila-booking.firebasestorage.app",
-  messagingSenderId: "981170210173",
-  appId: "1:981170210173:web:4d74cb3f6109fe1c0a3814",
-  measurementId: "G-ZYB3J8BW72"
+  apiKey: "AIzaSyAQOh8qfLBjKuofwukMx85jY43twJ7dQa4",
+  authDomain: "akeems-store.firebaseapp.com",
+  projectId: "akeems-store",
+  storageBucket: "akeems-store.firebasestorage.app",
+  messagingSenderId: "1016611414388",
+  appId: "1:1016611414388:web:85463ef1edce86493a8c21",
+  measurementId: "G-V07QG4GHP1"
 };
 
 const app = initializeApp(firebaseConfig);

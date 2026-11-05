@@ -31,11 +31,9 @@ nav,.page-header,.activity-feed-section,.stats-bar,.store-controls,#products,.co
 <div id="imageModal" class="modal"><div class="modal-content"><img id="modalImage" class="modal-image" src="" alt="Product image"><button class="modal-nav modal-prev" id="prevBtn">&#10094;</button><button class="modal-nav modal-next" id="nextBtn">&#10095;</button><span class="modal-close" id="closeBtn">&times;</span><div class="modal-counter" id="imageCounter"></div></div></div>
 <div id="detailsModal" class="details-modal"><span class="details-close" id="detailsClose">&times;</span><div class="details-box"><div class="details-top"><img id="detailsImage" class="details-image" src="" alt="Product"><div class="details-info"><h2 id="detailsName"></h2><div id="detailsCategory"></div><div class="details-price" id="detailsPrice"></div><div class="details-description" id="detailsDescription"></div><a id="detailsOrder" class="order-btn" href="#" target="_blank">💬 Order on WhatsApp</a></div></div></div></div>
 <script type="module">
-/* PUBLIC STORE FIREBASE BOOT: direct Firestore import intentionally bypasses the shared presentation loader. */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs, updateDoc, doc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyDhwIAmuZrY5Xqo6Ql7LDKxrPiklpG5GTE",authDomain:"shangrila-booking.firebaseapp.com",projectId:"shangrila-booking",storageBucket:"shangrila-booking.firebasestorage.app",messagingSenderId:"981170210173",appId:"1:981170210173:web:4d74cb3f6109fe1c0a3814",measurementId:"G-ZYB3J8BW72"};
-const db=getFirestore(initializeApp(firebaseConfig));
+/* Public storefront uses the dedicated Akeem Store Firebase app. */
+import { db } from "./firebase.js";
+import { collection, getDocs, updateDoc, doc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 const OWNER_PHONE="2347034447700";
 const container=document.getElementById("products"),searchBox=document.getElementById("searchBox"),sortSelect=document.getElementById("sortSelect"),categoryList=document.getElementById("categoryList"),resultsCount=document.getElementById("resultsCount"),clearFilters=document.getElementById("clearFilters"),hamburger=document.getElementById("hamburger"),mobileMenu=document.getElementById("mobileMenu");
 let allProducts=[],productStats={},userLikes={},selectedCategory="all",currentSearch="",currentSort="default";
