@@ -5,7 +5,7 @@ if(!/admindashboard\.html$/i.test(location.pathname)||window.__akeemProductEdito
 window.__akeemProductEditorLoaded=true;
 const {auth,db}=await import('./firebase.js');
 const {collection,getDocs,doc,updateDoc,serverTimestamp}=await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
-const ADMIN_EMAIL='akeemfatai@gmail.com';
+const ADMIN_EMAIL='akeem.fatai15@gmail.com';
 const CATEGORIES=['Cars & Vehicles','Tractors','Houses & Apartments','Land & Plots','Hotels & Accommodation','Generators & Power','Ships & Marine','Heavy Equipment','Other Products'];
 const css=document.createElement('style');css.textContent=`
 #akeemEditorLauncher{display:flex;align-items:center;gap:11px;width:100%;box-sizing:border-box;margin:4px 0 2px;padding:10px 12px;background:linear-gradient(135deg,#536985,#71839E);color:#fff;border:0;border-radius:10px;font:600 13.5px Montserrat,sans-serif;box-shadow:0 5px 14px rgba(20,30,50,.18);cursor:pointer;text-align:left}
