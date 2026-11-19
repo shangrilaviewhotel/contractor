@@ -45,8 +45,46 @@ service cloud.firestore {
     match /activityLog/{logId} {
       allow read, write: if isStoreOwner();
     }
+    // Campaigns are private to the verified store owner. Approved campaigns
+    // cannot be edited, preserving the review decision.
+    function validCampaign(data) {
+      return data.keys().hasOnly([
+          'productId','productName','productCategory','productPrice','productImage',
+          'caption','recipient','status','createdBy','updatedAt','createdAt','events',
+          'approvedAt','approvedBy','rejectedAt','rejectedBy'
+        ])
+        && data.productId is string
+        && data.productName is string
+        && data.productCategory is string
+        && data.productPrice is string
+        && data.productImage is string
+        && data.caption is string
+        && data.caption.size() > 0
+        && data.caption.size() <= 5000
+        && data.recipient is string
+        && data.recipient.size() <= 30
+        && data.status in ['draft','pending_approval','approved','rejected']
+        && data.createdBy is string
+        && data.updatedAt is timestamp
+        && data.createdAt is timestamp
+        && data.events is list
+        && data.events.size() <= 1000;
+    }
+
     match /marketingCampaigns/{campaignId} {
-      allow read, create, update, delete: if isStoreOwner();
+      allow read: if isStoreOwner();
+      allow create: if isStoreOwner() && validCampaign(request.resource.data)
+        && request.resource.data.status in ['draft','pending_approval'];
+      allow update: if isStoreOwner()
+        && resource.data.status != 'approved'
+        && validCampaign(request.resource.data)
+        && (
+          request.resource.data.status == resource.data.status
+          || (resource.data.status == 'draft' && request.resource.data.status == 'pending_approval')
+          || (resource.data.status == 'pending_approval' && request.resource.data.status in ['approved','rejected','draft'])
+          || (resource.data.status == 'rejected' && request.resource.data.status in ['draft','pending_approval'])
+        );
+      allow delete: if isStoreOwner();
     }
 
     match /settings/{settingId} {
