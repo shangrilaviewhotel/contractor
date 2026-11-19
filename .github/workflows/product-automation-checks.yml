@@ -1,0 +1,16 @@
+name: Akeem Store automation checks
+on:
+  pull_request:
+    branches: [firebase-separation-akeems-store]
+  push:
+    branches: [akeem-product-automation-approval]
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate product automation
+        run: node scripts/check-product-automation.mjs
