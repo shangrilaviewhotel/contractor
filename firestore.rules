@@ -45,6 +45,10 @@ service cloud.firestore {
     match /activityLog/{logId} {
       allow read, write: if isStoreOwner();
     }
+    match /marketingCampaigns/{campaignId} {
+      allow read, create, update, delete: if isStoreOwner();
+    }
+
     match /settings/{settingId} {
       allow read, write: if isStoreOwner();
     }
