@@ -68,6 +68,7 @@ if (typeof window !== "undefined" && typeof document !== "undefined") {
   }
 
   safeImport("./admin-product-upgrade.js?v=20260820-2");
+  safeImport("./product-automation-launcher.js?v=20261119-1");
 
   if (location.pathname.toLowerCase().includes("admindashboard")) {
     safeImport("./admin-public-submissions.js?v=20260820-3");
