@@ -1,21 +1,22 @@
 # Akeem Store Product Automation
 
-## Implemented
-- Adds a Product Automation page linked from the existing admin sidebar.
-- Reads the existing Firestore `products` collection; it does not duplicate or rewrite product records.
-- Creates campaign drafts in `marketingCampaigns`.
-- Supports draft → pending approval → approved/rejected review states.
-- Approval is an explicit admin action and never triggers automatic sending.
-- Approved campaigns can open a pre-filled WhatsApp chat/share link. The administrator must review and press Send in WhatsApp.
+## Included in this branch
+- Dedicated Product Automation page linked from the existing admin sidebar.
+- Reads the existing Firestore `products` catalogue; does not duplicate or rewrite product records.
+- Creates and edits campaign drafts in `marketingCampaigns`.
+- Campaign review states: draft → pending approval → approved/rejected. Pending campaigns can be edited; edits must be reviewed again. Approved campaigns are immutable.
+- Only approved campaigns expose a WhatsApp share action. Approval never sends or publishes automatically.
+- Direct-recipient campaigns require the administrator to confirm recorded marketing opt-in. The confirmation is saved with the campaign and enforced by Firestore rules.
+- Adds static CI checks for JavaScript syntax and approval/security invariants.
 
 ## Firebase setup
-Deploy the updated `firestore.rules` to the Firebase project configured in `firebase.js`. The new `marketingCampaigns` collection is admin-only and uses the existing `isAdmin()` custom-claim check. The page also checks the existing Akeem Store administrator UID.
+The branch is based on `firebase-separation-akeems-store`, which configures the Akeem Store Firebase project. Deploy the branch's updated `firestore.rules` to that Firebase project before using campaign storage. Rules restrict campaign records to the verified owner account `akeem.fatai15@gmail.com`.
 
-## WhatsApp automation not yet connected
-This change does not send messages through the WhatsApp Business Platform and does not automate WhatsApp Status or group posts. No Meta access token is stored in browser code. For automated delivery, configure a server-side Cloud Function or trusted backend using Meta's WhatsApp Business Platform, store credentials only in server secrets, validate customer opt-in and approved templates where required, and require a server-side approved campaign state before sending. Until that backend exists, WhatsApp sharing is manual and approval-gated.
+## WhatsApp limitations
+The WhatsApp Business Platform API is not connected. No Meta token or phone-number ID was supplied, and no credential is embedded in browser code. At present, an approved campaign opens a prefilled WhatsApp chat/share screen; an administrator must review and press Send manually. It does not automate WhatsApp Status or group posts. Automated delivery requires a Meta WhatsApp Business Platform account, phone-number ID, access token stored in server secrets, approved templates where required, opt-in records, a secure backend, and server-side enforcement of the approved campaign state.
 
-## AI content generation
-The caption helper is a deterministic starter template based on saved product fields; it is not an AI model call. Connect a server-side AI endpoint later if AI-generated copy or creatives are required. Never put an AI provider secret in client-side JavaScript.
+## AI content limitations
+The caption starter uses saved product fields and a template. It is not an AI model call. AI copy and creative generation require a secured server-side AI provider integration and a configured secret; no API key was supplied, so no client-side secret or fake AI behavior was added.
 
-## Verification
-Static review only. Existing product CRUD, Firebase initialization, and storefront files are not replaced. After deploying Firestore rules, test campaign draft, submission, approval/rejection and the WhatsApp share action using the configured admin account.
+## Scheduling and verification
+No automatic campaign scheduler is enabled. Scheduling without a deployed delivery backend would mislead administrators into thinking messages will be sent. Static checks run in GitHub Actions. Live Firebase and WhatsApp delivery still require deployment credentials and an end-to-end test in the owner's environment.
