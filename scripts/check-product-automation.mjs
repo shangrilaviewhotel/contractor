@@ -24,7 +24,7 @@ try {
   fs.writeFileSync(launcherPath, launcher);
   for (const file of [modulePath, storefrontPath, launcherPath]) {
     const check = spawnSync(process.execPath, ['--check', file], { encoding: 'utf8' });
-    assert.equal(check.status, 0, \`JavaScript syntax check failed for \${path.basename(file)}: \${check.stderr}\`);
+    assert.equal(check.status, 0, `JavaScript syntax check failed for ${path.basename(file)}: ${check.stderr}`);
   }
 } finally {
   fs.rmSync(temp, { recursive: true, force: true });
